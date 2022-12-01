@@ -1,0 +1,157 @@
+\documentclass[adraft,hidelinks]{eptcs}
+\usepackage{controlSequences}   % control sequences
+\usepackage{comment}
+%\setlength{\marginparwidth}{2cm} %to use todonotes package, delete if no todos
+%\usepackage{todonotes}
+% \usepackage{underscore}
+% \usepackage{latexsym}
+% \usepackage{wrapfig}
+% \usepackage{marvosym}
+%\usepackage{color}
+% \usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{stmaryrd}
+% \usepackage{multicol}
+
+% choose either one
+% \usepackage{enumitem}
+% \usepackage[shortlabels]{enumitem}
+
+%  \setlist[enumerate, 1]{(1)}
+% \usepackage{framed}
+\usepackage[utf8]{inputenc}
+%\definecolor{shadecolor}{rgb}{1,0.5,0.5}
+
+\begin{document}
+
+\def\titlerunning{Proposal}
+\def\authorrunning{Anran Wang}
+\title{\Large Necessary Liberal Preconditions \\\normalsize A Master Thesis Proposal}
+\author{Anran Wang}
+\maketitle
+
+%\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\input{01introduction.tex}
+\section{Introduction}\label{sec:intro}
+
+With computer programs melded into almost every aspect of human life, we often not only require their efficiency, but also their correctness. 
+We would like to know for sure that our programs deliver the desired results, and do not run forever. 
+This is called \textit{total correctness}. 
+To know ``for sure'', we could verify programs using formal methods that have been developing for decades. 
+One of such methods is \textit{Hoare Triple}\cite{Hoare1969} proposed by Tony Hoare in 1969. 
+A Hoare Triple contains three parts: a precondition, a program, a postcondition. 
+They are written as such: $\{F\}C\{G\}$\footnote{Originally it was written as $F \{C\} G$, but now it is often written with brackets around conditions instead of the program. }. 
+It states that if the precondition is met before the execution of the program, then the postcondition is guarantee to be satisfied after the execution. 
+Using Hoare Triple, we can prove both the termination and the validity of the postcondition of a program in a top-to-down manner. 
+
+Another way to construct such proofs is to use \textit{weakest precondition}(wp)\cite{Dijkstra1975} transformer by Dijkstra. 
+Starting with a postcondition, it works backwards. 
+Both wp and Hoare Triple guarantee total correctness. 
+
+Sometimes, however, we deem nontermination a good behaviour, and only want to prove that a program delivers correct output \textit{if} it terminates.
+This is called \textit{partial correctness}. 
+The \textit{weakest liberal precondition}\cite{Dijkstra1990} transformer can be used to prove partial correctness. 
+
+In this thesis, we would like to research this matter further. 
+We aim to study wlp in a quantitive setting. 
+Specifically, we provide a proof system for the \textit{necessary liberal preconditions} and its correspondance with a (new) Hoare Triple.
+
+
+\section{Preliminaries}
+To simplify matters, we first look at logical predicates. 
+The construction is similar with functions in a quantitive setting, but it is easier to understand.
+
+\subsection{Hoare Triple}
+A Hoare Triple is a triplet in such form: $ \{G\} C \{F\}$ where $G$ and $F$ are logical predicates and C is a program. 
+$G$ is called a \textit{precondition}, $F$ a \textit{postcondition}. 
+This triple reads ``if $G$ is satisfied before the execution of $C$, then $F$ is satisfied after the execution of $C$''. 
+Note that not only the correctness of the execution is guaranteed (via the postcondition), termination is as well, hence such triples prove total correctness. 
+
+\subsection{Weakest Precondition}
+As the name suggests, a weakest precondition transformer translates a postcondition to a precondition. 
+Written as a function, $wp(C,F)$ gives the ``weakest'' precondition that when satisfied, guarantees the satisfaction of postcondition $F$ after the execution of program $C$ . 
+A predicate $G_1$ is ``weaker'' than $G_2$, if $G_2$ implies $G_1$. 
+Just like Hoare Triple, wp is concerned with total correctness. 
+Since $wp(C,F)$ is the ``weakest'', wp gives rise to a valid Hoare Triple: $\{wp(C,F)\} C \{F\}$. 
+Alternatively, wp is connected with Hoare Triple by an implication: 
+\[\forall G.\ G\implies wp(C,F): \{G\} C \{F\}\]
+$G$ is then in this case the \textit{sufficient precondition}. 
+
+\subsection{Weakest Liberal Precondition}
+The \textit{weakest liberal precondition}, on the other hand, is concerned with partial correctness. 
+$wlp(C,F)$ returns then the ``weakest'' precondition with which all the executions of $C$ that either
+\begin{itemize}
+    \item[-] guarantees the postcondition $F$ , 
+    \item[-] or are non-terminating. 
+\end{itemize}
+As a result, if all calculations of $C$ terminate, $wp(C,F)\equiv wlp(C,F)$. 
+
+We can now use some implications to define correctness or incorrectness as shown in \tab{impl}. 
+\begin{table}\centering 
+    \begin{tabular}{cc}
+      \textbf{implication}&\textbf{defines}    \\ \hline
+      $G\implies wp(C,F)$&   total correctness   \\
+      $G\implies wlp(C,F)$&  partial correctness\\
+      $wp(C,F)\implies G$&  partial incorrectness\\
+      $wlp(C,F)\implies G$&  ???\\
+    \end{tabular}
+    \caption{implications using wp and wlp\cite{Zhang2022}}
+    \label{tab:impl}
+\end{table}
+
+We are interested in the last implication labeled with ???, where $G$ is called the \textit{necessary liberal precondition}, in the sense that 
+\begin{itemize}
+    \item [-] all preconditions that leads to non-termination of $C$ imples $G$, 
+    \item [-] a preconditions that does not imply $G$ leads to a postcondition that does not imply $F$. 
+\end{itemize}
+Note that $A\nvDash F$ is not the same as $A\vDash \neg F$. 
+
+It is our goal to study this implication and its connection to correctness/incorrectness. 
+
+\begin{comment}
+\todo[inline, color=pink]{This is where I disagree with the statements in \cite{Zhang2022} top of page 21 : 
+``\textit{??? gives rise to a notion of necessary liberal preconditions, in the sense that (1) $G$ contains all initial states $\sigma$ that diverge, and (2) whenever $\sigma\nvDash G$, then $\sigma$ is guaranteed to terminate in a state $\tau \nvDash F$. }''. 
+Specifically number (2). Recall definition (using notation in the paper) 
+\[\sigma\vDash wlp\bkt{C}(\psi)\text{ iff }\forall\tau\in\bkt{C}(\sigma):\tau\vDash\psi\] 
+and $$???\equiv \neg G \implies \neg wlp\bkt{C}(F)$$. 
+$$\equiv\neg G \implies\neg(\forall\tau\in\bkt{C}(F):\tau\vDash F)\equiv \neg G \implies\exists\tau\in\bkt{C}(F):\tau\nvDash F$$
+From $\neg G$ we can only infer that one of the calculations starting from $\tau$ ends up satisfying $\neg F$. 
+And we can assume that the demonic choice would deliver an undsirable result when possible (we desire F or non-termination, but $\neg G$ rules out non-termination), 
+then we \textit{should} end up with $\neg F$. 
+But it seems to me like loosing non-determinism. For example, 
+$$wlp\bkt C (F):= wlp\bkt{x:=x * 2 \square x := x*3} (x\mid 6) $$$$= wlp\bkt{x:=x * 2} (x\mid 6) \wedge wlp\bkt{x := x*3} (x\mid 6) 
+$$$$= x\mid 3 \wedge x\mid 2 =: G$$
+then with $\sigma(x):=2$ we have $\sigma\nvDash G$. 
+But starting from $\sigma$, we can not guarantee final states satisfying $F$, otherwise I think we would lose the nondeterminism. 
+If this is true, where does it leave us? What does ??? then tell us? 
+}
+\end{comment}
+
+
+\subsection{Quantitive Setting}
+In a quantitive setting, instead of logical predicates, we investigate functions that maps to $\R^{\pm\infty}$. 
+Analogous to implications, conjunction, disjunction for predicates, we have ordering $\preceq$, join $\curlywedge$ and meet $\curlyvee$. 
+
+\subsection{Guarded Command Language}
+We use Dijkstra's (nondeterministic) guarded command language\cite{Dijkstra1975} (nGCL) to concepturalize a computer program and to include nondeterminism. 
+For better understanding, we use an equivalent form\cite{Zhang2022} of nGCL that is similar to modern psydo-code: 
+$$C\ ::=\ \  x:= e \ \ \mid\ \  C;C \ \ \mid\ \  \{C\} \square \{C\} \ \ \mid\ \  
+if\ (\varphi)\ \{C\}\ else\ \{C\} \ \ \mid\ \  while\ (\varphi)\ \{C\}$$
+
+\section{A Proof System}
+The goal of this thesis is to study the necessary liberal precondition and its relation to Hoare Triple. 
+It would be beneficial to come up with a (complete and sound) proof system and apply it to important algorithms. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{eptcsini}
+\bibliography{references}
+
+\end{document}

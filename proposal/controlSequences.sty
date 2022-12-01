@@ -1,0 +1,159 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%				Characters			          %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbolFont{frenchscript}{OMS}{ztmcm}{m}{n}
+%\DeclareMathSymbol{\A}{\mathord}{frenchscript}{65}    % set of ABC agent identifiers
+\DeclareMathSymbol{\B}{\mathord}{frenchscript}{66}    % set of ABC broadcast names
+%\DeclareMathSymbol{\CH}{\mathord}{frenchscript}{67}   % set of CCS handshake communications
+%\newcommand{\Ch}{{\CH_h}}                             % set of CCS handshake communication names
+\DeclareMathSymbol{\C}{\mathord}{frenchscript}{67}    % (static) component set
+\DeclareMathSymbol{\Lab}{\mathord}{frenchscript}{76}  % set of labels in transition system
+\DeclareMathSymbol{\Ge}{\mathord}{frenchscript}{71}   % liveness property
+\DeclareMathSymbol{\Pow}{\mathord}{frenchscript}{80}  % powerset
+\DeclareMathSymbol{\Sig}{\mathord}{frenchscript}{83}  % set of signals
+%\DeclareMathSymbol{\Tk}{\mathord}{frenchscript}{84}   % task set
+\DeclareMathAlphabet{\mathbbm}{U}{bbm}{m}{n}          % blackboard bold
+\newcommand{\IT}{\mathbbm{T}}                         % labelled transition system
+\newcommand{\cT}{\mathbbm{P}}                         % closed terms, or processes
+\newcommand{\IN}{\mathbbm{N}}                         % natural numbers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%			Theorem-like environments			  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheorem{defi}{Definition}
+\newtheorem{theo}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{lemm}{Lemma}
+\newtheorem{coro}{Corollary}
+\newtheorem{obs}{Observation}
+\newtheorem{exam}{Example}
+
+\newenvironment{definition}[1]{\begin{defi} \rm \label{df:#1} }{\end{defi}}
+\newenvironment{definitionA}[2]{\begin{defi}[#1] \rm \label{df:#2} }{\end{defi}}
+\newenvironment{theorem}[1]{\begin{theo} \rm \label{thm:#1} }{\end{theo}}
+\newenvironment{proposition}[1]{\begin{prop} \rm \label{pr:#1} }{\end{prop}}
+\newenvironment{lemma}[1]{\begin{lemm} \rm \label{lem:#1} }{\end{lemm}}
+\newenvironment{corollary}[1]{\begin{coro} \rm \label{cor:#1} }{\end{coro}}
+\newenvironment{observation}[1]{\begin{obs} \rm \label{obs:#1} }{\end{obs}}
+\newenvironment{example}[1]{\begin{exam} \rm \label{ex:#1} }{\end{exam}}
+\newenvironment{exampleA}[2]{\begin{exam}[#1] \rm \label{ex:#2} }{\end{exam}}
+\newenvironment{proof}{\begin{trivlist} \item[\hspace{\labelsep}\bf Proof:]}{\hfill $\Box$\end{trivlist}}
+\newenvironment{proofNoBox}{\begin{trivlist} \item[\hspace{\labelsep}\bf Proof:]}{\end{trivlist}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%			Theorem-like references 			  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Sec}[1]{Section~\ref{sec:#1}}
+\newcommand{\Sects}{Sections}
+\newcommand{\App}[1]{Appendix~\ref{app:#1}}
+\newcommand{\df}[1]{Definition~\ref{df:#1}}
+\newcommand{\thm}[1]{Theorem~\ref{thm:#1}}
+\newcommand{\pr}[1]{Proposition~\ref{pr:#1}}
+\newcommand{\lem}[1]{Lemma~\ref{lem:#1}}
+\newcommand{\cor}[1]{Corollary~\ref{cor:#1}}
+\newcommand{\Obs}[1]{Observation~\ref{obs:#1}}
+\newcommand{\ex}[1]{Example~\ref{ex:#1}}
+\newcommand{\tab}[1]{Table~\ref{tab:#1}}
+\newcommand{\fig}[1]{Figure~\ref{fig:#1}}
+\newcommand{\exs}{Examples\xspace}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{itemise}%
+  {\begin{itemize}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\end{itemize}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%        expanding ARROWS from James; changed by Rob  14-12-10.        %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\def\comesfrom{\@transition\leftarrowfill}
+\def\goesto{\@transition\rightarrowfill}
+\def\ngoesto{\@transition\nrightarrowfill}
+\def\Goesto{\@transition\Rightarrowfill}
+\def\nGoesto{\@transition\nRightarrowfill}
+\def\xmapsto{\@transition\mapstofill}
+\def\nxmapsto{\@transition\nmapstofill}
+\def\@transition#1{\@@transition{#1}}
+\newbox\@transbox
+\newbox\@arrowbox
+\newbox\@downbox
+\def\@@transition#1#2%
+   {\setbox\@transbox\hbox
+      {\vrule height 1.5ex depth .8ex width 0ex\hskip0.25em$\scriptstyle#2$\hskip0.25em}
+   \ifdim\wd\@transbox<1.5em
+      \setbox\@transbox\hbox to 1.5em{\hfil\box\@transbox\hfil}\fi
+   \setbox\@arrowbox\hbox to \wd\@transbox{#1}
+   \ht\@arrowbox\z@\dp\@arrowbox\z@
+   \setbox\@transbox\hbox{$\mathop{\box\@arrowbox}\limits^{\box\@transbox}$}
+   \dp\@transbox\z@\ht\@transbox 10pt
+   \mathrel{\box\@transbox}}
+\def\nrightarrowfill{$\m@th\mathord-\mkern-6mu%
+  \cleaders\hbox{$\mkern-2mu\mathord-\mkern-2mu$}\hfill
+  \mkern-6mu\mathord\not\mkern-2mu\mathord\rightarrow$}
+\def\Rightarrowfill{$\m@th\mathord=\mkern-6mu%
+  \cleaders\hbox{$\mkern-2mu\mathord=\mkern-2mu$}\hfill
+  \mkern-6mu\mathord\Rightarrow$}
+\def\nRightarrowfill{$\m@th\mathord=\mkern-6mu%
+  \cleaders\hbox{$\mkern-2mu\mathord=\mkern-2mu$}\hfill
+  \mkern-6mu\mathord\not\mathord\Rightarrow$}
+\def\mapstofill{$\m@th\mathord\mapstochar\mathord-\mkern-6mu%
+  \cleaders\hbox{$\mkern-2mu\mathord-\mkern-2mu$}\hfill
+  \mkern-6mu\mathord\rightarrow$}
+\def\nmapstofill{$\m@th\mathord\mapstochar\mathord-\mkern-6mu%
+  \cleaders\hbox{$\mkern-2mu\mathord-\mkern-2mu$}\hfill
+  \mkern-6mu\mathord\not\mkern-2mu\mathord\rightarrow$}
+\makeatother %%%%% end of arrows definition
+\newcommand{\ar}[1]{\mathrel{\goesto{#1}}}            % arrow
+\newcommand{\nar}[1]{{\ngoesto{#1\;}}}                % negated arrow
+\newcommand{\goto}[1]{\stackrel{#1}{\longrightarrow}} % transition
+\newcommand{\gonotto}[1]{\mbox{$\,\,\,\not\!\!\!\stackrel{#1~}{\longrightarrow}$}} % negated tr.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Tr}{\textit{Tr}}                         % transitions
+\newcommand{\source}{\textit{source}}                 % source of transition
+\newcommand{\target}{\textit{target}}                 % target of transition
+%%added tiny spacing if used as funciton with paranthesis:
+\newcommand{\comp}{\textit{comp\/}}                   % components involved in transition
+\newcommand{\npc}{\textit{npc}}                       % components causing transition
+\newcommand{\afc}{\textit{afc}}                       % components affected by transition
+\newcommand{\defis}{\stackrel{{\it def}}{=}}          % recursive definition
+\newcommand{\NC}{{\it NC}}                            % necessary dynamic componenets
+\newcommand{\Left}{\mathrm{\scriptscriptstyle L}}     % left component indicator
+\newcommand{\R}{\mathrm{\scriptscriptstyle R}}        % right component indicator
+\newcommand{\Rec}{\mathit{Rec}}                       % receptive actions
+\newcommand{\J}{{\rm J}}                              % J (as in J-fairness)
+\newcommand{\aconc}{\mathrel{\mbox{$\smile\hspace{-.95ex}\raisebox{2.5pt}{$\scriptscriptstyle\bullet$}$}}}
+\newcommand{\naconc}{\mathrel{\mbox{$\,\not\!\smile\hspace{-.95ex}\raisebox{2.5pt}{$\scriptscriptstyle\bullet$}$}}}\newcommand{\X}{x}
+\newcommand{\conc}{\smile}                            % concurrency relation
+\newcommand{\nconc}{\,\not\!\smile}                   % not concurrent
+\newcommand{\dcup}{\mathbin{\mathaccent\cdot\cup}} % disjoint union
+\newcommand{\plat}[1]{\raisebox{0pt}[0pt][0pt]{#1}}   % no vertical space
+\newcommand{\weg}[1]{}                                % omitted material
+
+\newcommand{\signals}{\ensuremath{\mathrel{\hat{}\!}}}% syntactic operator ``signals''
+\newcommand{\sigar}[1]{^{\curvearrowright #1}}            % semantic behaviour ``signalling''
+\newcommand{\sig}[1]{^{\rightarrow #1}}                  % signalling synchron
+\newcommand{\RL}{L}                                   % restricted set of actions
+\newcommand{\shar}[1]{\mathord{\stackrel{#1}{\rightarrow}}} % active synchron
+\newcommand{\mylabel}[1]{\hypertarget{lab:#1}{\ \mbox{{\scriptsize\sc (#1)}}}}
+\newcommand{\myref}[1]{\hyperlink{lab:#1}{\scriptsize\sc (#1)}}
+
+\renewcommand{\chi}{t}                                % typical derivation of transition
+\renewcommand{\zeta}{u}                               % typical derivation of transition
+\newcommand{\E}{P}                                    % typical process expression
+\newcommand{\F}{Q}                                    % typical process expression
+%\newcommand{\AI}{A}                                  % typical agent identifier
+\newcommand{\We}{We\ }
+\newcommand{\we}{we\ }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                      Commands added by Anran                          %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\bkt}[1]{\llbracket \plat{$#1$} \rrbracket} % the [| ... |] bracket
+\newcommand{\nil}{\textbf{0}}
+\newcommand{\N}{\mathds{N}}
+%\newcommand{\anran}[1]{\mycomment[Anran]{#1}} % command from package todonotes
+\renewcommand{\R}{\mathbb{R}} % symbol for real numbers
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
