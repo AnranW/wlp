@@ -277,3 +277,6 @@ TSWLatexianTemp*
 
 # VS code layout files
 *.pag
+
+# mac system files
+*.DS_STORE
