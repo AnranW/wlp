@@ -34,7 +34,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\input{01introduction.tex}
-\section{Background}\label{sec:intro}
+\section{Background}\label{sec:background}
 
 With computer programs melded into almost every aspect of human life, we often not only require their efficiency, but also their correctness. 
 We would like to know for sure that our programs deliver the desired results, and do not run forever. 
@@ -43,51 +43,66 @@ To know ``for sure'', we could verify programs using formal methods that have be
 One of such methods are \textit{Hoare Triples}~\cite{Hoare1969} proposed by Tony Hoare in 1969. 
 A Hoare Triple contains three parts: a precondition, a program, and a postcondition. 
 They are written as such: $\{F\}C\{G\}$.\footnote{Originally it was written as $F \{C\} G$, but now it is often written with brackets around conditions instead of the program.} 
-It states that if the precondition is met before the execution of the program, then the postcondition is guaranteed to be satisfied after the execution. 
-Using Hoare Triples, we can prove both the termination and the validity of the postcondition of a program in a top-to-down manner. 
-
-Another way to construct such proofs is to use the \textit{weakest precondition} transformer (wp) by Dijkstra~\cite{Dijkstra1975}. 
-Starting with a postcondition, it works backwards. 
-Both wp and Hoare Triples guarantee total correctness. 
-
-Sometimes, however, we deem nontermination a good behaviour, and only want to prove that a program delivers correct output \textit{if} it terminates.
+It states that if the system is in a state that satisfies the precondition, then the state after the execution of the program will satisfy the postcondition, provided that the program terminates.
 This is called \textit{partial correctness}. 
-The \textit{weakest liberal precondition} transformer \cite{Dijkstra1990} can be used to prove partial correctness. 
 
-In this thesis, we would like to research this matter further. 
-We aim to study wlp in a quantitive setting. 
-Specifically, we provide a proof system for the \textit{necessary liberal preconditions} and its correspondance with a (new) Hoare Triple.
+Originally, Hoare Triples only deals with deterministic programs in a top-to-down manner, but nondeterminism can be added in a sensible way like Dijkstra did in \cite{Dijkstra1975}. 
+He presented the \textit{weakest precondition} transformer (wp): starting with a postcondition, it works backwards and ``guesses'' what the precondition can be. 
+wp is concerned with total correctness and is related to Hoare Triples by an implication: 
+\[\forall G.\ G\implies wp.C.F: \{G\} C \{F\}\] 
+\footnote{Here $wp.C.F$ is a function written in lambda-calculus style, it can be seen now as a function $wp(C,F)$. This form of writing proves to be simple and elegant in the upcoming sections.}
+This connection not only tells us that 
+\begin{itemize}
+    \item[-] given $wp.C.F$, any predicate $G$ that implies it can be the precondition of a valid Hoare Triple: $\{G\} C \{F\}$; 
+\end{itemize}
+it also shows when Hoare Triple will guarantee total correctness: 
+\begin{itemize}
+    \item[-] given a valid Hoare Triple $\{G\} C \{F\}$, if its precondition $G$ implies $wp.C.F$, then $\{G\} C \{F\}$ is valid for total correctness. 
+\end{itemize}
+
+Sometimes, however, we deem nontermination a good behaviour, and proving partial correctness suffices. 
+The \textit{weakest liberal precondition} transformer \cite{Dijkstra1990} can be used in such occasions: 
+if the system is in a state satisfying $wlp(C,F)$, then either $F$ is reachable after the termination of $C$, or $C$ does not terminate.
+wlp directly relates to Hoare Triples via an implication: 
+\[\forall G.\ G\implies wlp(C,F): \{G\} C \{F\}\]
+$G$ is then called the \textit{sufficient liberal precondition}, and finding it means we can prove the absense of errors in the program (if it terminates). 
+In contrast, the \textit{necessary liberal precondition} $G$ (where $ wlp(C,F)\implies G$) tells us that the system will not satisfy the postcondition $F$, once $G$ is violated. 
+Cousot et al. studied the matter from a practical perspective~\cite{Cousot2013}, they proposed inference tools and experimented in industrial codes.
+In this thesis, we aim to research this matter further with a more theoretical view. 
+We would like to propose a proof system and prove its soundness and completeness similar as in \cite{Vries2011}, but using Dijkstra's guarded command language (GCL)~\cite{Dijkstra1975}. 
+
+Instead of the usual qualitative reasoning using logical predicates, we would like to study in a quantitive setting using functions that represent quantities such as expectations of program variables. 
+While predicates map program states to true or false, functions map program states to $\Rinf$, real numbers extended with (negative) infinity. 
+In this setting, not only are infinities clear indication for nontermination, the transformers can also express more such as flow of quantitive information~\cite{Zhang2022}.
 
 
 \section{Preliminaries}
-To simplify matters, we first look at logical predicates. 
-The construction is similar with functions in a quantitive setting, but it is easier to understand.
+\subsection{Quantitiy}
+Let $\Sigma$ be the set of all program states, then the set of quantities is defined by 
+\[A=\{f\mid f:\Sigma\to\Rinf\}\] 
+With the ordering 
+\[f\preceq g \text{ iff } \forall \sigma \in \Sigma: f(\sigma)\leq g(\sigma)\]
+as well as join $\join$ and meet $\meet$
+\[f\join g = \lambda \sigma.min\{f(\sigma), g(\sigma)\}; \ \ \  f\meet g = \lambda \sigma.max\{f(\sigma), g(\sigma) \}\]
+we can define a complete lattice $\langle A, \preceq\rangle$. 
+Note that all subsets in a complete lattice have supremum and infimum. 
+
+Informally, $f\preceq g$ is analogous to $F\implies G$ for predicates, $\join$ ($\meet$) is analogous to $\wedge$ ($\vee$). 
 
 \subsection{Hoare Triple}
 A Hoare Triple is a triple $ \{G\} C \{F\}$ where $G$ and $F$ are logical predicates and C is a program. 
 $G$ is called a \textit{precondition}, $F$ a \textit{postcondition}. 
-This triple reads ``if $G$ is satisfied before the execution of $C$, then $C$ terminates and $F$ is satisfied after the execution of $C$''. 
-Note that not only the correctness of the execution is guaranteed (via the postcondition), termination is as well, hence such triples prove total correctness. 
+This triple reads ``if $G$ is satisfied before the execution of $C$, then if $C$ terminates, $F$ is satisfied after the execution of $C$''. 
 
-\subsection{Weakest Precondition}
-As the name suggests, a weakest precondition transformer translates a postcondition to a precondition. 
-Written as a function, $wp(C,F)$ gives the ``weakest'' precondition that when satisfied, guarantees the satisfaction of postcondition $F$ after the execution of program $C$ . 
-A predicate $G_1$ is ``weaker'' than $G_2$, if $G_2$ implies $G_1$. 
-Just like Hoare Triple, wp is concerned with total correctness. 
-Since $wp(C,F)$ is the ``weakest'', wp gives rise to a valid Hoare Triple: $\{wp(C,F)\} C \{F\}$. 
-Alternatively, wp is connected with Hoare Triple by an implication: 
-\[\forall G.\ G\implies wp(C,F): \{G\} C \{F\}\]
-$G$ is then in this case the \textit{sufficient precondition}. 
+\subsection{Weakest (Liberal) Prequantity}
+Let $\bkt C (\sigma)$ be the set of all \textbf{reachable} states by program $C$ from initial state $\sigma$, $f$ a \textit{postquantity}. 
+Let $\bigmeet S$ denote the supremum of set $S$, then: 
+\[wp.C.f.\sigma = \underset{\tau\in\bkt C(\sigma)}{\bigmeet} f(\tau)\]
 
-\subsection{Weakest Liberal Precondition}
-The \textit{weakest liberal precondition}, on the other hand, is concerned with partial correctness. 
-$wlp(C,F)$ returns then the ``weakest'' precondition with which all the executions of $C$ that either
-\begin{itemize}
-    \item[-] guarantees the postcondition $F$ , 
-    \item[-] or are non-terminating. 
-\end{itemize}
-As a result, if all calculations of $C$ terminate, $wp(C,F)\equiv wlp(C,F)$. 
+As the name suggests, $wp.C.f.\sigma$ gives the ``weakest'', i.e. supremum, prequantity given post quantity $f$. 
 
+
+\begin{comment}
 We can now use some implications to define correctness or incorrectness as shown in \tab{impl}. 
 \begin{table}\centering 
     \begin{tabular}{cc}
@@ -99,7 +114,8 @@ We can now use some implications to define correctness or incorrectness as shown
     \end{tabular}
     \caption{implications using wp and wlp\cite{Zhang2022}}
     \label{tab:impl}
-\end{table}
+\end{table}    
+\end{comment}
 
 We are interested in the last implication labeled with ???, where $G$ is called the \textit{necessary liberal precondition}, in the sense that 
 \begin{itemize}
@@ -108,29 +124,6 @@ We are interested in the last implication labeled with ???, where $G$ is called 
 \end{itemize}
 It is our goal to study this implication and its connection to correctness/incorrectness. 
 
-\begin{comment}
-\todo[inline, color=pink]{This is where I disagree with the statements in \cite{Zhang2022} top of page 21 : 
-``\textit{??? gives rise to a notion of necessary liberal preconditions, in the sense that (1) $G$ contains all initial states $\sigma$ that diverge, and (2) whenever $\sigma\nvDash G$, then $\sigma$ is guaranteed to terminate in a state $\tau \nvDash F$. }''. 
-Specifically number (2). Recall definition (using notation in the paper) 
-\[\sigma\vDash wlp\bkt{C}(\psi)\text{ iff }\forall\tau\in\bkt{C}(\sigma):\tau\vDash\psi\] 
-and $$???\equiv \neg G \implies \neg wlp\bkt{C}(F)$$. 
-$$\equiv\neg G \implies\neg(\forall\tau\in\bkt{C}(F):\tau\vDash F)\equiv \neg G \implies\exists\tau\in\bkt{C}(F):\tau\nvDash F$$
-From $\neg G$ we can only infer that one of the calculations starting from $\tau$ ends up satisfying $\neg F$. 
-And we can assume that the demonic choice would deliver an undsirable result when possible (we desire F or non-termination, but $\neg G$ rules out non-termination), 
-then we \textit{should} end up with $\neg F$. 
-But it seems to me like loosing non-determinism. For example, 
-$$wlp\bkt C (F):= wlp\bkt{x:=x * 2 \square x := x*3} (x\mid 6) $$$$= wlp\bkt{x:=x * 2} (x\mid 6) \wedge wlp\bkt{x := x*3} (x\mid 6) 
-$$$$= x\mid 3 \wedge x\mid 2 =: G$$
-then with $\sigma(x):=2$ we have $\sigma\nvDash G$. 
-But starting from $\sigma$, we can not guarantee final states satisfying $F$, otherwise I think we would lose the nondeterminism. 
-If this is true, where does it leave us? What does ??? then tell us? 
-}
-\end{comment}
-
-
-\subsection{Quantitive Setting}
-In a quantitive setting, instead of logical predicates, we investigate functions that maps to $\R^{\pm\infty}$. 
-Analogous to implications, conjunction, disjunction for predicates, we have ordering $\preceq$, join $\curlywedge$ and meet~$\curlyvee$. 
 
 \subsection{Guarded Command Language}
 We use Dijkstra's (nondeterministic) guarded command language (nGCL)~\cite{Dijkstra1975} to conceptualize a computer program and to include nondeterminism. 
