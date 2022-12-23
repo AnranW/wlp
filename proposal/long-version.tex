@@ -46,11 +46,11 @@ They are written as such: $\{F\}C\{G\}$.\footnote{Originally it was written as $
 It states that if the system is in a state that satisfies the precondition, then the state after the execution of the program will satisfy the postcondition, provided that the program terminates.
 This is called \textit{partial correctness}. 
 
-Originally, Hoare Triples only deals with deterministic programs in a top-to-down manner, but nondeterminism can be added in a sensible way like Dijkstra did in \cite{Dijkstra1975}. 
-He presented the \textit{weakest precondition} transformer (wp): starting with a postcondition, it works backwards and ``guesses'' what the precondition can be. 
+Originally, Hoare Triples only deals with deterministic programs in a top-to-down manner, but nondeterminism can be added in a sensible way~\cite{Dijkstra1975}. 
+Here, Dijkstra presented the \textit{weakest precondition} transformer (wp): starting with a postcondition, it works backwards and ``guesses'' what the precondition can be. 
 wp is concerned with total correctness and is related to Hoare Triples by an implication: 
-\[\forall G.\ G\implies wp.C.F: \{G\} C \{F\}\] 
 \footnote{Here $wp.C.F$ is a function written in lambda-calculus style, it can be seen now as a function $wp(C,F)$. This form of writing proves to be simple and elegant in the upcoming sections.}
+\[\forall G.\ G\implies wp.C.F: \{G\} C \{F\}\]
 This connection not only tells us that 
 \begin{itemize}
     \item[-] given $wp.C.F$, any predicate $G$ that implies it can be the precondition of a valid Hoare Triple: $\{G\} C \{F\}$; 
@@ -77,6 +77,17 @@ In this setting, not only are infinities clear indication for nontermination, th
 
 
 \section{Preliminaries}
+\subsection{Guarded Command Language}
+We use Dijkstra's (nondeterministic) guarded command language (nGCL)~\cite{Dijkstra1975} to conceptualize a computer program and to include nondeterminism. 
+For better understanding, we use an equivalent form~\cite{Zhang2022} of nGCL that is similar to modern pseudo-code: 
+$$C\ ::=\ \  x:= e \ \ \mid\ \  C;C \ \ \mid\ \  \{C\} \square \{C\} \ \ \mid\ \  
+if\ (\varphi)\ \{C\}\ else\ \{C\} \ \ \mid\ \  while\ (\varphi)\ \{C\}$$
+
+\subsection{Hoare Triple}
+A Hoare Triple is a triple $ \{G\} C \{F\}$ where $G$ and $F$ are logical predicates and C is a program. 
+$G$ is called a \textit{precondition}, $F$ a \textit{postcondition}. 
+This triple reads ``if $G$ is satisfied before the execution of $C$, then if $C$ terminates, $F$ is satisfied after the execution of $C$''. 
+
 \subsection{Quantitiy}
 Let $\Sigma$ be the set of all program states, then the set of quantities is defined by 
 \[A=\{f\mid f:\Sigma\to\Rinf\}\] 
@@ -89,20 +100,23 @@ Note that all subsets in a complete lattice have supremum and infimum.
 
 Informally, $f\preceq g$ is analogous to $F\implies G$ for predicates, $\join$ ($\meet$) is analogous to $\wedge$ ($\vee$). 
 
-\subsection{Hoare Triple}
-A Hoare Triple is a triple $ \{G\} C \{F\}$ where $G$ and $F$ are logical predicates and C is a program. 
-$G$ is called a \textit{precondition}, $F$ a \textit{postcondition}. 
-This triple reads ``if $G$ is satisfied before the execution of $C$, then if $C$ terminates, $F$ is satisfied after the execution of $C$''. 
-
 \subsection{Weakest (Liberal) Prequantity}
 Let $\bkt C (\sigma)$ be the set of all \textbf{reachable} states by program $C$ from initial state $\sigma$, $f$ a \textit{postquantity}. 
 Let $\bigmeet S$ denote the supremum of set $S$, then: 
 \[wp.C.f.\sigma = \underset{\tau\in\bkt C(\sigma)}{\bigmeet} f(\tau)\]
 
 As the name suggests, $wp.C.f.\sigma$ gives the ``weakest'', i.e. supremum, prequantity given post quantity $f$. 
-
-
+Given the program, postquantity, initial state, the wp transformer gives the ``biggest'' element of all postquantities at all reachable final states. 
+Since $f\preceq g$ means $g$ is weaker than $f$, the biggest quantity is the weakest. 
+Informally, fixing an initial state, whether a prequantity is valid for the weakest prequantity depends on whether the postquantity is valid for at least one of the final states. 
 \begin{comment}
+Note that supremum can be not an element of the infinite set.
+\end{comment}
+
+The weakest liberal prequantity transformer is defined with the infimum: 
+\[wlp.C.f.\sigma = \underset{\tau\in\bkt C(\sigma)}{\bigjoin} f(\tau)\]
+
+\subsection{Necessary and Sufficient Conditions}
 We can now use some implications to define correctness or incorrectness as shown in \tab{impl}. 
 \begin{table}\centering 
     \begin{tabular}{cc}
@@ -115,7 +129,6 @@ We can now use some implications to define correctness or incorrectness as shown
     \caption{implications using wp and wlp\cite{Zhang2022}}
     \label{tab:impl}
 \end{table}    
-\end{comment}
 
 We are interested in the last implication labeled with ???, where $G$ is called the \textit{necessary liberal precondition}, in the sense that 
 \begin{itemize}
@@ -125,15 +138,12 @@ We are interested in the last implication labeled with ???, where $G$ is called 
 It is our goal to study this implication and its connection to correctness/incorrectness. 
 
 
-\subsection{Guarded Command Language}
-We use Dijkstra's (nondeterministic) guarded command language (nGCL)~\cite{Dijkstra1975} to conceptualize a computer program and to include nondeterminism. 
-For better understanding, we use an equivalent form~\cite{Zhang2022} of nGCL that is similar to modern pseudo-code: 
-$$C\ ::=\ \  x:= e \ \ \mid\ \  C;C \ \ \mid\ \  \{C\} \square \{C\} \ \ \mid\ \  
-if\ (\varphi)\ \{C\}\ else\ \{C\} \ \ \mid\ \  while\ (\varphi)\ \{C\}$$
-
 \section{A Proof System}
-The goal of this thesis is to study the necessary liberal precondition and its relation to Hoare Triple. 
-It would be beneficial to come up with a (complete and sound) proof system and apply it to important algorithms. 
+The goal of this thesis is to study the necessary liberal precondition(quantity) and its relation to Hoare Triple. 
+In their paper, Cousot et al. studied the necessary preconditions and proposed static analysis rules with inference tools. 
+We aim to research the same subject but with a more theoretical approach, in the flavour of \cite{Vries2011}. 
+Instead of defining big-step semantics, we use GCL and hopefully to come up with a proof system, 
+and by doing so with GCL syntax, we hope to prove the completeness and soundness of the proof system using structural induction. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
