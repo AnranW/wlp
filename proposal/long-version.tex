@@ -36,8 +36,8 @@
 %\input{01introduction.tex}
 \section{Background}\label{sec:background}
 
-With computer programs melded into almost every aspect of human life, we often not only require their efficiency, but also their correctness. 
-We would like to know for sure that our programs deliver the desired results, and do not run forever. 
+With computer programs melded into almost every aspect of human life, we often require not only their efficiency, but also their correctness. 
+We would like to know for sure that our programs deliver the desired results and do not run forever. 
 This is called \textit{total correctness}. 
 To know ``for sure'', we could verify programs using formal methods that have been developing for decades. 
 One of such methods are \textit{Hoare Triples}~\cite{Hoare1969} proposed by Tony Hoare in 1969. 
@@ -46,10 +46,10 @@ They are written as such: $\{F\}C\{G\}$.\footnote{Originally it was written as $
 It states that if the system is in a state that satisfies the precondition, then the state after the execution of the program will satisfy the postcondition, provided that the program terminates.
 This is called \textit{partial correctness}. 
 
-Originally, Hoare Triples only deals with deterministic programs in a top-to-down manner, but nondeterminism can be added in a sensible way~\cite{Dijkstra1975}. 
+Originally, Hoare Triples only deal with deterministic programs in a top-to-down manner, but nondeterminism can be added in a sensible way~\cite{Dijkstra1975}. 
 Here, Dijkstra presented the \textit{weakest precondition} transformer (wp): starting with a postcondition, it works backwards and ``guesses'' what the precondition can be. 
 wp is concerned with total correctness and is related to Hoare Triples by an implication: 
-\footnote{Here $wp.C.F$ is a function written in lambda-calculus style, it can be seen now as a function $wp(C,F)$. This form of writing proves to be simple and elegant in the upcoming sections.}
+\footnote{Here $wp.C.F$ is a function written in lambda-calculus style, and it can be seen now as a function $wp(C,F)$. This form of writing proves to be simple and elegant in the upcoming sections.}
 \[\forall G.\ G\implies wp.C.F: \{G\} C \{F\}\]
 This connection not only tells us that 
 \begin{itemize}
@@ -60,35 +60,36 @@ it also shows when Hoare Triple will guarantee total correctness:
     \item[-] given a valid Hoare Triple $\{G\} C \{F\}$, if its precondition $G$ implies $wp.C.F$, then $\{G\} C \{F\}$ is valid for total correctness. 
 \end{itemize}
 
-Sometimes, however, we deem nontermination a good behaviour, and proving partial correctness suffices. 
+Sometimes, however, we deem non-termination a good behavior and proving partial correctness suffices. 
 The \textit{weakest liberal precondition} transformer \cite{Dijkstra1990} can be used in such occasions: 
 if the system is in a state satisfying $wlp(C,F)$, then either $F$ is reachable after the termination of $C$, or $C$ does not terminate.
 wlp directly relates to Hoare Triples via an implication: 
 \[\forall G.\ G\implies wlp(C,F): \{G\} C \{F\}\]
-$G$ is then called the \textit{sufficient liberal precondition}, and finding it means we can prove the absense of errors in the program (if it terminates). 
+$G$ is then called the \textit{sufficient liberal precondition}, and finding it means we can prove the absence of errors in the program (if it terminates). 
 In contrast, the \textit{necessary liberal precondition} $G$ (where $ wlp(C,F)\implies G$) tells us that the system will not satisfy the postcondition $F$, once $G$ is violated. 
-Cousot et al. studied the matter from a practical perspective~\cite{Cousot2013}, they proposed inference tools and experimented in industrial codes.
+Cousot et al. studied the matter from a practical perspective~\cite{Cousot2013}. 
+They proposed inference tools and experimented with industrial codes.
 In this thesis, we aim to research this matter further with a more theoretical view. 
 We would like to propose a proof system and prove its soundness and completeness similar as in \cite{Vries2011}, but using Dijkstra's guarded command language (GCL)~\cite{Dijkstra1975}. 
 
 Instead of the usual qualitative reasoning using logical predicates, we would like to study in a quantitive setting using functions that represent quantities such as expectations of program variables. 
 While predicates map program states to true or false, functions map program states to $\Rinf$, real numbers extended with (negative) infinity. 
-In this setting, not only are infinities clear indication for nontermination, the transformers can also express more such as flow of quantitive information~\cite{Zhang2022}.
+In this setting, not only are infinities clear indications for non-termination, the transformers can also express more such as the flow of quantitive information~\cite{Zhang2022}.
 
 
 \section{Preliminaries}
 \subsection{Guarded Command Language}
-We use Dijkstra's (nondeterministic) guarded command language (nGCL)~\cite{Dijkstra1975} to conceptualize a computer program and to include nondeterminism. 
+We use Dijkstra's (non-deterministic) guarded command language (nGCL)~\cite{Dijkstra1975} to conceptualize a computer program and to include non-determinism. 
 For better understanding, we use an equivalent form~\cite{Zhang2022} of nGCL that is similar to modern pseudo-code: 
 $$C\ ::=\ \  x:= e \ \ \mid\ \  C;C \ \ \mid\ \  \{C\} \square \{C\} \ \ \mid\ \  
 if\ (\varphi)\ \{C\}\ else\ \{C\} \ \ \mid\ \  while\ (\varphi)\ \{C\}$$
 
 \subsection{Hoare Triple}
-A Hoare Triple is a triple $ \{G\} C \{F\}$ where $G$ and $F$ are logical predicates and C is a program. 
+A Hoare Triple is a triple $ \{G\} C \{F\}$ where $G$ and $F$ are logical predicates, and C is a program. 
 $G$ is called a \textit{precondition}, $F$ a \textit{postcondition}. 
-This triple reads ``if $G$ is satisfied before the execution of $C$, then if $C$ terminates, $F$ is satisfied after the execution of $C$''. 
+This triple reads, ``if $G$ is satisfied before the execution of $C$, then if $C$ terminates, $F$ is satisfied after the execution of $C$''. 
 
-\subsection{Quantitiy}
+\subsection{Quantity}
 Let $\Sigma$ be the set of all program states, then the set of quantities is defined by 
 \[A=\{f\mid f:\Sigma\to\Rinf\}\] 
 With the ordering 
@@ -130,18 +131,18 @@ We can now use some implications to define correctness or incorrectness as shown
     \label{tab:impl}
 \end{table}    
 
-We are interested in the last implication labeled with ???, where $G$ is called the \textit{necessary liberal precondition}, in the sense that 
+We are interested in the last implication labeled with ???, where $G$ is called the \textit{necessary liberal precondition}, in a sense that 
 \begin{itemize}
-    \item [-] all preconditions that leads to non-termination of $C$ imply $G$, 
-    \item [-] a preconditions that does not imply $G$ leads to a postcondition that does not imply $F$. 
+    \item [-] all preconditions that lead to non-termination of $C$ imply $G$, 
+    \item [-] a preconditions that do not imply $G$ leads to a postcondition that does not imply $F$. 
 \end{itemize}
-It is our goal to study this implication and its connection to correctness/incorrectness. 
+Our goal is to study this implication and its connection to correctness/incorrectness. 
 
 
 \section{Goal: A Proof System}
-The goal of this thesis is to study the necessary liberal precondition(quantity) and its relation to Hoare Triple. 
+This thesis aims to study the necessary liberal precondition(quantity) and its relation to Hoare Triple. 
 In their paper, Cousot et al. studied the necessary preconditions and proposed static analysis rules with inference tools. 
-We aim to research the same subject but with a more theoretical approach, in the flavour of \cite{Vries2011}. 
+We aim to research the same subject with a more theoretical approach in the flavor of \cite{Vries2011}. 
 Instead of defining big-step semantics, we use GCL and hopefully to come up with a proof system, 
 and by doing so with GCL syntax, we hope to prove the completeness and soundness of the proof system using structural induction. 
 Finally, we will look for interesting use cases demonstrating the necessary liberal precondition reasoning techniques and how they differ from other systems. 
