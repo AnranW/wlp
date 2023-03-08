@@ -1,10 +1,10 @@
 # Master Thesis: Necessary Liberal Preconditions
 Please find the pdf file at ./proposal/long-version.pdf.
 
-## Updates 08.01.2023
+## Updates 08.03.2023
 - Tidying up classicthesis, work in progress.
 
-## Updates 06.01.2023
+## Updates 06.03.2023
 - Attempt to use classicthesis for formatting.
 
 ## Updates 11.01.2023
