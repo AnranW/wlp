@@ -1,17 +1,21 @@
 % ****************************************************************************************************
-% classicthesis-config.tex 
-% formerly known as loadpackages.sty, classicthesis-ldpkg.sty, and classicthesis-preamble.sty 
-% Use it at the beginning of your ClassicThesis.tex, or as a LaTeX Preamble 
+% classicthesis-config.tex
+% formerly known as loadpackages.sty, classicthesis-ldpkg.sty, and classicthesis-preamble.sty
+% Use it at the beginning of your ClassicThesis.tex, or as a LaTeX Preamble
 % in your ClassicThesis.{tex,lyx} with \input{classicthesis-config}
-% ****************************************************************************************************  
-% If you like the classicthesis, then I would appreciate a postcard. 
-% My address can be found in the file ClassicThesis.pdf. A collection 
-% of the postcards I received so far is available online at 
+% ****************************************************************************************************
+% If you like the classicthesis, then I would appreciate a postcard.
+% My address can be found in the file ClassicThesis.pdf. A collection
+% of the postcards I received so far is available online at
 % http://postcards.miede.de
 % ****************************************************************************************************
+%packages added by Anran
 
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{stmaryrd}
 \usepackage{controlSequences}
-
+\usepackage{comment}
 % ****************************************************************************************************
 % 0. Set the encoding of your files. UTF-8 is the only sensible encoding nowadays. If you can't read
 % äöüßáéçèê∂åëæƒÏ€ then change the encoding setting in your editor, not the line below. If your editor
@@ -21,14 +25,14 @@
 	\usepackage{inputenc}
 
 % ****************************************************************************************************
-% 1. Configure classicthesis for your needs here, e.g., remove "drafting" below 
+% 1. Configure classicthesis for your needs here, e.g., remove "drafting" below
 % in order to deactivate the time-stamp on the pages
 % ****************************************************************************************************
-\PassOptionsToPackage{eulerchapternumbers,listings,drafting,%
+\PassOptionsToPackage{eulerchapternumbers,listings,%drafting,%
 					 pdfspacing,%floatperchapter,%linedheaders,%
-					 subfig,beramono,eulermath,parts}{classicthesis}                                        
+					 subfig,beramono,eulermath,parts}{classicthesis}
 % ********************************************************************
-% Available options for classicthesis.sty 
+% Available options for classicthesis.sty
 % (see ClassicThesis.pdf for more information):
 % drafting
 % parts nochapters linedheaders
@@ -41,19 +45,19 @@
 % ****************************************************************************************************
 % 2. Personal data and user ad-hoc commands
 % ****************************************************************************************************
-\newcommand{\myTitle}{A Classic Thesis Style\xspace}
-\newcommand{\mySubtitle}{An Homage to The Elements of Typographic Style\xspace}
-\newcommand{\myDegree}{Doktor-Ingenieur (Dr.-Ing.)\xspace}
-\newcommand{\myName}{André Miede\xspace}
-\newcommand{\myProf}{Put name here\xspace}
-\newcommand{\myOtherProf}{Put name here\xspace}
-\newcommand{\mySupervisor}{Put name here\xspace}
+\newcommand{\myTitle}{Necessary Liberal Preconditions\xspace}
+\newcommand{\mySubtitle}{A Proof System\xspace}
+\newcommand{\myDegree}{BSc.\xspace}
+\newcommand{\myName}{Anran Wang\xspace}
+\newcommand{\myProf}{Prof. Jan Křetínský\xspace}
+\newcommand{\myOtherProf}{Prof. Benjamin Lucien Kaminski\xspace}
+\newcommand{\mySupervisor}{Msc. Lena Verscht\xspace}
 \newcommand{\myFaculty}{Put data here\xspace}
 \newcommand{\myDepartment}{Put data here\xspace}
 \newcommand{\myUni}{Put data here\xspace}
-\newcommand{\myLocation}{Saarbrücken\xspace}
-\newcommand{\myTime}{September 2015\xspace}
-\newcommand{\myVersion}{version 4.2\xspace}
+\newcommand{\myLocation}{Munich\xspace}
+\newcommand{\myTime}{March 2023\xspace}
+\newcommand{\myVersion}{version 0.1\xspace}
 
 % ********************************************************************
 % Setup, finetuning, and useful commands
@@ -64,20 +68,20 @@
 \newcommand{\ie}{i.\,e.}
 \newcommand{\Ie}{I.\,e.}
 \newcommand{\eg}{e.\,g.}
-\newcommand{\Eg}{E.\,g.} 
+\newcommand{\Eg}{E.\,g.}
 % ****************************************************************************************************
 
 
 % ****************************************************************************************************
 % 3. Loading some handy packages
 % ****************************************************************************************************
-% ******************************************************************** 
+% ********************************************************************
 % Packages with options that might require adjustments
-% ******************************************************************** 
+% ********************************************************************
 %\PassOptionsToPackage{ngerman,american}{babel}   % change this to your language(s)
 % Spanish languages need extra options in order to work with this template
 %\PassOptionsToPackage{spanish,es-lcroman}{babel}
-	\usepackage{babel}                  
+	\usepackage{babel}
 
 \usepackage{csquotes}
 \PassOptionsToPackage{%
@@ -94,24 +98,24 @@
 }{biblatex}
     \usepackage{biblatex}
 
-\PassOptionsToPackage{fleqn}{amsmath}       % math environments and more by the AMS 
+\PassOptionsToPackage{fleqn}{amsmath}       % math environments and more by the AMS
     \usepackage{amsmath}
 
-% ******************************************************************** 
+% ********************************************************************
 % General useful packages
-% ******************************************************************** 
+% ********************************************************************
 \PassOptionsToPackage{T1}{fontenc} % T2A for cyrillics
-    \usepackage{fontenc}     
+    \usepackage{fontenc}
 \usepackage{textcomp} % fix warning with missing font shapes
-\usepackage{scrhack} % fix warnings when using KOMA with listings package          
-\usepackage{xspace} % to get the spacing after macros right  
+\usepackage{scrhack} % fix warnings when using KOMA with listings package
+\usepackage{xspace} % to get the spacing after macros right
 \usepackage{mparhack} % get marginpar right
 \usepackage{fixltx2e} % fixes some LaTeX stuff --> since 2015 in the LaTeX kernel (see below)
 %\usepackage[latest]{latexrelease} % will be used once available in more distributions (ISSUE #107)
-\PassOptionsToPackage{printonlyused,smaller}{acronym} 
+\PassOptionsToPackage{printonlyused,smaller}{acronym}
     \usepackage{acronym} % nice macros for handling all acronyms in the thesis
     %\renewcommand{\bflabel}[1]{{#1}\hfill} % fix the list of acronyms --> no longer working
-    %\renewcommand*{\acsfont}[1]{\textsc{#1}} 
+    %\renewcommand*{\acsfont}[1]{\textsc{#1}}
     \renewcommand*{\aclabelfont}[1]{\acsfont{#1}}
 % ****************************************************************************************************
 
@@ -126,18 +130,18 @@
 \usepackage{caption}
 % Thanks to cgnieder and Claus Lahiri
 % http://tex.stackexchange.com/questions/69349/spacedlowsmallcaps-in-caption-label
-% [REMOVED DUE TO OTHER PROBLEMS, SEE ISSUE #82]    
+% [REMOVED DUE TO OTHER PROBLEMS, SEE ISSUE #82]
 %\DeclareCaptionLabelFormat{smallcaps}{\bothIfFirst{#1}{~}\MakeTextLowercase{\textsc{#2}}}
 %\captionsetup{font=small,labelformat=smallcaps} % format=hang,
 \captionsetup{font=small} % format=hang,
-\usepackage{subfig}  
+\usepackage{subfig}
 % ****************************************************************************************************
 
 
 % ****************************************************************************************************
 % 5. Setup code listings
 % ****************************************************************************************************
-\usepackage{listings} 
+\usepackage{listings}
 %\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
 \lstset{language=[LaTeX]Tex,%C++,
     morekeywords={PassOptionsToPackage,selectlanguage},
@@ -156,8 +160,8 @@
     %frame=single,
     belowcaptionskip=.75\baselineskip
     %frame=L
-} 
-% ****************************************************************************************************             
+}
+% ****************************************************************************************************
 
 
 % ****************************************************************************************************
@@ -169,10 +173,10 @@
 \PassOptionsToPackage{pdftex,hyperfootnotes=false,pdfpagelabels}{hyperref}
     \usepackage{hyperref}  % backref linktocpage pagebackref
 \pdfcompresslevel=9
-\pdfadjustspacing=1 
+\pdfadjustspacing=1
 \PassOptionsToPackage{pdftex}{graphicx}
-    \usepackage{graphicx} 
- 
+    \usepackage{graphicx}
+
 
 % ********************************************************************
 % Hyperreferences
@@ -193,7 +197,7 @@
     pdfkeywords={},%
     pdfcreator={pdfLaTeX},%
     pdfproducer={LaTeX with hyperref and classicthesis}%
-}   
+}
 
 % ********************************************************************
 % Setup autoreferences
@@ -201,7 +205,7 @@
 % There are some issues regarding autorefnames
 % http://www.ureader.de/msg/136221647.aspx
 % http://www.tex.ac.uk/cgi-bin/texfaq2html?label=latexwords
-% you have to redefine the makros for the 
+% you have to redefine the makros for the
 % language you use, e.g., american, ngerman
 % (as chosen when loading babel/AtBeginDocument)
 % ********************************************************************
@@ -215,20 +219,20 @@
 			\renewcommand*{\chapterautorefname}{Chapter}%
 			\renewcommand*{\sectionautorefname}{Section}%
 			\renewcommand*{\subsectionautorefname}{Section}%
-			\renewcommand*{\subsubsectionautorefname}{Section}%     
+			\renewcommand*{\subsubsectionautorefname}{Section}%
                 }%
-       \addto\extrasngerman{% 
+       \addto\extrasngerman{%
 			\renewcommand*{\paragraphautorefname}{Absatz}%
 			\renewcommand*{\subparagraphautorefname}{Unterabsatz}%
 			\renewcommand*{\footnoteautorefname}{Fu\"snote}%
 			\renewcommand*{\FancyVerbLineautorefname}{Zeile}%
 			\renewcommand*{\theoremautorefname}{Theorem}%
 			\renewcommand*{\appendixautorefname}{Anhang}%
-			\renewcommand*{\equationautorefname}{Gleichung}%        
+			\renewcommand*{\equationautorefname}{Gleichung}%
 			\renewcommand*{\itemautorefname}{Punkt}%
-                }%  
+                }%
             % Fix to getting autorefs for subfigures right (thanks to Belinda Vogt for changing the definition)
-            \providecommand{\subfigureautorefname}{\figureautorefname}%             
+            \providecommand{\subfigureautorefname}{\figureautorefname}%
     }{\relax}
 \makeatother
 
@@ -248,7 +252,7 @@
 % ********************************************************************
 % Last, but not least...
 % ********************************************************************
-\usepackage{classicthesis} 
+\usepackage{classicthesis}
 % ****************************************************************************************************
 
 
@@ -271,8 +275,8 @@
 %\usepackage[light,condensed,math]{iwona}
 %\renewcommand{\sfdefault}{iwona}
 %\usepackage{lmodern} % <-- no osf support :-(
-%\usepackage{cfr-lm} % 
+%\usepackage{cfr-lm} %
 %\usepackage[urw-garamond]{mathdesign} <-- no osf support :-(
-%\usepackage[default,osfigures]{opensans} % scale=0.95 
+%\usepackage[default,osfigures]{opensans} % scale=0.95
 %\usepackage[sfdefault]{FiraSans}
 % ****************************************************************************************************

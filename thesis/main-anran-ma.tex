@@ -4,9 +4,9 @@
 %
 % Copyright (C) 2015 André Miede http://www.miede.de
 %
-% If you like the style then I would appreciate a postcard. My address 
-% can be found in the file ClassicThesis.pdf. A collection of the 
-% postcards I received so far is available online at 
+% If you like the style then I would appreciate a postcard. My address
+% can be found in the file ClassicThesis.pdf. A collection of the
+% postcards I received so far is available online at
 % http://postcards.miede.de
 %
 % License:
@@ -44,8 +44,6 @@
 % Bibliographies
 %*******************************************************
 \addbibresource{Bibliography.bib}
-\addbibresource[label=ownpubs]{AMiede_Publications.bib}
-\addbibresource{references.bib}
 
 
 %********************************************************************
@@ -67,16 +65,17 @@
 %********************************************************************
 % Frontmatter
 %*******************************************************
-\include{FrontBackmatter/DirtyTitlepage}
-\include{FrontBackmatter/Titlepage}
-\include{FrontBackmatter/Titleback}
-\cleardoublepage\include{FrontBackmatter/Dedication}
-%\cleardoublepage\include{FrontBackmatter/Foreword}
-\cleardoublepage\include{FrontBackmatter/Abstract}
-\cleardoublepage\include{FrontBackmatter/Publications}
-\cleardoublepage\include{FrontBackmatter/Acknowledgments}
+%\input would cause error "i cant write on file ...aux "
+\input{FrontBackmatter/DirtyTitlepage}
+\input{FrontBackmatter/Titlepage}
+\input{FrontBackmatter/Titleback}
+\cleardoublepage\input{FrontBackmatter/Dedication}
+%\cleardoublepage\input{FrontBackmatter/Foreword}
+\cleardoublepage\input{FrontBackmatter/Abstract}
+%\cleardoublepage\input{FrontBackmatter/Publications}
+\cleardoublepage\input{FrontBackmatter/Acknowledgments}
 \pagestyle{scrheadings}
-\cleardoublepage\include{FrontBackmatter/Contents}
+\cleardoublepage\input{FrontBackmatter/Contents}
 %********************************************************************
 % Mainmatter
 %*******************************************************
@@ -84,20 +83,19 @@
 %\setcounter{page}{90}
 % use \cleardoublepage here to avoid problems with pdfbookmark
 \cleardoublepage
-\part{Some Kind of Manual}
-\include{Chapters/Chapter01}
+\ctparttext{Some text about this part.}
+\part{Part 1}
+\input{Chapters/Chapter01}
+\input{Chapters/Chapter02}
+\input{Chapters/Chapter03}
 \cleardoublepage
-\ctparttext{You can put some informational part preamble text here. 
-Illo principalmente su nos. Non message \emph{occidental} angloromanic
-da. Debitas effortio simplificate sia se, auxiliar summarios da que,
-se avantiate publicationes via. Pan in terra summarios, capital
-interlingua se que. Al via multo esser specimen, campo responder que
-da. Le usate medical addresses pro, europa origine sanctificate nos se.}
-\part{The Showcase}
-%\include{Chapters/Chapter02}
+
+\ctparttext{Some text about this part.}
+\part{Part 2}
+%\input{Chapters/Chapter02}
 %\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
-%\include{Chapters/Chapter03}
-%\include{multiToC} % <--- just debug stuff, ignore for your documents
+%\input{Chapters/Chapter03}
+%\input{multiToC} % <--- just debug stuff, ignore for your documents
 % ********************************************************************
 % Backmatter
 %*******************************************************
@@ -105,13 +103,13 @@ da. Le usate medical addresses pro, europa origine sanctificate nos se.}
 %\renewcommand{\thechapter}{\alph{chapter}}
 \cleardoublepage
 \part{Appendix}
-\include{Chapters/Chapter0A}
+\input{Chapters/Chapter0A}
 %********************************************************************
 % Other Stuff in the Back
 %*******************************************************
-\cleardoublepage\include{FrontBackmatter/Bibliography}
-\cleardoublepage\include{FrontBackmatter/Declaration}
-\cleardoublepage\include{FrontBackmatter/Colophon}
+\cleardoublepage\input{FrontBackmatter/Bibliography}
+\cleardoublepage\input{FrontBackmatter/Declaration}
+\cleardoublepage\input{FrontBackmatter/Colophon}
 % ********************************************************************
 % Game Over: Restore, Restart, or Quit?
 %*******************************************************
