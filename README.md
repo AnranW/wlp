@@ -1,5 +1,8 @@
 # Master Thesis: Necessary Liberal Preconditions
-Please find the pdf file at ./proposal/long-version.pdf.
+Please find the pdf file at ./thesis/main-anran-ma.pdf.
+
+## Updates 12.03.2023
+- Layout of title pages.
 
 ## Updates 08.03.2023
 - Tidying up classicthesis, work in progress.

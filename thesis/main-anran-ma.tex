@@ -66,14 +66,17 @@
 % Frontmatter
 %*******************************************************
 %\input would cause error "i cant write on file ...aux "
-\input{FrontBackmatter/DirtyTitlepage}
+%\input{FrontBackmatter/DirtyTitlepage}
+\input{FrontBackmatter/Bookface}
+\input{FrontBackmatter/Bookfaceback}
 \input{FrontBackmatter/Titlepage}
 \input{FrontBackmatter/Titleback}
-\cleardoublepage\input{FrontBackmatter/Dedication}
+\cleardoublepage\input{FrontBackmatter/Declaration}
+% \cleardoublepage\input{FrontBackmatter/Dedication}
 %\cleardoublepage\input{FrontBackmatter/Foreword}
 \cleardoublepage\input{FrontBackmatter/Abstract}
 %\cleardoublepage\input{FrontBackmatter/Publications}
-\cleardoublepage\input{FrontBackmatter/Acknowledgments}
+% \cleardoublepage\input{FrontBackmatter/Acknowledgments}
 \pagestyle{scrheadings}
 \cleardoublepage\input{FrontBackmatter/Contents}
 %********************************************************************
@@ -108,7 +111,7 @@
 % Other Stuff in the Back
 %*******************************************************
 \cleardoublepage\input{FrontBackmatter/Bibliography}
-\cleardoublepage\input{FrontBackmatter/Declaration}
+% \cleardoublepage\input{FrontBackmatter/Declaration}
 \cleardoublepage\input{FrontBackmatter/Colophon}
 % ********************************************************************
 % Game Over: Restore, Restart, or Quit?

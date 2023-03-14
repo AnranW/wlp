@@ -280,3 +280,6 @@ TSWLatexianTemp*
 
 # mac system files
 *.DS_STORE
+
+# temp files
+*/temp/*
