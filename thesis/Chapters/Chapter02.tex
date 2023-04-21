@@ -4,76 +4,93 @@
 %\setcounter{figure}{10}
 % \NoCaseChange{Homo Sapiens}
 \section{Guarded Command Language}
-We use Dijkstra's (non-deterministic) guarded command language (nGCL)~\cite{Dijkstra1975} to conceptualize a computer program and to include non-determinism.
+We use Dijkstra's (non-deterministic) \define{guarded command language (GCL)}~\cite{Dijkstra1975} to conceptualize a computer program and to include non-determinism.
 For better understanding, we use an equivalent form~\cite{Zhang2022} of nGCL that is similar to modern pseudo-code:
-$$C\ ::=\ \  x:= e \ \ \mid\ \  C;C \ \ \mid\ \  \{C\}
- \square \{C\} \ \ \mid\ \
-if\ (\varphi)\ \{C\}\ else\ \{C\} \ \ \mid\ \  while\ (\varphi)\ \{C\}$$
-
-\section{Hoare Triple}
-A Hoare Triple is a triple $ \{G\} C \{F\}$ where $G$ and $F$ are logical predicates, and C is a program.
-$G$ is called a \textit{precondition}, $F$ a \textit{postcondition}.
-This triple reads, ``if $G$ is satisfied before the execution of $C$, then if $C$ terminates, $F$ is satisfied after the execution of $C$''.
-
-\section{Quantity}
-Let $\Sigma$ be the set of all program states, then the set of quantities is defined by
-\[A=\{f\mid f:\Sigma
-\to
-\Rinf
-\}\]
-With the ordering
-\[f\preceq g \text{ iff } \forall \sigma \in \Sigma: f(\sigma)\leq g(\sigma)\]
-as well as join $\join$ and meet $\meet$
-\[f\join g = \lambda \sigma.min\{f(\sigma), g(\sigma)\}; \ \ \  f\meet g = \lambda \sigma.max\{f(\sigma), g(\sigma) \}\]
-we can define a complete lattice $\langle A, \preceq\rangle$.
-Note that all subsets in a complete lattice have supremum and infimum.
-
-Informally, $f\preceq g$ is analogous to $F\implies G$ for predicates, $\join$ ($\meet$) is analogous to $\wedge$ ($\vee$).
-
-\section{Weakest (Liberal) Prequantity}
-Let $\bkt{C}
-(\sigma)$ be the set of all
-\textbf{reachable} states by program
-$C$ from initial state $\sigma$, $f$ a \textit{postquantity}.
-Let $\bigmeet S$ denote the supremum of set $S$, then:
-\[wp.C.f.\sigma = \underset{\tau\in\bkt{C}
-(\sigma)}
-{\bigmeet}
-f(\tau)\]
-
-As the name suggests, $wp.C.f.\sigma$ gives the ``weakest'', i.e. supremum, prequantity given post quantity $f$.
-Given the program, postquantity, initial state, the wp transformer gives the ``biggest'' element of all postquantities at all reachable final states.
-Since $f\preceq g$ means $g$ is weaker than $f$, the biggest quantity is the weakest.
-Informally, fixing an initial state, whether a prequantity is valid for the weakest prequantity depends on whether the postquantity is valid for at least one of the final states.
-\begin{comment}
-Note that supremum can be not an element of the infinite set.
-\end{comment}
-
-The weakest liberal prequantity transformer is defined with the infimum:
-\[wlp.C.f.\sigma = \underset{\tau\in\bkt C(\sigma)}{\bigjoin} f(\tau)\]
-
-\section{Necessary and Sufficient Conditions}
-We can now use some implications to define correctness or incorrectness as shown in \tab{impl}.
-\begin{table}\centering
-    \begin{tabular}{cc}
-      \textbf{implication}&\textbf{defines}    \\ \hline
-      $G\implies wp(C,F)$&   total correctness   \\
-      $G\implies wlp(C,F)$&  partial correctness\\
-      $wp(C,F)\implies G$&  partial incorrectness\\
-      $wlp(C,F)\implies G$&  ???\\
+\begin{table}[h!]\centering
+    \begin{tabular}{cl}
+    $C\ ::=$ &  $x:= e   \ \ \mid \ \  C;C  \ \ \mid \ \   \{C\}\square \{C\}  \ \ \mid \ \  if\ (\varphi)\ \{C\}\ else\ \{C\} 
+     \ \ \mid\ \  while\ (\varphi)\ \{C\}$ \\ 
+  &$\mid skip \mid diverge$
     \end{tabular}
-    \caption{implications using wp and wlp\cite{Zhang2022}}
-    \label{tab:impl}
 \end{table}
 
-We are interested in the last implication labeled with ???, where $G$ is called the \textit{necessary liberal precondition}, in a sense that
-\begin{itemize}
-    \item [-] all preconditions that lead to non-termination of $C$ imply $G$,
-    \item [-] a preconditions that do not imply $G$ leads to a postcondition that does not imply $F$.
-\end{itemize}
-Our goal is to study this implication and its connection to correctness/incorrectness.
+\section{Weakest Precondition}
+We define the \define{weakest precondition} transformer structurally in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where $wp$ is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function like $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here $wp$ is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the semantics of $wp$. } as follows: 
+
+\begin{table}[h!]\centering
+    \begin{tabular}{ll}
+      \textbf{C}&\textbf{wp.C.F}    \\ \hline
+      $skip$&   $F$   \\
+      $diverge$&  $false$\\
+      $x:= e $&  $F[x/e]$\\
+      $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\
+      $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wp.C_1.F)\vee(\neg\varphi\wedge wp.C_2.F)$\\
+      $\{C_1\}\square \{C_2\}$ & $wlp.C_1.F\vee wlp.C_2.F$ \\
+      $while\ (\varphi)\ \{C'\}$&  $lfp X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
+    \end{tabular}
+    \caption{The Weakest Precondition Transformer}
+\end{table}
+
+$F[x/e]$ is $F$ where every occurrence of $x$ is syntactically replaced by $e$. 
+$lfp X. f$ is the least fixed point of function $f$ with variable $X$. 
+Let $\Phi(X):=\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X$ the characteristic function. 
+
+To justify this definition, we must first clarify the intended semantics/meaning of the wp-transformer. 
+Let $\exec C$ denote the \define{execution} of program $C$, $\exec C.\sigma$ denote the set of final states that \imptt{can} occur after the execution of $C$. 
+(A state is a function that maps a program variable to a value. The set of \define{states} is denoted by $\Sigma=\{\sigma \mid \sigma: Vars\to Vals\}$. )
+If $C$ is deterministic, $\exec C.\sigma$ is the set of a single state, either a final state $\sigma'$ or $\bot$ if the execution does not terminate. 
+If $C$ is non-deterministic, $\exec C.\sigma$ can be a set with multiple elements. 
+It is only sensible if we define with \imptt{can} rather than \imptt{will/must}, especially with non-deterministic programs, since their execution by definition \imptt{will} guarantee only little about final states, hence we would end up with mostly empty sets, which is not meaningful in our case. 
+
+\todo{Justify all the definitions except while. }
+
+\todo{Explain least point iteration from bottom. }
+
+\section{Defining Loops}
+In Dijkstra's original paper\cite{Dijkstra1975}, he defined $wp$ for while-loops based on its (intended) semantics. 
+
+Let 
+\[
+WHILE=while(\varphi)\{C'\}
+\\ 
+IF=  if\ (\varphi)\{C';WHILE\}\ else\ \{skip\}
+\] 
+Rewriting Dijkstra's definition in a form conforming to our style, he defines 
+\[
+H_0(F)=(F \wedge \neg \psi )
+\\
+H_k(F)=(wp.IF.(H_{k-1}(F)) \vee H_0(F))
+\]
+Intuitively, we can understand $H_k(F)$ as the weakest precondition such that the program terminates in a final state satisfying $F$ after \imptt{at most} $k$ iterations. 
+
+Then by definition: 
+\begin{equation}
+\hspace{2.8cm} wp.WHILE.F=(\exists k\geq 0: H_k(F))  \label{eq:while}
+\end{equation}
+% \[wp.WHILE.F=(\exists k\geq 0: H_k(F))  \] \label{eq:while}
 
 
+
+Our definition is equivalent to this definition. 
+Coincidentally, $H_k(F)$ is the $k-$th iteration from bottom $\bot$ to calculate the least fixed point of the characteristic function: $\Phi^k(\bot)$. 
+Thus by finding the least fixed point, we've found a $k$ that satisfies \eq{while}. 
+
+\section{Weakest Liberal Precondition}
+We define the weakest liberal precondition transformer in \autoref{tab:wlp}. 
+\begin{table}[h!]\centering
+    \begin{tabular}{ll}
+      \textbf{C}&\textbf{wlp.C.F}    \\ \hline
+      $skip$&   $F$   \\
+      $diverge$&  $true$\\
+      $x:= e $&  $F[x/e]$\\
+      $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\
+      $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wp.C_1.F)\vee(\neg\varphi\wedge wp.C_2.F)$\\
+      $\{C_1\}\square \{C_2\}$ & $wlp.C_1.F\wedge wlp.C_2.F$\\
+      $while\ (\varphi)\ \{C'\}$&  $gfp X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
+    \end{tabular}
+    \caption{The Weakest Precondition Transformer}
+    \label{tab:wlp}
+\end{table}
 
 %*****************************************
 %*****************************************

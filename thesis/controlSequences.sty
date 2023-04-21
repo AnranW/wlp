@@ -3,6 +3,7 @@
 %%%                      Commands added by Anran                          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\bkt}[1]{\llbracket {#1} \rrbracket} % the [| ... |] bracket
+\newcommand{\exec}[1]{\llbracket {#1} \rrbracket} % the bracket for execution
 \newcommand{\nil}{\textbf{0}}
 \newcommand{\N}{\mathds{N}}
 \newcommand{\R}{\mathds{R}}
@@ -15,3 +16,7 @@
 \newcommand{\bigmeet}{\varcurlyvee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\tab}[1]{Table~\ref{tab:#1}}
+\newcommand{\define}[1]{{\color{royalBlue}{#1}}} % color to highlight definitions
+\newcommand{\imptt}[1]{{\color{crimson}{#1}}} % color to highlight important things
+\newcommand{\todo}[1]{\colorbox{lightpink!10}{\begin{minipage}{\textwidth}\color{LimeGreen}\textbf{TODO: }#1\end{minipage}}}
+\newcommand{\eq}[1]{{\color{RoyalBlue}(\ref{eq:#1})}} % make brackets also blue, different from \eqref and \autoref
