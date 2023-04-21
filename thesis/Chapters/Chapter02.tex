@@ -5,7 +5,11 @@
 % \NoCaseChange{Homo Sapiens}
 \section{Guarded Command Language}
 We use Dijkstra's (non-deterministic) \define{guarded command language (GCL)}~\cite{Dijkstra1975} to conceptualize a computer program and to include non-determinism.
-For better understanding, we use an equivalent form~\cite{Zhang2022} of nGCL that is similar to modern pseudo-code:
+For better understanding, we use an equivalent
+\footnote{Specifically, $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $ is equivalent to
+$if\ \varphi \to C_1$ $[]$ $\neg\varphi \to C_2\ fi$; $\{C_1\}\square \{C_2\}$ is equivalent to $if\ true\to C_1$ $[]$ $true\to C_2\ fi$.} 
+form of nGCL that is similar to modern pseudo-code:
+
 \begin{table}[h!]\centering
     \begin{tabular}{cl}
     $C\ ::=$ &  $x:= e   \ \ \mid \ \  C;C  \ \ \mid \ \   \{C\}\square \{C\}  \ \ \mid \ \  if\ (\varphi)\ \{C\}\ else\ \{C\} 
@@ -13,6 +17,8 @@ For better understanding, we use an equivalent form~\cite{Zhang2022} of nGCL tha
   &$\mid skip \mid diverge$
     \end{tabular}
 \end{table}
+
+
 
 \section{Weakest Precondition}
 We define the \define{weakest precondition} transformer structurally in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where $wp$ is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function like $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here $wp$ is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the semantics of $wp$. } as follows: 
@@ -26,7 +32,7 @@ We define the \define{weakest precondition} transformer structurally in lambda-c
       $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\
       $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wp.C_1.F)\vee(\neg\varphi\wedge wp.C_2.F)$\\
       $\{C_1\}\square \{C_2\}$ & $wlp.C_1.F\vee wlp.C_2.F$ \\
-      $while\ (\varphi)\ \{C'\}$&  $lfp X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
+      $while\ (\varphi)\ \{C'\}$&  $lfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
     \end{tabular}
     \caption{The Weakest Precondition Transformer}
 \end{table}
@@ -86,9 +92,9 @@ We define the weakest liberal precondition transformer in \autoref{tab:wlp}.
       $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\
       $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wp.C_1.F)\vee(\neg\varphi\wedge wp.C_2.F)$\\
       $\{C_1\}\square \{C_2\}$ & $wlp.C_1.F\wedge wlp.C_2.F$\\
-      $while\ (\varphi)\ \{C'\}$&  $gfp X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
+      $while\ (\varphi)\ \{C'\}$&  $gfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
     \end{tabular}
-    \caption{The Weakest Precondition Transformer}
+    \caption{The Weakest Liberal Precondition Transformer}
     \label{tab:wlp}
 \end{table}
 
