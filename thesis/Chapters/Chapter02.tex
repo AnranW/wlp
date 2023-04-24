@@ -7,7 +7,7 @@
 We use Dijkstra's (non-deterministic) \define{guarded command language (GCL)}~\cite{Dijkstra1975} to conceptualize a computer program and to include non-determinism.
 For better understanding, we use an equivalent
 \footnote{Specifically, $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $ is equivalent to
-$if\ \varphi \to C_1$ $[]$ $\neg\varphi \to C_2\ fi$; $\{C_1\}\square \{C_2\}$ is equivalent to $if\ true\to C_1$ $[]$ $true\to C_2\ fi$.} 
+$if\ \varphi \to C_1$ $[]$ $\neg\varphi \to C_2\ fi$ in Dijkstra's original style\cite{Dijkstra1975}; $\{C_1\}\square \{C_2\}$ is equivalent to $if\ true\to C_1$ $[]$ $true\to C_2\ fi$.} 
 form of nGCL that is similar to modern pseudo-code:
 
 \begin{table}[h!]\centering
@@ -21,7 +21,7 @@ form of nGCL that is similar to modern pseudo-code:
 
 
 \section{Weakest Precondition}
-We define the \define{weakest precondition} transformer structurally in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where $wp$ is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function like $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here $wp$ is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the semantics of $wp$. } as follows: 
+We define the \define{weakest precondition} transformer structurally in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where $wp$ is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function like $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here $wp$ is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the type of $wp$. } as follows: 
 
 \begin{table}[h!]\centering
     \begin{tabular}{ll}
@@ -37,17 +37,21 @@ We define the \define{weakest precondition} transformer structurally in lambda-c
     \caption{The Weakest Precondition Transformer}
 \end{table}
 
-$F[x/e]$ is $F$ where every occurrence of $x$ is syntactically replaced by $e$. 
-$lfp X. f$ is the least fixed point of function $f$ with variable $X$. 
-Let $\Phi(X):=\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X$ the characteristic function. 
+\mathl{F[x/e]} is $F$ where every occurrence of $x$ is syntactically replaced by $e$. 
+
+\mathl{lfp\ X. f} is the least fixed point of function $f$ with variable $X$. 
+
+Let \mathl{$\Phi(X):=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$} be the characteristic function. 
 
 To justify this definition, we must first clarify the intended semantics/meaning of the wp-transformer. 
-Let $\exec C$ denote the \define{execution} of program $C$, $\exec C.\sigma$ denote the set of final states that \imptt{can} occur after the execution of $C$. 
-(A state is a function that maps a program variable to a value. The set of \define{states} is denoted by $\Sigma=\{\sigma \mid \sigma: Vars\to Vals\}$. )
-If $C$ is deterministic, $\exec C.\sigma$ is the set of a single state, either a final state $\sigma'$ or $\bot$ if the execution does not terminate. 
-If $C$ is non-deterministic, $\exec C.\sigma$ can be a set with multiple elements. 
-It is only sensible if we define with \imptt{can} rather than \imptt{will/must}, especially with non-deterministic programs, since their execution by definition \imptt{will} guarantee only little about final states, hence we would end up with mostly empty sets, which is not meaningful in our case. 
+Let \mathl{\exec C} denote the \define{execution} of program $C$, \mathl{\exec C.\sigma} denote the set of final states that \imptt{can} occur after the execution of $C$. 
 
+(A state is a function that maps a program variable to a value. The set of \define{states} is denoted by \mathl{\Sigma=\{\sigma \mid \sigma: Vars\to Vals\}}. )
+
+If $C$ is deterministic, then $\exec C.\sigma$ is a set of a single state, either a final state $\sigma'$ or $\bot$, if the execution does not terminate. 
+If $C$ is non-deterministic, $\exec C.\sigma$ can be a set with multiple elements, since multiple final states can be possible. 
+
+The weakest precondition $wp.C.F$ is then 
 \todo{Justify all the definitions except while. }
 
 \todo{Explain least point iteration from bottom. }

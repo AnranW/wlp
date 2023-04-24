@@ -185,11 +185,11 @@
 \definecolor{halfgray}{gray}{0.55} % chapter numbers will be semi transparent .5 .55 .6 .0
 \definecolor{webgreen}{rgb}{0,.5,0}
 \definecolor{webbrown}{rgb}{.6,0,0}
-\definecolor{maroon}{cmyk}{0, 0.87, 0.68, 0.32}
-\definecolor{royalBlue}{cmyk}{1, 0.50, 0, 0}
+% \definecolor{maroon}{cmyk}{0, 0.87, 0.68, 0.32}
+% \definecolor{royalBlue}{cmyk}{1, 0.50, 0, 0}
 %\definecolor{Black}{cmyk}{0, 0, 0, 0}
 \definecolor{lightpink}{rgb}{.953, .812, .776}
-\definecolor{crimson}{rgb}{.863, .078, .235}
+% \definecolor{crimson}{rgb}{.863, .078, .235}
 
 
 % ********************************************************************
@@ -396,11 +396,11 @@
     \ifthenelse{\boolean{@linedheaders}}%
     {% lines above and below, number right
     \titleformat{\chapter}[display]%
-        {\relax}{\raggedleft{\color{maroon}\chapterNumber\thechapter} \\ }{0pt}%
+        {\relax}{\raggedleft{\color{Maroon}\chapterNumber\thechapter} \\ }{0pt}%
         {\titlerule\vspace*{.9\baselineskip}\raggedright\spacedallcaps}[\normalsize\vspace*{.8\baselineskip}\titlerule]%
     }{% something like Bringhurst
     \titleformat{\chapter}[display]%
-        {\relax}{\mbox{}\oldmarginpar{\vspace*{-3\baselineskip}\color{maroon}\chapterNumber\thechapter}}{0pt}%
+        {\relax}{\mbox{}\oldmarginpar{\vspace*{-3\baselineskip}\color{Maroon}\chapterNumber\thechapter}}{0pt}%
         {\raggedright\spacedallcaps}[\normalsize\vspace*{.8\baselineskip}\titlerule]%
     }
     % sections \FloatBarrier
