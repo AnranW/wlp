@@ -1,48 +1,48 @@
 %************************************************
 \chapter{Background}\label{ch:background}
 %************************************************
+\todo{Make first letter big? }
+% With computer programs melded into almost every aspect of human life, we often not only require their efficiency, but also their correctness. 
+% We would like to know for sure that our programs deliver the desired results, and do not run forever. 
+% This is called \define{total correctness}. 
+% To know ``for sure'', we could verify programs using formal methods that have been developing for decades. 
+% One of such methods are \define{Hoare Triples}~\cite{Hoare69} proposed by Tony Hoare in 1969. 
+% A Hoare Triple contains three parts: a precondition, a program, and a postcondition. 
+% They are written as such: $\{G\}C\{F\}$.
+%%\footnote{Originally it was written as $F \{C\} G$, but now it is often written with brackets around conditions instead of the program.} 
+% It states that if the system is in a state that satisfies the precondition, then the state after the execution of the program will satisfy the postcondition, provided that the program terminates.
+% This is called \define{partial correctness}. 
 
-With computer programs melded into almost every aspect of human life, we often not only require their efficiency, but also their correctness. 
-We would like to know for sure that our programs deliver the desired results, and do not run forever. 
-This is called \define{total correctness}. 
-To know ``for sure'', we could verify programs using formal methods that have been developing for decades. 
-One of such methods are \define{Hoare Triples}~\cite{Hoare1969} proposed by Tony Hoare in 1969. 
-A Hoare Triple contains three parts: a precondition, a program, and a postcondition. 
-They are written as such: $\{F\}C\{G\}$.\footnote{Originally it was written as $F \{C\} G$, but now it is often written with brackets around conditions instead of the program.} 
-It states that if the system is in a state that satisfies the precondition, then the state after the execution of the program will satisfy the postcondition, provided that the program terminates.
-This is called \define{partial correctness}. 
+% Originally, Hoare Triples only deals with deterministic programs in a top-to-down manner, but nondeterminism can be added in a sensible way~\cite{Dijkstra75}. 
+% Here, Dijkstra presented the \define{weakest precondition} transformer (wp): starting with a postcondition, it works backwards and ``guesses'' what the precondition can be. 
+% wp is concerned with total correctness and is related to Hoare Triples by an implication: 
+% \footnote{Here $wp.C.F$ is a function written in lambda-calculus style, it can be seen now as a function $wp(C,F)$. This form of writing proves to be simple and elegant in the upcoming sections.}
+% \[\forall G.\ G\implies wp.C.F: \{G\} C \{F\}\]
+% This connection not only tells us that 
+% \begin{itemize}
+%     \item[-] given $wp.C.F$, any predicate $G$ that implies it can be the precondition of a valid Hoare Triple: $\{G\} C \{F\}$; 
+% \end{itemize}
+% it also shows when Hoare Triple will guarantee total correctness: 
+% \begin{itemize}
+%     \item[-] given a valid Hoare Triple $\{G\} C \{F\}$, if its precondition $G$ implies $wp.C.F$, then $\{G\} C \{F\}$ is valid for total correctness. 
+% \end{itemize}
 
-Originally, Hoare Triples only deals with deterministic programs in a top-to-down manner, but nondeterminism can be added in a sensible way~\cite{Dijkstra1975}. 
-Here, Dijkstra presented the \define{weakest precondition} transformer (wp): starting with a postcondition, it works backwards and ``guesses'' what the precondition can be. 
-wp is concerned with total correctness and is related to Hoare Triples by an implication: 
-\footnote{Here $wp.C.F$ is a function written in lambda-calculus style, it can be seen now as a function $wp(C,F)$. This form of writing proves to be simple and elegant in the upcoming sections.}
-\[\forall G.\ G\implies wp.C.F: \{G\} C \{F\}\]
-This connection not only tells us that 
-\begin{itemize}
-    \item[-] given $wp.C.F$, any predicate $G$ that implies it can be the precondition of a valid Hoare Triple: $\{G\} C \{F\}$; 
-\end{itemize}
-it also shows when Hoare Triple will guarantee total correctness: 
-\begin{itemize}
-    \item[-] given a valid Hoare Triple $\{G\} C \{F\}$, if its precondition $G$ implies $wp.C.F$, then $\{G\} C \{F\}$ is valid for total correctness. 
-\end{itemize}
+% Sometimes, however, we deem nontermination a good behaviour, and proving partial correctness suffices. 
+% The \define{weakest liberal precondition} transformer \cite{Dijkstra90} can be used in such occasions: 
+% if the system is in a state satisfying $wlp.C.F$, then either $F$ is reachable after the termination of $C$, or $C$ does not terminate.
+% wlp directly relates to Hoare Triples via an implication: 
+% \[\forall G.\ G\implies wlp.C.F: \{G\} C \{F\}\]
+% $G$ is then called the \define{sufficient liberal precondition}, and finding it means we can prove the absense of errors in the program (if it terminates). 
+% In contrast, the \define{necessary liberal precondition} $G$ (where $ wlp.C.F\implies G$) tells us that the system will not satisfy the postcondition $F$, once $G$ is violated. 
+% Cousot et al. studied the matter from a practical perspective~\cite{Cousot13}, they proposed inference tools and experimented in industrial codes.
+% In this thesis, we aim to research this matter further with a more theoretical view. 
+% We would like to propose a proof system and prove its soundness and completeness similar as in \cite{Vries11}, but using Dijkstra's guarded command language (GCL)~\cite{Dijkstra75}. 
 
-Sometimes, however, we deem nontermination a good behaviour, and proving partial correctness suffices. 
-The \define{weakest liberal precondition} transformer \cite{Dijkstra1990} can be used in such occasions: 
-if the system is in a state satisfying $wlp.C.F$, then either $F$ is reachable after the termination of $C$, or $C$ does not terminate.
-wlp directly relates to Hoare Triples via an implication: 
-\[\forall G.\ G\implies wlp.C.F: \{G\} C \{F\}\]
-$G$ is then called the \define{sufficient liberal precondition}, and finding it means we can prove the absense of errors in the program (if it terminates). 
-In contrast, the \define{necessary liberal precondition} $G$ (where $ wlp.C.F\implies G$) tells us that the system will not satisfy the postcondition $F$, once $G$ is violated. 
-Cousot et al. studied the matter from a practical perspective~\cite{Cousot2013}, they proposed inference tools and experimented in industrial codes.
-In this thesis, we aim to research this matter further with a more theoretical view. 
-We would like to propose a proof system and prove its soundness and completeness similar as in \cite{Vries2011}, but using Dijkstra's guarded command language (GCL)~\cite{Dijkstra1975}. 
+% Instead of the usual qualitative reasoning using logical predicates, we would like to study in a quantitive setting using functions that represent quantities such as expectations of program variables. 
+% While predicates map program states to true or false, functions map program states to $R\infty$, real numbers extended with (negative) infinity. 
+% In this setting, not only are infinities clear indication for nontermination, the transformers can also express more such as flow of quantitive information~\cite{Zhang22}.
 
-Instead of the usual qualitative reasoning using logical predicates, we would like to study in a quantitive setting using functions that represent quantities such as expectations of program variables. 
-While predicates map program states to true or false, functions map program states to $R\infty$, real numbers extended with (negative) infinity. 
-In this setting, not only are infinities clear indication for nontermination, the transformers can also express more such as flow of quantitive information~\cite{Zhang2022}.
-
-\section{From Hoare Triples to Weakest Precondition}
 
 \todo{Rewrite; add chapter contents. }
-\todo{Where did I find the connection from Hoare Triple to weakest precondition? }
+
 

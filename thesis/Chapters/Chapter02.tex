@@ -3,11 +3,49 @@
 %*****************************************
 %\setcounter{figure}{10}
 % \NoCaseChange{Homo Sapiens}
+
+\section{The Root of All Good: Hoare Triples}
+In 1969, C.A.R. Hoare published his famous article \textit{An Axiomatic Basis for Computer Programming}~\cite{Hoare69} to explore the logic of computer programs use axioms and inference rules to prove the properties of programs. 
+This system is known referred as \define{Hoare Triples}. 
+He introduced \imptt{sufficient} preconditions that will guarantee correct results but does not rule out non-termination. 
+A selection of the axioms and rules are shown in \autoref{tab:hoare}. \footnote{We omit the symbol $\vdash$ in front of a Hoare Triple, which denotes ``valid/provable'', for better readability. }\footnote{Nondeterminism was not considered in the original paper, so we treat the programs here as deterministic. } 
+
+\begin{table}[ht]\centering
+    \begin{tabular}{ll}
+      \hline 
+      \textbf{Axiom of Assignment}     &  \hoare{F[x/e]}{x:=e}{F}   \\
+      \textbf{Rules of Consequence}   &  If \hoare{G}{C}{F} and $F\Rightarrow P$ then \hoare{G}{C}{P} \\
+                                      &  If \hoare{G}{C}{F} and $P\Rightarrow G$ then \hoare{P}{C}{F} \\
+      \textbf{Rule of Composition}   &  If \hoare{G}{C_1}{F_1} and \hoare{F_1}{C_2}{F} then \hoare{G}{C_1;C_2}{F} \\
+      \textbf{Rule of Iteration}  &  If $F\wedge$(\hoare{G}{C}{F}) then \hoare{F}{\text{while } B \text{ do } C }{\neg B \wedge F}  \\
+      % \textbf{Rule of Condition}   &  $wp.C_1.(wp.C_2.F)$\\
+      \hline
+    \end{tabular}
+    \caption{Valid Hoare Triples}
+    \label{tab:hoare}
+\end{table}
+
+\mathl{\{F[x/e]\}} is obtained by substituting occurrences of $x$ by $e$. 
+
+Semantically, a Hoare Triple \hoare{G}{C}{F} is said to be valid for (partial) correctness, if the execution of the program $C$ with an initial state satisfying the precondition $G$ leads to a final state that satisfies the postcondition $F$, provided that the program terminates. 
+\autoref{fig:hoare} illustrates a valid Hoare Triple, $\Sigma$ represents the set of all states, the section denoted with $G$ includes the states that satisfy the predicate $G$. The arrow from left to write denotes the execution of the program $C$. 
+
+\begin{figure}[ht]\centering
+\includegraphics[width=0.5\textwidth]{image/hoare.jpg}
+\caption{Valid Hoare Triple (Deterministic)}
+\label{fig:hoare}
+\end{figure}
+\todo{Digitize image, also add program C. }
+
+The proof system built by Hoare's rules is sound, expressive, yet incomplete.~\cite{Apt81}
+A sensible advancement would be to find the \imptt{necessary and sufficient} preconditions that grant us the post-properties, i.e. to eliminate the arrows from $\neg G$ to $F$ in \autoref{fig:hoare}. 
+
+
 \section{Guarded Command Language}
-We use Dijkstra's (non-deterministic) \define{guarded command language (GCL)}~\cite{Dijkstra1975} to conceptualize a computer program and to include non-determinism.
+We use Dijkstra's (non-deterministic) \define{guarded command language (GCL)}~\cite{Dijkstra75} to conceptualize a computer program and to include non-determinism.
 For better understanding, we use an equivalent
 \footnote{Specifically, $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $ is equivalent to
-$if\ \varphi \to C_1$ $[]$ $\neg\varphi \to C_2\ fi$ in Dijkstra's original style\cite{Dijkstra1975}; $\{C_1\}\square \{C_2\}$ is equivalent to $if\ true\to C_1$ $[]$ $true\to C_2\ fi$.} 
+$if\ \varphi \to C_1$ $[]$ $\neg\varphi \to C_2\ fi$ in Dijkstra's original style\cite{Dijkstra75}; $\{C_1\}\square \{C_2\}$ is equivalent to $if\ true\to C_1$ $[]$ $true\to C_2\ fi$.} 
 form of nGCL that is similar to modern pseudo-code:
 
 \begin{table}[h!]\centering
@@ -57,7 +95,7 @@ The weakest precondition $wp.C.F$ is then
 \todo{Explain least point iteration from bottom. }
 
 \section{Defining Loops}
-In Dijkstra's original paper\cite{Dijkstra1975}, he defined $wp$ for while-loops based on its (intended) semantics. 
+In Dijkstra's original paper\cite{Dijkstra75}, he defined $wp$ for while-loops based on its (intended) semantics. 
 
 Let 
 \[
