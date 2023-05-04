@@ -52,7 +52,7 @@ The missing guarantee of termination can be seen in the rule of iteration: consi
 
 
 Hoare Logic is sound, expressive, yet incomplete~\cite{apt81}.
-A sensible advancement would be to find the \imptt{necessary and sufficient} preconditions that grant us the post-properties, i.e. to eliminate the arrows from $\neg G$ to $F$ in \autoref{fig:hoare}, and to be able to prove termination, i.e. to eliminate the arrows from $G$ to the abyss\footnote{Adding termination proof is also done by Zohar Manna and Amir Pnueli in 1973~\cite{manna73}, where they introduced what we call a \define{loop variant}, a value that decreases with each iteration. The name is in contrast to \define{loop invariant}, concretely the $F$ in Rule of Iteration, which is constant before and after the loop. }, which is what Edsger W Dijkstra accomplished with his \define{weakest precondition} transformer in 1975~\cite{dijkstra75}, among other things. 
+A sensible advancement would be to find the \imptt{necessary and sufficient} preconditions that grant us the post-properties, i.e. to eliminate the arrows from $\neg G$ to $F$ in \autoref{fig:hoare}, and to be able to prove termination, i.e. to eliminate the arrows from $G$ to the abyss\footnote{Adding termination proof is also done by Zohar Manna and Amir Pnueli in 1974~\cite{manna74}, where they introduced what we call a \define{loop variant}, a value that decreases with each iteration. The name is in contrast to \define{loop invariant}, concretely the $F$ in Rule of Iteration, which is constant before and after the loop. }, which is what Edsger W Dijkstra accomplished with his \define{weakest precondition} transformer in 1975~\cite{dijkstra75}, among other things. 
 
 
 \section{Guarded Command Language}\label{sec:gcl}
