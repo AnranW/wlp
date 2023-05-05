@@ -2,6 +2,9 @@
 Please find the pdf file at ./thesis/main-anran-ma.pdf.
 
 ## Updates 04.05.2023
+- Continue writing chapter 2. 
+
+## Updates 04.05.2023
 - Restructure. 
 - Continued chapter 2. 
 
