@@ -44,10 +44,9 @@ The missing guarantee of termination can be seen in the rule of iteration: consi
 \todo{In case I change color for $\backslash$ mathl, I should change the color for hoare triplc GCF. }
 
 \begin{figure}[ht!]\centering
-\includegraphics[width=0.5\textwidth]{image/hoare.jpg}
+\includegraphics[width=0.5\textwidth]{image/hoare.eps}
 \caption{Valid Hoare Triple (Deterministic)}
 \label{fig:hoare}
-\todo{Digitize image. }
 \end{figure}
 
 
@@ -87,10 +86,9 @@ Again, the goal is to find the \imptt{necessary and sufficient} precondition suc
 \autoref{fig:wp-det} shows it graphically. 
 
 \begin{figure}[ht!]\centering
-\includegraphics[width=0.5\textwidth]{image/wp-det.jpg}
+\includegraphics[width=0.5\textwidth]{image/wp-det.eps}
 \caption{Weakest Precondition (Deterministic)}
 \label{fig:wp-det}
-\todo{Digitize image. }
 \end{figure}
 
 We define the \define{weakest precondition} transformer structurally in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where $wp$ is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function like $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here $wp$ is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the type of $wp$. } as in \autoref{tab:wp-det}: 
@@ -205,10 +203,9 @@ The weakest precondition $wp.C.F$ is then
 Each arrow from left to right shows a \imptt{possible} execution of program $C$. 
 
 \begin{figure}[ht!]\centering
-\includegraphics[width=0.5\textwidth]{image/wp-nondet.jpg}
+\includegraphics[width=0.5\textwidth]{image/wp-nondet.eps}
 \caption{Weakest Precondition (Non-deterministic)}
 \label{fig:wp-nondet}
-\todo{Digitize image. }
 \end{figure}
 
 
