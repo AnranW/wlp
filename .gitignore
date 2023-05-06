@@ -283,3 +283,7 @@ TSWLatexianTemp*
 
 # temp files
 */temp/*
+
+# files to do with ipe image editing
+./image/*.autosave.ipe
+./image/*.eps
