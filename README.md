@@ -1,6 +1,13 @@
 # Master Thesis: Necessary Liberal Preconditions
 Please find the pdf file at ./thesis/main-anran-ma.pdf.
 
+## Open questions: 
+- Figure 2: is it wp or Hoare? Benjamin's dissertation says wp. 
+- Hoare triple being incomplete: why can we not prove p -> true for any p? Shouldn't it be from first order logic? 
+
+## Updates 22.05.2023
+- Revision according to Lena's notes.  
+
 ## Updates 06.05.2023
 - Digitized images. 
 

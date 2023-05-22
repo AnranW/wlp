@@ -5,7 +5,7 @@
 % \NoCaseChange{Homo Sapiens}
 
 \section{Lloyd-Hoare Logic}
-\todo{A history lesson, rewrite to include Lloyd. See \cite{kaminski19} P.27. }
+\todo{A history lesson, rewrite to include Lloyd. See~\cite{kaminski19} P.27. }
 
 In 1969, C.A.R. Hoare wrote \textit{An Axiomatic Basis for Computer Programming}~\cite{hoare69} to explore the logic of computer programs using axioms and inference rules to prove the properties of programs. 
 This system is known as \define{Hoare logic}. 
@@ -25,7 +25,7 @@ With deterministic programs, one initial state corresponds to one final state, a
       % \textbf{Rule of Condition}   &  $wp.C_1.(wp.C_2.F)$\\
       \hline\hline
     \end{tabular}
-    \caption{Valid Hoare Triples}
+    \caption{Valid Hoare Triple}
     \label{tab:hoare}
 \end{table}
 
@@ -50,7 +50,7 @@ Using style taken form Kaminski's dissertation~\cite{kaminski19}, \autoref{fig:h
 
 \todo{Explain incomplete in which sense. Question: why can't we prove $p\to true$ in H? }
 
-Hoare Logic is sound and expressive, yet incomplete~\cite{apt81}.
+Hoare logic is sound and expressive, yet incomplete~\cite{apt81}.
 A sensible advancement would be to also prove termination, i.e. to eliminate the arrows from $G$ to the abyss.  
 Supplementing Hoare logic with a termination proof is done by Zohar Manna and Amir Pnueli in 1974~\cite{manna74}, where they introduced what we call a \define{loop variant}, a value that decreases with each iteration. The name is in contrast to \define{loop invariant}, concretely the $F$ in \textbf{Rule of Iteration} in \autoref{tab:hoare}, which is constant before and after the loop. 
 
@@ -60,7 +60,7 @@ Another advancement would be to find the \imptt{necessary and sufficient} precon
 \section{Guarded Command Language}\label{sec:gcl}
 From now on we will use Dijkstra's (non-deterministic) \define{guarded command language (GCL)}~\cite{dijkstra75} to represent programs and to include non-determinism (starting from \autoref{sec:wp-nondet}).
 For better readability, we use an equivalent\footnote{Specifically, \mathl{if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}}  is equivalent to
-\mathl{if\ \varphi \to C_1\ []\ \neg\varphi \to C_2\ fi} in Dijkstra's original style\cite{dijkstra75}; \mathl{\{C_1\}\square \{C_2\}} is equivalent to \mathl{if\ true\to C_1\ []\ true\to C_2\ fi}.} 
+\mathl{if\ \varphi \to C_1\ []\ \neg\varphi \to C_2\ fi} in Dijkstra's original style~\cite{dijkstra75}; \mathl{\{C_1\}\square \{C_2\}} is equivalent to \mathl{if\ true\to C_1\ []\ true\to C_2\ fi}.} 
 form of GCL that is similar to modern pseudo-code:
 
 \begin{table}[ht!]\centering
@@ -90,9 +90,10 @@ Again, the goal is to find the \imptt{necessary and sufficient} precondition suc
 \includegraphics[width=0.5\textwidth]{image/wp-det.eps}
 \caption{Weakest Precondition (Deterministic)}
 \label{fig:wp-det}
+\todo{Discuss with Lena about this figure. }
 \end{figure}
 
-We define the \define{weakest precondition} transformer structurally in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where $wp$ is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function like $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here $wp$ is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the type of $wp$. } as in \autoref{tab:wp-det}: 
+We define the \define{weakest precondition} transformer inductively over the program structure in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where $wp$ is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function to $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here $wp$ is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the type of $wp$. } as in \autoref{tab:wp-det}: 
 
 \begin{table}[ht!]\centering
     \begin{tabular}{ll}
@@ -107,7 +108,7 @@ We define the \define{weakest precondition} transformer structurally in lambda-c
       $while\ (\varphi)\ \{C'\}$&  $lfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
     \hline\hline
     \end{tabular}
-    \caption{The Weakest Precondition Transformer (Deterministic Programs)~\cite{kaminski19}}
+    \caption{The Weakest Precondition Transformer for Deterministic Programs~\cite{kaminski19}}
     \label{tab:wp-det}
 \end{table}
 
@@ -116,34 +117,34 @@ We define the \define{weakest precondition} transformer structurally in lambda-c
 \mathl{lfp\ X. f} is the least fixed point of function $f$ with variable $X$. 
 
 Let {$$\Phi(X):=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$$} be the characteristic function, then $wp$ for while-loop can be defined as: 
-{$$wp.(while(\varphi)\{C'\}).F = lfp\ X. \Phi(X)$$}. 
+{$$wp.(while(\varphi)\{C'\}).F = lfp\ X. \Phi(X)$$}
 
-Most of the definitions in \autoref{tab:wp-det} are intuitive and correspond to their counterparts in Hoare Logic.
-To take special notice are the definitions for \mathl{diverge} and \mathl{while}. 
-Since $wp$ aims for total correctness, the precondition \mathl{wp.diverge.F} should terminate with postcondition \mathl{F}. 
+Most of the definitions in \autoref{tab:wp-det} are intuitive and correspond to their counterparts in Hoare logic, while those for \mathl{diverge} and \mathl{while} deserve special attention. 
+Since $wp$ aims for total correctness, a program starting in an initial state satisfying the precondition \mathl{wp.diverge.F} should terminate in a final state satisfying the postcondition \mathl{F}. 
 Because \mathl{diverge} does not terminate, there is no such precondition and $wp$ for \mathl{diverge} should be \mathl{false}. 
 
-The definition for the while-loop\cite{kaminski19} is trickier, but we can verify its correctness by recalling Dijkstra's original definition. 
+The definition for the while-loop~\cite{kaminski19} is trickier, but we can verify its correctness by recalling Dijkstra's original definition in the following section. 
 
 \todo{Find out if there's earlier definition that used lfp. }
 
 \subsection{Defining Loops}
-In Dijkstra's original paper\cite{dijkstra75}, he defined $wp$ for while-loops based on its (intended) semantics, i.e. the precondition such that, when satisfied, guarantees that the loop terminates with the required postcondition within a certain number of iterations. 
+In Dijkstra's original paper~\cite{dijkstra75}, he defined $wp$ for while-loops based on its (intended) semantics, i.e. the precondition that guarantees loop termination with the required postcondition within a certain number of iterations. 
 
 Let 
 \[
 WHILE=while(\varphi)\{C'\}
-\\ 
-IF=  if\ (\varphi)\{C';WHILE\}\ else\ \{skip\}
+\\\text{ and } \\ 
+IF=  if\ (\varphi)\{C';WHILE\}\ else\ \{skip\}. 
 \] 
 Rewriting Dijkstra's definition in a form conforming to our style, he defines 
 \[
 H_0(F)=(F \wedge \neg \varphi )
-\\
-H_k(F)=(wp.IF.(H_{k-1}(F)) \vee H_0(F))
+\\\text{ and } \\ 
+H_k(F)=(wp.IF.(H_{k-1}(F)) \vee H_0(F)). 
 \]
 Intuitively, when $H_0(F)$ is satisfied before the execution of $WHILE$, the loop is exited with 0 iteration in a state that satisfies $F\wedge\neg\varphi$ hence $F$. 
-Then we can understand $H_k(F)$ as the weakest precondition such that the program terminates in a final state satisfying $F$ after \imptt{at most} $k$ iterations. 
+Then, we can understand $H_k(F)$ as the weakest precondition such that the program terminates in a final state satisfying $F$ after \imptt{at most} $k$ iterations. 
+\todo{Explain a bit more about how this relate to the above definition. }
 
 Then by definition: 
 \begin{equation}
@@ -153,22 +154,23 @@ Then by definition:
 
 
 
-We state that our definition coincides with this definition. 
-Without going too deep into domain theory, we only use one of its theorem that yields a computation for least fix points, when they exist. 
+We state that our definition in \autoref{tab:wp-det} coincides with this definition. 
+Without going too deep into domain theory, we only use one of its theorem that yields a computation for least fixed points, when they exist. 
 
 \begin{theorem}
 \todo{Insert theorem, then explain least point iteration from bottom. }
 \end{theorem}
 
 
-Coincidentally, $H_k(F)$ is the $k-$th iteration from bottom $\bot$ to calculate the least fixed point of the characteristic function: $\Phi^k(\bot)$. 
-Thus by finding the least fixed point, we've found a $k$ that satisfies \eq{while}. 
+Coincidentally, $H_k(F)$ is the $k-$th iteration of the characteristic function $\Phi$ from the bottom element, denoted by $\Phi^k(\bot)$. 
+Thus by identifying the least fixed point, we've found a $k$ that satisfies \eq{while}. 
 
 
 
 
 \subsection{The Non-deterministic Case}\label{sec:wp-nondet}
-Now we bring the non-deterministic choice back into the picture and add its definition as shown in \autoref{tab:wp-nondet}. 
+Now we bring the non-deterministic choice back into the picture and add its wp to \autoref{tab:wp-nondet}. 
+To justify this definition for the non-deterministic choice, we must first clarify the intended semantics of the wp-transformer. 
 
 \begin{table}[ht!]\centering
     \begin{tabular}{ll}
@@ -183,15 +185,12 @@ Now we bring the non-deterministic choice back into the picture and add its defi
       $while\ (\varphi)\ \{C'\}$&  $lfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
     \hline\hline
     \end{tabular}
-    \caption{The Weakest Precondition Transformer (Non-deterministic Programs)~\cite{kaminski19}}
+    \caption{The Weakest Precondition Transformer for Non-deterministic Programs~\cite{kaminski19}}
     \label{tab:wp-nondet}
 \end{table}
 
-To justify this definition for the non-deterministic choice, we must first clarify the intended semantics/meaning of the wp-transformer. 
-
-Let \mathl{\exec C} denote the \define{execution} of program $C$, \mathl{\exec C.\sigma} denote the set of final states that \imptt{can} occur after the execution of $C$. 
-
-(A state is a function that maps a program variable to a value. The set of \define{states} is denoted by \mathl{\Sigma=\{\sigma \mid \sigma: Vars\to Vals\}}. )
+Let \mathl{\exec C} denote the \define{execution} of program $C$ and \mathl{\exec C.\sigma} denote the set of final states that \imptt{can} occur after the execution of $C$. 
+A state is a function that maps a program variable to a value. The set of \define{states} is denoted by \mathl{\Sigma=\{\sigma \mid \sigma: Vars\to Vals\}}. 
 
 If $C$ is deterministic, then $\exec C.\sigma$ is a set of a single state, either a final state $\sigma'$ or $\bot$, if the execution does not terminate. 
 If $C$ is non-deterministic, $\exec C.\sigma$ can be a set with multiple elements, since multiple final states can be possible. 
