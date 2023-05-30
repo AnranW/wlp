@@ -30,17 +30,16 @@ With deterministic programs, one initial state corresponds to one final state, a
 \end{table}
 
 Semantically, a Hoare triple {{\mathl{\hoarenm{G}{C}{F}}}} is said to be valid for (partial) correctness, if the execution of the program $C$ with an initial state satisfying the precondition $G$ leads to a final state that satisfies the postcondition $F$, provided that the program terminates. 
-
 The definitions in \autoref{tab:hoare} indeed correspond to this intended semantics. Formal soundness proofs can be found in Krzysztof R. Apt's survey~\cite{apt81} in 1981.
 As an example, consider the rule of composition: if the execution of program $C_1$ changes the state from $G$ to $F_1$, and $C_2$ changes the state from $F_1$ to $F$, then executing them consecutively should bring the program state from $G$ to $F$, with the intermediate state $F_1$.
 
-The missing guarantee of termination can be seen in the rule of iteration: consider the triple {\mathl{\hoarenm{x\leq 1}{\text{while } x\leq 1 \text{ do } x:=x*2}{1<x\leq 2}}}, it is provable in Hoare logic with the following proof tree. 
-However, this while-loop will not terminate in case $x=0$.
+The missing guarantee of termination can be seen in the rule of iteration: consider the triple {\mathl{\hoarenm{x\leq 2}{\text{while } x\leq 1 \text{ do } x:=x*2}{1<x\leq 2}}}, it is provable in Hoare logic with the following proof tree. 
+However, this while-loop will not terminate in case $x\leq 0$ in the initial state.
 \begin{center}
 \colorbox{ForestGreen!5}{
 \begin{prooftree}
   \infer0[\ \ \textbf{Axiom of Assignment}]{\hoarenm{x\leq 1}{x:=x*2}{x\leq 2}}
-  \infer1[\ \ \textbf{Rule of Iteration}]{\hoarenm{x\leq 1}{\text{while } x\leq 1 \text{ do } x:=x*2}{1<x\leq 2}}
+  \infer1[\ \ \textbf{Rule of Iteration}]{\hoarenm{x\leq 2}{\text{while } x\leq 1 \text{ do } x:=x*2}{1<x\leq 2}}
 \end{prooftree}}
 \end{center}
 
@@ -53,10 +52,10 @@ Using style taken from Benjamin L. Kaminski's dissertation~\cite{kaminski19}, \a
 \end{figure}
 
 
-\todo{Explain incomplete in which sense. Question: why can't we prove $p\to true$ in H? }
+%\todo{Explain incomplete in which sense. Question: why can't we prove $p\to true$ in H? }
 
-Hoare logic is sound and expressive, yet incomplete~\cite{apt81}.
-A sensible advancement would be to also prove termination, i.e. to eliminate the arrows from $G$ to the abyss.  
+%Hoare logic is sound and expressive, yet incomplete~\cite{apt81}.
+A sensible advancement of Hoare logic would be to also prove termination, i.e. to eliminate the arrows from $G$ to the abyss.  
 Supplementing Hoare logic with a termination proof is done by Zohar Manna and Amir Pnueli in 1974~\cite{manna74}, where they introduced what we call a \define{loop variant}, a value that decreases with each iteration. The name is in contrast to \define{loop invariant}, concretely the $F$ in \textbf{Rule of Iteration} in \autoref{tab:hoare}, which is constant before and after the loop. 
 
 Another advancement would be to find the \imptt{necessary and sufficient} preconditions that grant us the post-properties, i.e. to eliminate the arrows from $\neg G$ to $F$ in \autoref{fig:hoare}, which  is what Edsger W. Dijkstra accomplished with his \define{weakest precondition} transformer in 1975~\cite{dijkstra75}, among other things. 
@@ -98,7 +97,7 @@ Again, the goal is to find the \imptt{necessary and sufficient} precondition suc
 \autoref{fig:wp-det} shows it graphically. 
 
 \begin{figure}[ht!]\centering
-\includegraphics[width=0.5\textwidth]{image/wp-det.eps}
+\includegraphics[width=0.7\textwidth]{image/wp-det.eps}
 \caption{Weakest Precondition (Deterministic)}
 \label{fig:wp-det}
 \todo{Discuss with Lena about this figure. }
@@ -214,7 +213,7 @@ The weakest precondition $wp.C.F$ is then
 Each arrow from left to right shows a \imptt{possible} execution of program $C$. 
 
 \begin{figure}[ht!]\centering
-\includegraphics[width=0.5\textwidth]{image/wp-nondet.eps}
+\includegraphics[width=0.7\textwidth]{image/wp-nondet.eps}
 \caption{Weakest Precondition (Non-deterministic)}
 \label{fig:wp-nondet}
 \end{figure}
@@ -246,7 +245,13 @@ We define the weakest liberal precondition transformer in \autoref{tab:wlp}.
 \end{table}
 
 \begin{figure}[ht!]\centering
-\includegraphics[width=0.5\textwidth]{image/wlp-nondet.eps}
+\includegraphics[width=0.7\textwidth]{image/wlp-det.eps}
+\caption{Weakest Liberal Precondition (Deterministic)}
+\label{fig:wlp-det}
+\end{figure}
+
+\begin{figure}[ht!]\centering
+\includegraphics[width=0.7\textwidth]{image/wlp-nondet.eps}
 \caption{Weakest Liberal Precondition (Non-deterministic)}
 \label{fig:wlp-nondet}
 \end{figure}

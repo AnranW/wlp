@@ -3,7 +3,6 @@ Please find the pdf file at ./thesis/main-anran-ma.pdf.
 
 ## Open questions: 
 - Figure 2: is it wp or Hoare? Benjamin's dissertation says wp. 
-- Hoare triple being incomplete: why can we not prove p -> true for any p? Shouldn't it be from first order logic? 
 - Contradicting definitions: Dijkstra & Kaminski dissertation P.38 P.46 vs. Zhang P.6. 
 
 ## Updates 30.05.2023
