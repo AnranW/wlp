@@ -4,11 +4,11 @@
 %\setcounter{figure}{10}
 % \NoCaseChange{Homo Sapiens}
 
-\section{Lloyd-Hoare Logic}
-\todo{A history lesson, rewrite to include Lloyd. See~\cite{kaminski19} P.27. }
+\section{Hoare Logic}
+Since the beginning of the 1960s, scholars have been researching the establishment of mathematics in computation~\cite{floyd93, mccarthy93} to have a formal understanding and reasoning of programs. 
+One of the most known methods is \define{Hoare logic}. 
 
 In 1969, C.A.R. Hoare wrote \textit{An Axiomatic Basis for Computer Programming}~\cite{hoare69} to explore the logic of computer programs using axioms and inference rules to prove the properties of programs. 
-This system is known as \define{Hoare logic}. 
 He introduced \imptt{sufficient} preconditions that  guarantee correct results but do not rule out non-termination. 
 A selection of the axioms and rules are shown in~\autoref{tab:hoare}.~\footnote{We omit the symbol $\vdash$ in front of a Hoare triple, which denotes ``valid/provable'', for better readability. }\footnote{Non-determinism was not considered in the original paper, so we treat the programs here as deterministic. 
 With deterministic programs, one initial state corresponds to one final state, and in case of non-termination we assign a final state $\bot$. \todo{Think about whether to add liberally deterministic (Hesselink 1992, Programs, Recursion and Unbounded Choice). }} 
@@ -21,7 +21,7 @@ With deterministic programs, one initial state corresponds to one final state, a
       \textbf{Rules of Consequence}   &  If \hoare{G}{C}{F} and $F\Rightarrow P$ then \hoare{G}{C}{P} \\
                                       &  If \hoare{G}{C}{F} and $P\Rightarrow G$ then \hoare{P}{C}{F} \\
       \textbf{Rule of Composition}   &  If \hoare{G}{C_1}{F_1} and \hoare{F_1}{C_2}{F} then \hoare{G}{C_1;C_2}{F} \\
-      \textbf{Rule of Iteration}  &  If $F\wedge$(\hoare{B}{C}{F}) then \hoare{F}{\text{while } B \text{ do } C }{\neg B \wedge F}  \\
+      \textbf{Rule of Iteration}  &  If \hoare{(F\wedge B)}{C}{F} then \hoare{F}{\text{while } B \text{ do } C }{\neg B \wedge F}  \\
       % \textbf{Rule of Condition}   &  $wp.C_1.(wp.C_2.F)$\\
       \hline\hline
     \end{tabular}
@@ -29,17 +29,22 @@ With deterministic programs, one initial state corresponds to one final state, a
     \label{tab:hoare}
 \end{table}
 
-Semantically, a Hoare triple {{\color{Gray}{\hoare{G}{C}{F}}}} is said to be valid for (partial) correctness, if the execution of the program $C$ with an initial state satisfying the precondition $G$ leads to a final state that satisfies the postcondition $F$, provided that the program terminates. 
+Semantically, a Hoare triple {{\mathl{\hoarenm{G}{C}{F}}}} is said to be valid for (partial) correctness, if the execution of the program $C$ with an initial state satisfying the precondition $G$ leads to a final state that satisfies the postcondition $F$, provided that the program terminates. 
 
-The definition in \autoref{tab:hoare} indeed corresponds to this intended semantics. Formal soundness proofs can be found in Krzysztof R. Apt's survey~\cite{apt81} in 1981.
+The definitions in \autoref{tab:hoare} indeed correspond to this intended semantics. Formal soundness proofs can be found in Krzysztof R. Apt's survey~\cite{apt81} in 1981.
 As an example, consider the rule of composition: if the execution of program $C_1$ changes the state from $G$ to $F_1$, and $C_2$ changes the state from $F_1$ to $F$, then executing them consecutively should bring the program state from $G$ to $F$, with the intermediate state $F_1$.
 
-The missing guarantee of termination can be seen in the rule of iteration: consider the example 
-\todo{Add example here. }
+The missing guarantee of termination can be seen in the rule of iteration: consider the triple {\mathl{\hoarenm{x\leq 1}{\text{while } x\leq 1 \text{ do } x:=x*2}{1<x\leq 2}}}, it is provable in Hoare logic with the following proof tree. 
+However, this while-loop will not terminate in case $x=0$.
+\begin{center}
+\colorbox{ForestGreen!5}{
+\begin{prooftree}
+  \infer0[\ \ \textbf{Axiom of Assignment}]{\hoarenm{x\leq 1}{x:=x*2}{x\leq 2}}
+  \infer1[\ \ \textbf{Rule of Iteration}]{\hoarenm{x\leq 1}{\text{while } x\leq 1 \text{ do } x:=x*2}{1<x\leq 2}}
+\end{prooftree}}
+\end{center}
 
-Using style taken form Kaminski's dissertation~\cite{kaminski19}, \autoref{fig:hoare} illustrates a valid Hoare triple: $\Sigma$ represents the set of all states, the section denoted with $G$ includes the states that satisfy the predicate $G$. The arrow from left to right denotes the execution of the program $C$. 
-
-\todo{In case I change color for $\backslash$ mathl, I should change the color for hoare triplc GCF. }
+Using style taken from Benjamin L. Kaminski's dissertation~\cite{kaminski19}, \autoref{fig:hoare} illustrates a valid Hoare triple: $\Sigma$ represents the set of all states, the section denoted with $G$ includes the states that satisfy the predicate $G$. The arrow from left to right denotes the execution of the program $C$. 
 
 \begin{figure}[ht!]\centering
 \includegraphics[width=0.5\textwidth]{image/hoare.eps}
@@ -61,17 +66,23 @@ Another advancement would be to find the \imptt{necessary and sufficient} precon
 From now on we will use Dijkstra's (non-deterministic) \define{guarded command language (GCL)}~\cite{dijkstra75} to represent programs and to include non-determinism (starting from \autoref{sec:wp-nondet}).
 For better readability, we use an equivalent\footnote{Specifically, \mathl{if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}}  is equivalent to
 \mathl{if\ \varphi \to C_1\ []\ \neg\varphi \to C_2\ fi} in Dijkstra's original style~\cite{dijkstra75}; \mathl{\{C_1\}\square \{C_2\}} is equivalent to \mathl{if\ true\to C_1\ []\ true\to C_2\ fi}.} 
-form of GCL that is similar to modern pseudo-code:
+form of GCL that is similar to modern pseudo-code as shown in \autoref{tab:gcl}. 
 
-\begin{table}[ht!]\centering
-    \begin{tabular}{cl}
-    $C\ ::=$ &  $x:= e   \ \ \mid \ \  C;C  \ \ \mid \ \   \{C\}\square \{C\}  \ \ \mid \ \  if\ (\varphi)\ \{C\}\ else\ \{C\} 
-     \ \ \mid\ \  while\ (\varphi)\ \{C\}$ \\ 
-  &$\mid skip \mid diverge$
+\begin{table}[h!]\centering
+    \begin{tabular}{clll}
+    $C\ ::=$ 
+      & $x:= e$ &  $\mid \ C;C $ & $\mid\  \{C\}\square \{C\} $ \\
+      &\footnotesize\define{assignment} &\footnotesize\define{sequential composition} 
+      & \footnotesize\define{non-deterministic choice} \\
+      &$\mid\  if\ (\varphi)\ \{C\}\ else\ \{C\}$ & $\mid\ while\ (\varphi)\ \{C\}$
+      &$\mid\ skip \ \ \ \ \mid\ diverge$ \\ 
+      &\footnotesize\define{conditional choice} &\footnotesize\define{while-loop} 
     \end{tabular}
+    \caption{Guarded Command Language}
+    \label{tab:gcl}
 \end{table}
 
-\todo{Add brief description of all program statements. }
+The \define{assignment, sequential composition, conditional choice, while-loop} commands conform to their usual meaning.
 The \define{non-deterministic choice} \mathl{\{C_1\}\square \{C_2\}} chooses from two programs randomly. 
 It is however not \define{probabilistic}, meaning we do not know the probabilistic distribution of the outcome of the choice. 
 
@@ -181,7 +192,7 @@ To justify this definition for the non-deterministic choice, we must first clari
       $x:= e $&  $F[x/e]$\\
       $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\
       $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wp.C_1.F)\vee(\neg\varphi\wedge wp.C_2.F)$\\
-      {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wp.C_1.F\vee wlp.C_2.F$}\\
+      {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wp.C_1.F\wedge wp.C_2.F$}\\
       $while\ (\varphi)\ \{C'\}$&  $lfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
     \hline\hline
     \end{tabular}
@@ -224,15 +235,21 @@ We define the weakest liberal precondition transformer in \autoref{tab:wlp}.
       $skip$&   $F$   \\
       $diverge$&  $true$\\
       $x:= e $&  $F[x/e]$\\
-      $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\
-      $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wp.C_1.F)\vee(\neg\varphi\wedge wp.C_2.F)$\\
-      $\{C_1\}\square \{C_2\}$ & $wlp.C_1.F\wedge wlp.C_2.F$\\
-      $while\ (\varphi)\ \{C'\}$&  $gfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
+      $C_1;C_2$&  $wlp.C_1.(wlp.C_2.F)$\\
+      $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wlp.C_1.F)\vee(\neg\varphi\wedge wlp.C_2.F)$\\
+      $\{C_1\}\square \{C_2\}$ & $wlp.C_1.F\vee wlp.C_2.F$\\
+      $while\ (\varphi)\ \{C'\}$&  $gfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X)$\\
       \hline\hline
     \end{tabular}
     \caption{The Weakest Liberal Precondition Transformer}
     \label{tab:wlp}
 \end{table}
+
+\begin{figure}[ht!]\centering
+\includegraphics[width=0.5\textwidth]{image/wlp-nondet.eps}
+\caption{Weakest Liberal Precondition (Non-deterministic)}
+\label{fig:wlp-nondet}
+\end{figure}
 
 %*****************************************
 %*****************************************
