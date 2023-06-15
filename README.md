@@ -4,6 +4,7 @@ Please find the pdf file at ./thesis/main-anran-ma.pdf.
 ## Open questions: 
 - Figure 2: is it wp or Hoare? Benjamin's dissertation says wp. 
 - Contradicting definitions: Dijkstra & Kaminski dissertation P.38 P.46 vs. Zhang P.6. 
+- What is a total logic? P.3 "Reverse Hoare Logic is a total logic" 
 
 ## Updates 30.05.2023
 - Doing todos. 
