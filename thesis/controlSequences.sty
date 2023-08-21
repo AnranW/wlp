@@ -18,7 +18,8 @@
 % \newcommand{\tab}[1]{Table~\ref{tab:#1}}
 \newcommand{\define}[1]{{\color{RoyalBlue}{#1}}} % color to highlight definitions
 \newcommand{\imptt}[1]{{\color{Maroon}{#1}}} % color to highlight important things
-\newcommand{\todo}[1]{\colorbox{lightpink!10}{\begin{minipage}{\textwidth}\color{LimeGreen}\textbf{\\TODO: }#1\end{minipage}}}
+\newcommand{\todoshow}[1]{\colorbox{lightpink!10}{\begin{minipage}{\textwidth}\color{LimeGreen}\textbf{\\TODO: }#1\end{minipage}}}
+\newcommand{\todo}[1]{\footnote{TODO: #1}}
 \newcommand{\eq}[1]{{\color{RoyalBlue}(\ref{eq:#1})}} % make brackets also blue, different from \eqref and \autoref
 \newcommand{\mathl}[1]{{\color{Gray}{$#1$}}} % highlight for mathematical formulas 
 \newcommand{\hoare}[3]{$#1\ \{#2\}\ #3$} % the layout for hoare triples

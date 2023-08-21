@@ -1,22 +1,46 @@
 %************************************************
 \chapter{Background}\label{ch:background}
 %************************************************
-\todo{Make first letter big? }
 
-\todo{Decide on all the colors in the end. }
-% With computer programs melded into almost every aspect of human life, we often not only require their efficiency, but also their correctness. 
-% We would like to know for sure that our programs deliver the desired results, and do not run forever. 
-% This is called \define{total correctness}. 
-% To know ``for sure'', we could verify programs using formal methods that have been developing for decades. 
-% One of such methods are \define{Hoare Triples}~\cite{Hoare69} proposed by Tony Hoare in 1969. 
-% A Hoare Triple contains three parts: a precondition, a program, and a postcondition. 
-% They are written as such: $\{G\}C\{F\}$.
+
+In 1739, Scottish philosopher David Hume questioned why we know that the sun will rise tomorrow, `` tho' 'tis plain we have no further assurance of these facts, than what experience affords us''~\cite{hume1896}. 
+Hume's question about causality is daunting, yet most of us are not in crisis because we doubt if the sun rises tomorrow. 
+The reason is probably that we believe in physics, astrology, and the rules and formulas that assure us the universe works in a certain way, hence the sun rises tomorrow. 
+It is exactly the rules and formulas this thesis attempts to investigate, in the realm of computer programs, with which we are certain that the equivalent version of the sun in a program will rise tomorrow. 
+
+Computer programs undoubtedly have melded into almost every aspect of human life. 
+We want them to solve our problem efficiently, and correctly. 
+Imagine being driven by an autonomous car. It it desirable that it delivers us to the correct destination, and never get stuck driving around a same block without making progress. 
+Delivering the correct result and stopping eventually is called \define{total correctness}. 
+Once we know that a program is totally correct, then we are sure that the sun rises tomorrow. 
+
+To know ``for sure'', we could verify programs using formal methods. 
+One famous method is \define{Hoare Triples}~\cite{Hoare69}. 
+A Hoare Triple contains three parts: a precondition, a program, and a postcondition. 
+They are written as such: \hoare{G}{C}{F}.
 %%\footnote{Originally it was written as $F \{C\} G$, but now it is often written with brackets around conditions instead of the program.} 
-% It states that if the system is in a state that satisfies the precondition, then the state after the execution of the program will satisfy the postcondition, provided that the program terminates.
-% This is called \define{partial correctness}. 
+It states that if the system is in a state that satisfies the precondition, then the state after the execution of the program will satisfy the postcondition, provided that the program terminates.
+Hoare Triples is elegant in that once we have appropriate preconditions, it works well syntactically and sequentially. 
+But with Hoare Triples in its original form, we know the program is correct, but we are not sure of its termination. 
+This is called \define{partial correctness}. 
 
-% Originally, Hoare Triples only deals with deterministic programs in a top-to-down manner, but nondeterminism can be added in a sensible way~\cite{Dijkstra75}. 
-% Here, Dijkstra presented the \define{weakest precondition} transformer (wp): starting with a postcondition, it works backwards and ``guesses'' what the precondition can be. 
+To prove a program totally correct, Dijkstra presented the \define{weakest precondition transformer}~\cite{dijkstra75} (wp): starting with a postcondition, it works backwards and calculates what the precondition can be that guarantees both correctness and termination. 
+While in Hoare Triples, the precondition is a \imptt{sufficient} condition where the program will be correct in that the final state will satisfy the desired postcondition, with wp we obtain a \imptt{necessary and sufficient} precondition. 
+
+Since then, a plethora of research projects blossomed and yielded fruitful results. 
+This thesis aims to follow the steps of the predecessors and investigate \define{weakest liberal precondition transformer}~\cite{dijkstra90} (wlp), which gives preconditions that are necessary and sufficient so that the program either terminates correctly, or never terminates. 
+
+We first introduce Hoare Triples, wp transformer, and wlp transformer, using \define{Guarded Command Language}~\cite{dijkstra75} to present programs in \autoref{ch:Preliminaries}. 
+We also explain their connections and differences. 
+
+Then we proceed to \autoref{ch:system} [fill in content of this chapter] %TODO
+
+
+
+
+
+
+
 % wp is concerned with total correctness and is related to Hoare Triples by an implication: 
 % \footnote{Here $wp.C.F$ is a function written in lambda-calculus style, it can be seen now as a function $wp(C,F)$. This form of writing proves to be simple and elegant in the upcoming sections.}
 % \[\forall G.\ G\implies wp.C.F: \{G\} C \{F\}\]
@@ -45,6 +69,6 @@
 % In this setting, not only are infinities clear indication for nontermination, the transformers can also express more such as flow of quantitive information~\cite{Zhang22}.
 
 
-\todo{Rewrite; add chapter contents. }
+\todo{Decide on all the colors in the end. }
 
 

@@ -67,6 +67,7 @@ For better readability, we use an equivalent\footnote{Specifically, \mathl{if\ (
 \mathl{if\ \varphi \to C_1\ []\ \neg\varphi \to C_2\ fi} in Dijkstra's original style~\cite{dijkstra75}; \mathl{\{C_1\}\square \{C_2\}} is equivalent to \mathl{if\ true\to C_1\ []\ true\to C_2\ fi}.} 
 form of GCL that is similar to modern pseudo-code as shown in \autoref{tab:gcl}. 
 
+
 \begin{table}[h!]\centering
     \begin{tabular}{clll}
     $C\ ::=$ 
@@ -86,15 +87,19 @@ The \define{non-deterministic choice} \mathl{\{C_1\}\square \{C_2\}} chooses fro
 It is however not \define{probabilistic}, meaning we do not know the probabilistic distribution of the outcome of the choice. 
 
 When \mathl{skip} is executed, the program state does not change and the consecutive part is executed. 
-When \mathl{diverge} is executed, the program goes to a state $\bot$ symbolizing non-termination, and the execution stops. 
+When \mathl{diverge} is executed, the program goes to a state symbolizing non-termination, and the execution stops. 
 
+In our representation of GCL, non-determinism is explicitly constructed via the infix operator \mathl{\square}, whereas in its original definition, non-determinism occurs when the guards within the \mathl{if} and \mathl{while} commands are not mutually exclusive~\cite{dijkstra90}. 
+Additionally, the \mathl{if} statement in Dijkstra's GCL is equivalent to divergence in case non of its guards are true, but in our version this can no longer happen because of the Law of Excluded Middle: the predicate $\varphi$ must be either true or false, so either the ``then'' branch or the ``else'' branch is activated.
+Consequently, non-termination can only originate from either the \mathl{diverge} or the \mathl{while} command. 
 
 \section{Weakest Precondition}\label{sec:wp}
 
 \subsection{The Deterministic Case}\label{sec:wp-det}
 To better relate Hoare triples and Dijkstra's weakest precondition transformer, we first focus on deterministic programs. 
-Again, the goal is to find the \imptt{necessary and sufficient} precondition such that the program is guaranteed to \imptt{terminate} in a state that satisfies the postcondition. 
+The goal is to find the \imptt{necessary and sufficient} precondition such that the program is guaranteed to \imptt{terminate} in a state that satisfies the postcondition. 
 \autoref{fig:hoare-wp-det} shows it graphically alongside the figure for valid Hoare triples. 
+We can see that on the right side, the arrows from $G$ to non-termination and from $\neg G$ to $F$ are absent. 
 
 \begin{figure}[ht!]\centering
 \includegraphics[width=\textwidth]{image/hoare-wp.eps}
@@ -174,12 +179,19 @@ Without going too deep into domain theory, we only use one of its theorem that y
 Coincidentally, $H_k(F)$ is the $k-$th iteration of the characteristic function $\Phi$ from the bottom element, denoted by $\Phi^k(\bot)$. 
 Thus by identifying the least fixed point, we've found a $k$ that satisfies \eq{while}. 
 
+Now that we have defined the weakest precondition transformer, which calculates the necessary and sufficient precondition that a program will terminate in the given postcondition. 
+As a result, we can establish the relation between Hoare Triples and wp transformers:
+\[ \hoarenm{G}{C}{F}\text{ is a valid Hoare Triple  \ \ \ \    iff  \ \ \   \ } G\Longrightarrow wp.C.F\] 
 
 
+\subsection{The Non-deterministic Case: Angelic vs. Demonic}\label{sec:wp-nondet}
+Now we bring the non-deterministic choice back into the picture and add its $wp$ to \autoref{tab:wp-nondet}. 
+Here we assume a setting with \define{angelic non-determinism}, where we think that whenever non-determinism occurs, it will resolve in our favor.
+This results in the weakest precondition for our non-deterministic choice being a disjunction of the wp for its subprograms. 
+We are hopeful that a precondition satisfying the wp of one of the subprograms can also lead to termination in our desired postcondition. 
+This is a design choice that is different from Dijkstra's~\cite{dijkstra75}, where the wp for non-deterministic choice would be a conjunction, hinting at a demonic setting. 
+Both choices are justifiable, we choose to follow Zhang and Kaminski's work, favoring the resulting Galois connection between the weakest (liberal) precondition transformers and the strongest (liberal) postcondition transformers~\cite{zhang22}. 
 
-\subsection{The Non-deterministic Case}\label{sec:wp-nondet}
-Now we bring the non-deterministic choice back into the picture and add its wp to \autoref{tab:wp-nondet}. 
-To justify this definition for the non-deterministic choice, we must first clarify the intended semantics of the wp-transformer. 
 
 \begin{table}[ht!]\centering
     \begin{tabular}{ll}
@@ -198,24 +210,35 @@ To justify this definition for the non-deterministic choice, we must first clari
     \label{tab:wp-nondet}
 \end{table}
 
-Let \mathl{\exec C} denote the \define{execution} of program $C$ and \mathl{\exec C.\sigma} denote the set of final states that \imptt{can} occur after the execution of $C$. 
-A state is a function that maps a program variable to a value. The set of \define{states} is denoted by \mathl{\Sigma=\{\sigma \mid \sigma: Vars\to Vals\}}. 
-
-If $C$ is deterministic, then $\exec C.\sigma$ is a set of a single state, either a final state $\sigma'$ or $\bot$, if the execution does not terminate. 
-If $C$ is non-deterministic, $\exec C.\sigma$ can be a set with multiple elements, since multiple final states can be possible. 
-
-The weakest precondition $wp.C.F$ is then 
-
-\note{Up to here is readable. }
-
-\autoref{fig:wp-nondet} shows $wp$ with non-deterministic programs. 
+The left side of \autoref{fig:wp-wlp-together} shows $wp$ with non-deterministic programs. 
 Each arrow from left to right shows a \imptt{possible} execution of program $C$. 
 
+% \begin{figure}[ht!]\centering
+% \includegraphics[width=0.7\textwidth]{image/wp-nondet.eps}
+% \caption{Weakest Precondition (Angelic Non-determinism)}
+% \label{fig:wp-nondet}
+% \end{figure}
+
 \begin{figure}[ht!]\centering
-\includegraphics[width=0.7\textwidth]{image/wp-nondet.eps}
-\caption{Weakest Precondition (Non-deterministic)}
-\label{fig:wp-nondet}
+\includegraphics[width=\textwidth]{image/wp-wlp-together.eps}
+\caption{Weakest Precondition (Angelic Non-determinism), Weakest Liberal Precondition (Demonic Non-determinism)}
+\label{fig:wp-wlp-together}
 \end{figure}
+
+
+
+% To justify this definition for the non-deterministic choice, we must first clarify the intended semantics of the wp-transformer. 
+
+% Let \mathl{\exec C} denote the \define{execution} of program $C$ and \mathl{\exec C.\sigma} denote the set of final states that \imptt{can} occur after the execution of $C$. 
+% A state is a function that maps a program variable to a value. The set of \define{states} is denoted by \mathl{\Sigma=\{\sigma \mid \sigma: Vars\to Vals\}}. 
+
+% If $C$ is deterministic, then $\exec C.\sigma$ is a set of a single state, either a final state $\sigma'$ or $\bot$, if the execution does not terminate. 
+% If $C$ is non-deterministic, $\exec C.\sigma$ can be a set with multiple elements, since multiple final states can be possible. 
+
+% The weakest precondition $wp.C.F$ is then 
+
+
+
 
 
 
@@ -225,7 +248,14 @@ Each arrow from left to right shows a \imptt{possible} execution of program $C$.
 
 
 \section{Weakest Liberal Precondition}
+While wp-transformer excludes non-termination, wlp-transformer takes a more liberal approach. 
+The weakest precondition delivers a precondition so that the program terminates and the postcondition is \imptt{reachable}. 
+The weakest liberal precondition, however, delivers a precondition so that the program either terminates satisfying the postcondition, or diverges. 
+The postcondition in the wlp setting is not only reachable, but also guaranteed upon termination, because we regard the non-deterministic choice as demonic, again favoring to establish Galois connection~\cite{zhang22}. 
+
 We define the weakest liberal precondition transformer in \autoref{tab:wlp}. 
+A graphical representation can be found in the right side of \autoref{fig:wp-wlp-together}. 
+
 \begin{table}[ht!]\centering
     \begin{tabular}{ll}
     \hline\hline
@@ -235,25 +265,36 @@ We define the weakest liberal precondition transformer in \autoref{tab:wlp}.
       $x:= e $&  $F[x/e]$\\
       $C_1;C_2$&  $wlp.C_1.(wlp.C_2.F)$\\
       $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wlp.C_1.F)\vee(\neg\varphi\wedge wlp.C_2.F)$\\
-      $\{C_1\}\square \{C_2\}$ & $wlp.C_1.F\wedge wlp.C_2.F$\\
-      $while\ (\varphi)\ \{C'\}$&  $gfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X)$\\
+      {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wlp.C_1.F\wedge wlp.C_2.F$}\\
+      {\color{Maroon}$while\ (\varphi)\ \{C'\}$}& {\color{Maroon} $gfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X)$}\\
       \hline\hline
     \end{tabular}
     \caption{The Weakest Liberal Precondition Transformer}
     \label{tab:wlp}
 \end{table}
+\todo{Explain the use of gfp. Possibly relate to page 185 of Dijkstra and Scholten 1990 book. }
 
-\begin{figure}[ht!]\centering
-\includegraphics[width=0.7\textwidth]{image/wlp-det.eps}
-\caption{Weakest Liberal Precondition (Deterministic)}
-\label{fig:wlp-det}
-\end{figure}
+% \begin{figure}[ht!]\centering
+% \includegraphics[width=0.7\textwidth]{image/wlp-det.eps}
+% \caption{Weakest Liberal Precondition (Deterministic)}
+% \label{fig:wlp-det}
+% \end{figure}
 
-\begin{figure}[ht!]\centering
-\includegraphics[width=0.7\textwidth]{image/wlp-nondet.eps}
-\caption{Weakest Liberal Precondition (Non-deterministic)}
-\label{fig:wlp-nondet}
-\end{figure}
+% \begin{figure}[ht!]\centering
+% \includegraphics[width=0.7\textwidth]{image/wlp-nondet.eps}
+% \caption{Weakest Liberal Precondition (Demonic Non-determinism)}
+% \label{fig:wlp-nondet}
+% \end{figure}
+
+
+\section{Properties of wp and wlp}
+wp and wlp are each other's conjugate: 
+\[wp.C.F = \neg wlp.C.\neg F\]
+
+
+
+
+\note{Up to here is readable. }
 
 %*****************************************
 %*****************************************

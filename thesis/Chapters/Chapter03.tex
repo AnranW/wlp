@@ -6,6 +6,19 @@
 In this section we study the necessary liberal precondition: 
 $$wlp.C.F\implies G$$
 
+
+\section{Sketches} 
+\note{In this section are informal sketches of my thoughts.}
+
+\paragraph{Possible ways to approach this}\ 
+
+\textbf{1.} $wlp.C.F \Longrightarrow G $ but through G the postcondition F is always reachable. 
+Effectively this transfers wlp in demonic setting to wlp in angelic setting, the postcondition being ``guaranteed'' changes into ``reachable''. 
+
+\textbf{2.}$$wlp.C.F \Longrightarrow G \equiv \neg G \Longrightarrow \neg wlp.C.F \equiv \neg G \Longrightarrow  wp.C.\neg F $$ 
+This corresponds to total correctness, but negatively. 
+\hoare{\neg G}{C}{\neg F} would be a valid Hoare Triple. 
+
 %*****************************************
 %*****************************************
 %*****************************************

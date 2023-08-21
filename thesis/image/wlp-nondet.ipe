@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.26">
-<info created="D:20230506130932" modified="D:20230615160243"/>
+<info created="D:20230506130932" modified="D:20230616102027"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -389,7 +389,7 @@ h
 <text matrix="1 0 0 1 12 -20" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
 <text matrix="1 0 0 1 12 -64" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots </text>
 <use matrix="1 0 0 1 0 88" name="mark/disk(sx)" pos="192 636" size="normal" stroke="black"/>
-<text matrix="1 0 0 1 236 -28" transformations="translations" pos="156 716" stroke="black" type="label" width="63.835" height="8.174" depth="2.32" valign="baseline" size="large" style="math">G=wp.C.F </text>
+<text matrix="1 0 0 1 236 -28" transformations="translations" pos="156 716" stroke="black" type="label" width="67.585" height="8.307" depth="2.32" valign="baseline" size="large" style="math">G=wlp.C.F </text>
 <path matrix="1 0 0 1 -8 4" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
 200 720 m
 216 712
