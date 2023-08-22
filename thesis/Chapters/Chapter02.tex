@@ -52,9 +52,6 @@ Using style taken from Benjamin L. Kaminski's dissertation~\cite{kaminski19}, \a
 \end{figure}
 
 
-%\todo{Explain incomplete in which sense. Question: why can't we prove $p\to true$ in H? }
-
-%Hoare logic is sound and expressive, yet incomplete~\cite{apt81}.
 A sensible advancement of Hoare logic would be to also prove termination, i.e. to eliminate the arrows from $G$ to the abyss.  
 Supplementing Hoare logic with a termination proof is done by Zohar Manna and Amir Pnueli in 1974~\cite{manna74}, where they introduced what we call a \define{loop variant}, a value that decreases with each iteration. The name is in contrast to \define{loop invariant}, concretely the $F$ in \textbf{Rule of Iteration} in \autoref{tab:hoare}, which is constant before and after the loop. 
 
@@ -172,7 +169,7 @@ We state that our definition in \autoref{tab:wp-det} coincides with this definit
 Without going too deep into domain theory, we only use one of its theorem that yields a computation for least fixed points, when they exist. 
 
 \begin{theorem}
-\todo{Insert theorem, then explain least point iteration from bottom. }
+\textbf{[Insert theorem]}%TODO
 \end{theorem}
 
 
@@ -292,9 +289,8 @@ wp and wlp are each other's conjugate:
 \[wp.C.F = \neg wlp.C.\neg F\]
 
 
+\textbf{[TO BE CONTINUED]}
 
-
-\note{Up to here is readable. }
 
 %*****************************************
 %*****************************************
