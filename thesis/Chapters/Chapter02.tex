@@ -215,8 +215,10 @@ It states that it is impossible for a program to terminate in a state satisfying
 \end{proof}
 
 Thus by identifying the least fixed point, we find a $k$ that satisfies \autoref{eq:while}.
-The advantage of using least fixed point to define $wp$ is that there are heuristics to find it, whereas \autoref{eq:while} excels at giving intuitions for the preconditions that guarantee loop termination.
-
+The advantage of using least fixed point to define $wp$ is that there are heuristics to find it, whereas \autoref{eq:while} excels at giving intuitions for the preconditions that guarantee loop termination. 
+Essentially, they express the same predicate, i.e. the ``weakest'' precondition for while-loops which is unique. 
+Consequently, it means that we can not use other fixed points to define $wp.WHILE$, which are weaker than the least fixed point. 
+For the same reason, we will see that greatest fixed point is necessary to define weakest liberal precondition. 
 
 
 \subsection{The Non-deterministic Case: Angelic vs. Demonic}\label{sec:wp-nondet}
@@ -307,6 +309,11 @@ A graphical representation can be found in the right side of \autoref{fig:wp-wlp
     \caption{The Weakest Liberal Precondition Transformer}
     \label{tab:wlp}
 \end{table}
+
+As preluded earlier, greatest fixed points are used to define wlp for while-loops. 
+
+
+
 \todo{Explain the use of gfp. Possibly relate to page 185 of Dijkstra and Scholten 1990 book. }
 
 % \begin{figure}[ht!]\centering
