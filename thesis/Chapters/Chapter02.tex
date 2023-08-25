@@ -136,7 +136,7 @@ Because \mathl{diverge} does not terminate, there is no such precondition and $w
 
 The definition for the while-loop~\cite{kaminski19} is trickier, but we can verify its correctness by recalling Dijkstra's original definition in the following section. 
 
-\todo{Find out if there's earlier definition that used lfp. }
+%\solved{Find out if there's earlier definition that used lfp. -> yes, dijkstra&scholten}
 
 \subsection{Defining Loops}
 In Dijkstra's original paper~\cite{dijkstra75}, he defined $wp$ for while-loops based on its (intended) semantics, i.e. the precondition that guarantees loop termination with the required postcondition within a certain number of iterations. 
@@ -145,40 +145,78 @@ Let
 \[
 WHILE=while(\varphi)\{C'\}
 \\\text{ and } \\ 
-IF=  if\ (\varphi)\{C';WHILE\}\ else\ \{skip\}. 
+IF=  if\ (\varphi)\{C'\}\ else\ \{diverge\}. 
 \] 
+%\footnote{In our model, the if construct have only one guard $\varphi$, which if written in the original style would be $if \varphi \to C'$ }
 Rewriting Dijkstra's definition in a form conforming to our style, he defines 
 \[
-H_0(F)=(F \wedge \neg \varphi )
+H_0(F)=( \neg \varphi\wedge F )
 \\\text{ and } \\ 
-H_k(F)=(wp.IF.(H_{k-1}(F)) \vee H_0(F)). 
+H_k(F)=wp.IF.H_{k-1}(F) \vee H_0(F). 
 \]
-Intuitively, when $H_0(F)$ is satisfied before the execution of $WHILE$, the loop is exited with 0 iteration in a state that satisfies $F\wedge\neg\varphi$ hence $F$. 
-Then, we can understand $H_k(F)$ as the weakest precondition such that the program terminates in a final state satisfying $F$ after \imptt{at most} $k$ iterations. 
-\todo{Explain a bit more about how this relate to the above definition. }
+
+\mathl{IF} is defined in such way that $wp.IF.X$ is the weakest precondition that makes sure the guard of \mathl{IF} discharges and $C'$ is executed once, leaving the program in a state satisfying $X$.
+As a result, $H_k(F)$ corresponds to the weakest precondition such that the program terminates in a final state satisfying $F$ after \imptt{at most} $k$ iterations.
+
+
+%done{Explain a bit more about how this relate to the above definition. }
 
 Then by definition: 
 \begin{equation}
 \hspace{2.8cm} wp.WHILE.F=(\exists k\geq 0: H_k(F))  \label{eq:while}
 \end{equation}
-% \[wp.WHILE.F=(\exists k\geq 0: H_k(F))  \] \label{eq:while}
+% Replacing the existential quantifier by disjunctions yields: 
+%  % \[wp.WHILE.F=(\exists k\geq 0: H_k(F))  \] \label{eq:while}
+% \begin{equation}
+% \hspace{2.8cm} wp.WHILE.F\equiv\bigvee_{k\geq 0} H_k(F) \equiv \bigvee_{k\geq 0} wp.IF.H_{k-1}(F) \vee H_0(F))  \label{eq:while-disj}
+% \end{equation}
 
 
 
-We state that our definition in \autoref{tab:wp-det} coincides with this definition. 
-Without going too deep into domain theory, we only use one of its theorem that yields a computation for least fixed points, when they exist. 
+We state that the definition in \autoref{tab:wp-det} coincides with this definition. 
+Without going too deep into domain theory, we only use one of its theorem that yields a computation for least fixed points, provided they exist. 
 
 \begin{theorem}
 \textbf{[Insert theorem]}%TODO
 \end{theorem}
 
 
-Coincidentally, $H_k(F)$ is the $k-$th iteration of the characteristic function $\Phi$ from the bottom element, denoted by $\Phi^k(\bot)$. 
-Thus by identifying the least fixed point, we've found a $k$ that satisfies \eq{while}. 
+Coincidentally, $H_k(F)$ is the $(k+1)-$th iteration of the characteristic function $\Phi$ from the bottom element, denoted by $\Phi^{k+1}(false)$. 
+For all predicates $F$ and all programs $C'$: 
+\begin{lemma}
+$\forall k\geq 0: H_k(F)=\Phi^{k+1}(false)$
+\end{lemma}
 
-Now that we have defined the weakest precondition transformer, which calculates the necessary and sufficient precondition that a program will terminate in the given postcondition. 
-As a result, we can establish the relation between Hoare Triples and wp transformers:
-\[ \hoarenm{G}{C}{F}\text{ is a valid Hoare Triple  \ \ \ \    iff  \ \ \   \ } G\Longrightarrow wp.C.F\] 
+\begin{proof}
+Proof by induction. 
+\vspace{-0.25cm}\paragraph{Base case: } 
+  \begin{align*} 
+    \Phi(false)   & = (\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.false)  & \\ 
+                  & = (\neg\varphi\wedge F)\vee(\varphi\wedge false)         && |\ (*)\\
+                  & = \neg\varphi\wedge F                                    && |\ \text{predicate calculus} \\
+                  & = H_0(F)
+  \end{align*}
+The equation (*) is supported by the Law of Excluded Miracle~\cite[p.18]{dijkstra76}: for all programs $C$, $wp.C.false = false$. 
+It states that it is impossible for a program to terminate in a state satisfying no postcondition. 
+
+\vspace{-0.25cm}\paragraph{Step case: } 
+  \begin{align*} 
+    H_{k+1}(F)     & = wp.IF.H_{k}(F) \vee H_0(F) \\
+                  & = (\varphi\wedge wp.C'.H_{k}(F))\vee(\neg\varphi\wedge wp.diverge.H_{k}(F)) \vee H_0(F) \\ 
+                  &\hspace{0.45\textwidth} | \ \text{unfold IF; definition of wp} \\
+                  & = (\varphi\wedge wp.C'.H_{k}(F))\vee(\neg\varphi\wedge false) \vee H_0(F) \\
+                  &\hspace{0.45\textwidth} | \ \text{definition of wp} \\
+                  & = (\varphi\wedge wp.C'.\Phi^{k+1}(false)) \vee H_0(F)  \\
+                  &\hspace{0.45\textwidth} | \ \text{induction hypothesis; predicate calculus} \\
+                  & = (\varphi\wedge wp.C'.\Phi^{k+1}(false)) \vee (\neg\varphi\wedge F)  \\
+                  & = \Phi^{k+2}(false)  \\
+  \end{align*}
+
+\end{proof}
+
+Thus by identifying the least fixed point, we find a $k$ that satisfies \autoref{eq:while}.
+The advantage of using least fixed point to define $wp$ is that there are heuristics to find it, whereas \autoref{eq:while} excels at giving intuitions for the preconditions that guarantee loop termination.
+
 
 
 \subsection{The Non-deterministic Case: Angelic vs. Demonic}\label{sec:wp-nondet}
@@ -287,6 +325,11 @@ A graphical representation can be found in the right side of \autoref{fig:wp-wlp
 \section{Properties of wp and wlp}
 wp and wlp are each other's conjugate: 
 \[wp.C.F = \neg wlp.C.\neg F\]
+
+% \[wp.C.false = false\]
+% \[wlp.C.true = true\]
+% \[wp.C.true = preconditions that lead to termination\]
+% \[wlp.C.false = preconditions that lead to nontermination\]
 
 
 \textbf{[TO BE CONTINUED]}
