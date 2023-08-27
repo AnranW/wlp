@@ -138,7 +138,7 @@ The definition for the while-loop~\cite{kaminski19} is trickier, but we can veri
 
 %\solved{Find out if there's earlier definition that used lfp. -> yes, dijkstra&scholten}
 
-\subsection{Defining Loops}
+\subsection{Defining Loops}\label{sec:define loops}
 In Dijkstra's original paper~\cite{dijkstra75}, he defined $wp$ for while-loops based on its (intended) semantics, i.e. the precondition that guarantees loop termination with the required postcondition within a certain number of iterations. 
 
 Let 
@@ -165,17 +165,22 @@ Then by definition:
 \begin{equation}
 \hspace{2.8cm} wp.WHILE.F=(\exists k\geq 0: H_k(F))  \label{eq:while}
 \end{equation}
-% Replacing the existential quantifier by disjunctions yields: 
-%  % \[wp.WHILE.F=(\exists k\geq 0: H_k(F))  \] \label{eq:while}
-% \begin{equation}
-% \hspace{2.8cm} wp.WHILE.F\equiv\bigvee_{k\geq 0} H_k(F) \equiv \bigvee_{k\geq 0} wp.IF.H_{k-1}(F) \vee H_0(F))  \label{eq:while-disj}
-% \end{equation}
 
 
+The definition in \autoref{tab:wp-det}, however, uses the least fixed point of the characteristic function that is not obvious. 
+We understand the use of fixed point in two ways. 
+First, a precondition $G$ being a fixed point of the characteristic function $G= \Phi(G)=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.G)$ means that under control of $G$, termination is possible (left side of the disjunction) and repeated execution of $C'$ is possible(right side of the disjunction), since $G$ is invariant before and after the execution of $C'$. 
+Second, if we were to believe that the semantics of $WHILE$ should be equivalent to the semantics of $if(\varphi)\{C;WHILE\}else\{skip\}$, we can derive the need for fixed point: 
+\begin{align*} 
+  wp.WHILE.F    & \seq wp.(if(\varphi)\{C;WHILE\}else\{skip\}.F) \\
+                & \seq \varphi\wedge wp.(C;WHILE).F \vee \neg\varphi\wedge wp.skip.F\\ 
+                & \seq \varphi\wedge wp.C.(wp.WHILE.F) \vee \neg\varphi\wedge F\\ 
+                & \seq \Phi(wp.WHILE.F)\\ 
+\end{align*}
 
-We state that the definition in \autoref{tab:wp-det} coincides with this definition. 
-Without going too deep into domain theory, we only use one of its theorem that yields a computation for least fixed points, provided they exist. 
-
+The question then arises: can we define wp with any fixed point? 
+The answer is no and we show it by verifying that the definition in \autoref{tab:wp-det} coincides with Dijkstra's definition at the beginning of this chapter. \footnote{In fact, Dijkstra and Scholten\cite{dijkstra90} later also gave definitions for wp and wlp in an equivalent form of least and greatest fixed points, they called it "strongest" and "weakest solution". They also proved that it is necessary to use the extreme solutions. }
+We borrow a theorem from domain theory that yields a computation for least fixed points, provided they exist: 
 \begin{theorem}
 \textbf{[Insert theorem]}%TODO
 \end{theorem}
@@ -207,7 +212,7 @@ It states that it is impossible for a program to terminate in a state satisfying
                   & = (\varphi\wedge wp.C'.H_{k}(F))\vee(\neg\varphi\wedge false) \vee H_0(F) \\
                   &\hspace{0.45\textwidth} | \ \text{definition of wp} \\
                   & = (\varphi\wedge wp.C'.\Phi^{k+1}(false)) \vee H_0(F)  \\
-                  &\hspace{0.45\textwidth} | \ \text{induction hypothesis; predicate calculus} \\
+                  &\hspace{0.45\textwidth} | \ \text{induction hypothesis} \\
                   & = (\varphi\wedge wp.C'.\Phi^{k+1}(false)) \vee (\neg\varphi\wedge F)  \\
                   & = \Phi^{k+2}(false)  \\
   \end{align*}
@@ -288,7 +293,7 @@ Each arrow from left to right shows a \imptt{possible} execution of program $C$.
 While wp-transformer excludes non-termination, wlp-transformer takes a more liberal approach. 
 The weakest precondition delivers a precondition so that the program terminates and the postcondition is \imptt{reachable}. 
 The weakest liberal precondition, however, delivers a precondition so that the program either terminates satisfying the postcondition, or diverges. 
-The postcondition in the wlp setting is not only reachable, but also guaranteed upon termination, because we regard the non-deterministic choice as demonic, again favoring to establish Galois connection~\cite{zhang22}. 
+The postcondition in the wlp setting is not only reachable, but also \imptt{guaranteed} upon termination, because we regard the non-deterministic choice as demonic, again favoring to establish Galois connection~\cite{zhang22}. 
 
 We define the weakest liberal precondition transformer in \autoref{tab:wlp}. 
 A graphical representation can be found in the right side of \autoref{fig:wp-wlp-together}. 
@@ -311,10 +316,10 @@ A graphical representation can be found in the right side of \autoref{fig:wp-wlp
 \end{table}
 
 As preluded earlier, greatest fixed points are used to define wlp for while-loops. 
+It is an easy choice, since wlp is semantically the \imptt{weakest} liberal precondition, and $wlp.WHILE.F$ should be a fixed point of its characteristic function, similar to \autoref{sec:define loops}. 
 
 
-
-\todo{Explain the use of gfp. Possibly relate to page 185 of Dijkstra and Scholten 1990 book. }
+%done{Explain the use of gfp. Possibly relate to page 185 of Dijkstra and Scholten 1990 book. }
 
 % \begin{figure}[ht!]\centering
 % \includegraphics[width=0.7\textwidth]{image/wlp-det.eps}
