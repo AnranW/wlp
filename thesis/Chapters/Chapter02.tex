@@ -11,7 +11,10 @@ One of the most known methods is \define{Hoare logic}.
 In 1969, C.A.R. Hoare wrote \textit{An Axiomatic Basis for Computer Programming}~\cite{hoare69} to explore the logic of computer programs using axioms and inference rules to prove the properties of programs. 
 He introduced \imptt{sufficient} preconditions that  guarantee correct results but do not rule out non-termination. 
 A selection of the axioms and rules are shown in~\autoref{tab:hoare}.~\footnote{We omit the symbol $\vdash$ in front of a Hoare triple, which denotes ``valid/provable'', for better readability. }\footnote{Non-determinism was not considered in the original paper, so we treat the programs here as deterministic. 
-With deterministic programs, one initial state corresponds to one final state, and in case of non-termination we assign a final state $\bot$. \todo{Think about whether to add liberally deterministic (Hesselink 1992, Programs, Recursion and Unbounded Choice). }} 
+With deterministic programs, one initial state corresponds to one final state, and in case of non-termination we assign a final state $\bot$. }
+
+\todo{Think about whether to add liberally deterministic (Hesselink 1992, Programs, Recursion and Unbounded Choice). }
+
 \mathl{\{F[x/e]\}} is obtained by substituting occurrences of $x$ by $e$. 
 
 \begin{table}[ht]\centering
@@ -90,7 +93,7 @@ In our representation of GCL, non-determinism is explicitly constructed via the 
 Additionally, the \mathl{if} statement in Dijkstra's GCL is equivalent to divergence in case non of its guards are true, but in our version this can no longer happen because of the Law of Excluded Middle: the predicate $\varphi$ must be either true or false, so either the ``then'' branch or the ``else'' branch is activated.
 Consequently, non-termination can only originate from either the \mathl{diverge} or the \mathl{while} command. 
 
-\section{Weakest Precondition}\label{sec:wp}
+\section{Weakest Preconditions}\label{sec:wp}
 
 \subsection{The Deterministic Case}\label{sec:wp-det}
 To better relate Hoare triples and Dijkstra's weakest precondition transformer, we first focus on deterministic programs. 
@@ -104,7 +107,7 @@ We can see that on the right side, the arrows from $G$ to non-termination and fr
 \label{fig:hoare-wp-det}
 \end{figure}
 
-We define the \define{weakest precondition} transformer inductively over the program structure in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where $wp$ is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function to $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here $wp$ is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the type of $wp$. } as in \autoref{tab:wp-det}: 
+We define the \define{weakest precondition} transformer inductively over the program structure in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where wp is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function to $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here wp is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the type of wp. } as in \autoref{tab:wp-det}: 
 
 \begin{table}[ht!]\centering
     \begin{tabular}{ll}
@@ -127,19 +130,19 @@ We define the \define{weakest precondition} transformer inductively over the pro
 
 \mathl{lfp\ X. f} is the least fixed point of function $f$ with variable $X$. 
 
-Let {$$\Phi(X):=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$$} be the characteristic function, then $wp$ for while-loop can be defined as: 
+Let {$$\Phi(X):=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$$} be the characteristic function, then wp for while-loop can be defined as: 
 {$$wp.(while(\varphi)\{C'\}).F = lfp\ X. \Phi(X)$$}
 
 Most of the definitions in \autoref{tab:wp-det} are intuitive and correspond to their counterparts in Hoare logic, while those for \mathl{diverge} and \mathl{while} deserve special attention. 
-Since $wp$ aims for total correctness, a program starting in an initial state satisfying the precondition \mathl{wp.diverge.F} should terminate in a final state satisfying the postcondition \mathl{F}. 
-Because \mathl{diverge} does not terminate, there is no such precondition and $wp$ for \mathl{diverge} should be \mathl{false}. 
+Since wp aims for total correctness, a program starting in an initial state satisfying the precondition \mathl{wp.diverge.F} should terminate in a final state satisfying the postcondition \mathl{F}. 
+Because \mathl{diverge} does not terminate, there is no such precondition and wp for \mathl{diverge} should be \mathl{false}. 
 
 The definition for the while-loop~\cite{kaminski19} is trickier, but we can verify its correctness by recalling Dijkstra's original definition in the following section. 
 
 %\solved{Find out if there's earlier definition that used lfp. -> yes, dijkstra&scholten}
 
 \subsection{Defining Loops}\label{sec:define loops}
-In Dijkstra's original paper~\cite{dijkstra75}, he defined $wp$ for while-loops based on its (intended) semantics, i.e. the precondition that guarantees loop termination with the required postcondition within a certain number of iterations. 
+In Dijkstra's original paper~\cite{dijkstra75}, he defined wp for while-loops based on its (intended) semantics, i.e. the precondition that guarantees loop termination with the required postcondition within a certain number of iterations. 
 
 Let 
 \[
@@ -179,7 +182,7 @@ Second, if we were to believe that the semantics of $WHILE$ should be equivalent
 \end{align*}
 
 The question then arises: can we define wp with any fixed point? 
-The answer is no and we show it by verifying that the definition in \autoref{tab:wp-det} coincides with Dijkstra's definition at the beginning of this chapter. \footnote{In fact, Dijkstra and Scholten\cite{dijkstra90} later also gave definitions for wp and wlp in an equivalent form of least and greatest fixed points, they called it "strongest" and "weakest solution". They also proved that it is necessary to use the extreme solutions. }
+The answer is no and we show it by verifying that the definition in \autoref{tab:wp-det} coincides with Dijkstra's definition at the beginning of this chapter.\footnote{In fact, Dijkstra and Scholten\cite{dijkstra90} later also gave definitions for wp and wlp in an equivalent form of least and greatest fixed points, they called it "strongest" and "weakest solution". They also proved that it is necessary to use the extreme solutions. }
 We borrow a theorem from domain theory that yields a computation for least fixed points, provided they exist: 
 \begin{theorem}
 \textbf{[Insert theorem]}%TODO
@@ -220,40 +223,60 @@ It states that it is impossible for a program to terminate in a state satisfying
 \end{proof}
 
 Thus by identifying the least fixed point, we find a $k$ that satisfies \autoref{eq:while}.
-The advantage of using least fixed point to define $wp$ is that there are heuristics to find it, whereas \autoref{eq:while} excels at giving intuitions for the preconditions that guarantee loop termination. 
+The advantage of using least fixed point to define wp is that there are heuristics to find it, whereas \autoref{eq:while} excels at giving intuitions for the preconditions that guarantee loop termination. 
 Essentially, they express the same predicate, i.e. the ``weakest'' precondition for while-loops which is unique. 
 Consequently, it means that we can not use other fixed points to define $wp.WHILE$, which are weaker than the least fixed point. 
 For the same reason, we will see that greatest fixed point is necessary to define weakest liberal precondition. 
 
 
 \subsection{The Non-deterministic Case: Angelic vs. Demonic}\label{sec:wp-nondet}
-Now we bring the non-deterministic choice back into the picture and add its $wp$ to \autoref{tab:wp-nondet}. 
-Here we assume a setting with \define{angelic non-determinism}, where we think that whenever non-determinism occurs, it will resolve in our favor.
+Now we bring the non-deterministic choice back into the picture and add its wp to \autoref{tab:wp-wlp}. 
+Here we assume a setting with \define{angelic non-determinism}, where we assume that whenever non-determinism occurs, it will be resolved in our favor.
 This results in the weakest precondition for our non-deterministic choice being a disjunction of the wp for its subprograms. 
 We are hopeful that a precondition satisfying the wp of one of the subprograms can also lead to termination in our desired postcondition. 
-This is a design choice that is different from Dijkstra's~\cite{dijkstra75}, where the wp for non-deterministic choice would be a conjunction, hinting at a demonic setting. 
+This is a design choice that is different from Dijkstra's~\cite{dijkstra75}, where the wp for non-deterministic choice is a conjunction, hinting at a demonic setting. 
 Both choices are justifiable, we choose to follow Zhang and Kaminski's work, favoring the resulting Galois connection between the weakest (liberal) precondition transformers and the strongest (liberal) postcondition transformers~\cite{zhang22}. 
 
 
 \begin{table}[ht!]\centering
-    \begin{tabular}{ll}
+    \begin{tabular}{lll}
     \hline\hline
-      \textbf{C}&\textbf{wp.C.F}    \\ \hline
+      \textbf{C}&\textbf{wp.C.F} & \textbf{wlp.C.F}   \\ \hline
       $skip$&   $F$   \\
       $diverge$&  $false$\\
       $x:= e $&  $F[x/e]$\\
       $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\
-      $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wp.C_1.F)\vee(\neg\varphi\wedge wp.C_2.F)$\\
-      {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wp.C_1.F\vee wp.C_2.F$}\\
-      $while\ (\varphi)\ \{C'\}$&  $lfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
+      $if\ (\varphi)\ \{C_1\} $&  $(\varphi\wedge wp.C_1.F)$\\
+      $\ \ \ \ \ \ \ \  else\ \{C_2\} $&  $\ \ \ \ \ \ \ \  \vee(\neg\varphi\wedge wp.C_2.F)$\\
+      {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wp.C_1.F\vee wp.C_2.F$} & {\color{Maroon}$wlp.C_1.F\wedge wlp.C_2.F$}\\
+      $while\ (\varphi)\ \{C'\}$&  $lfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$ & {\color{Maroon} $gfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X)$}\\
     \hline\hline
     \end{tabular}
-    \caption{The Weakest Precondition Transformer for Non-deterministic Programs~\cite{kaminski19}}
-    \label{tab:wp-nondet}
+    \caption{The Weakest (Liberal) Precondition Transformer for Non-deterministic Programs~\cite{kaminski19}}
+    \label{tab:wp-wlp}
 \end{table}
 
-The left side of \autoref{fig:wp-wlp-together} shows $wp$ with non-deterministic programs. 
+% \begin{table}[ht!]\centering
+%     \begin{tabular}{ll}
+%     \hline\hline
+%       \textbf{C}&\textbf{wp.C.F}    \\ \hline
+%       $skip$&   $F$   \\
+%       $diverge$&  $false$\\
+%       $x:= e $&  $F[x/e]$\\
+%       $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\
+%       $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wp.C_1.F)\vee(\neg\varphi\wedge wp.C_2.F)$\\
+%       {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wp.C_1.F\vee wp.C_2.F$}\\
+%       $while\ (\varphi)\ \{C'\}$&  $lfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
+%     \hline\hline
+%     \end{tabular}
+%     \caption{The Weakest Precondition Transformer for Non-deterministic Programs~\cite{kaminski19}}
+%     \label{tab:wp-nondet}
+% \end{table}
+
+The left side of \autoref{fig:wp-wlp-together} shows wp with non-deterministic programs. 
 Each arrow from left to right shows a \imptt{possible} execution of program $C$. 
+The effects of demonic and angelic non-determinism is highlighted in green. 
+A condition under whose control the required postcondition is \imptt{reachable but not guaranteed} is considered as a valid precondition in an angelic setting (left half of \autoref{fig:wp-wlp-together}), but not in a demonic setting (right half of \autoref{fig:wp-wlp-together}). 
 
 % \begin{figure}[ht!]\centering
 % \includegraphics[width=0.7\textwidth]{image/wp-nondet.eps}
@@ -289,31 +312,14 @@ Each arrow from left to right shows a \imptt{possible} execution of program $C$.
 
 
 
-\section{Weakest Liberal Precondition}
-While wp-transformer excludes non-termination, wlp-transformer takes a more liberal approach. 
-The weakest precondition delivers a precondition so that the program terminates and the postcondition is \imptt{reachable}. 
+\section{Weakest Liberal Preconditions}
+While the wp-transformer excludes non-termination, the wlp-transformer takes a more liberal approach. 
+The weakest precondition delivers a precondition so that the program terminates and a state satisfying the postcondition is \imptt{reachable}. 
 The weakest liberal precondition, however, delivers a precondition so that the program either terminates satisfying the postcondition, or diverges. 
-The postcondition in the wlp setting is not only reachable, but also \imptt{guaranteed} upon termination, because we regard the non-deterministic choice as demonic, again favoring to establish Galois connection~\cite{zhang22}. 
+The postcondition in the wlp setting is \imptt{guaranteed} upon termination, because we regard the non-deterministic choice as demonic, again favoring to establish a Galois connection~\cite{zhang22}. 
 
-We define the weakest liberal precondition transformer in \autoref{tab:wlp}. 
-A graphical representation can be found in the right side of \autoref{fig:wp-wlp-together}. 
-
-\begin{table}[ht!]\centering
-    \begin{tabular}{ll}
-    \hline\hline
-      \textbf{C}&\textbf{wlp.C.F}    \\ \hline
-      $skip$&   $F$   \\
-      $diverge$&  $true$\\
-      $x:= e $&  $F[x/e]$\\
-      $C_1;C_2$&  $wlp.C_1.(wlp.C_2.F)$\\
-      $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wlp.C_1.F)\vee(\neg\varphi\wedge wlp.C_2.F)$\\
-      {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wlp.C_1.F\wedge wlp.C_2.F$}\\
-      {\color{Maroon}$while\ (\varphi)\ \{C'\}$}& {\color{Maroon} $gfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X)$}\\
-      \hline\hline
-    \end{tabular}
-    \caption{The Weakest Liberal Precondition Transformer}
-    \label{tab:wlp}
-\end{table}
+We define the weakest liberal precondition transformer in \autoref{tab:wp-wlp}. 
+A graphical representation can be found on the right side of \autoref{fig:wp-wlp-together}. 
 
 As preluded earlier, greatest fixed points are used to define wlp for while-loops. 
 It is an easy choice, since wlp is semantically the \imptt{weakest} liberal precondition, and $wlp.WHILE.F$ should be a fixed point of its characteristic function, similar to \autoref{sec:define loops}. 
@@ -332,6 +338,8 @@ It is an easy choice, since wlp is semantically the \imptt{weakest} liberal prec
 % \caption{Weakest Liberal Precondition (Demonic Non-determinism)}
 % \label{fig:wlp-nondet}
 % \end{figure}
+
+
 
 
 \section{Properties of wp and wlp}
