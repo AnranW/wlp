@@ -1,0 +1,84 @@
+% Copyright 2006-2015 by Michael Kuhn
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+% Modified by Anran just for Christian! 
+
+\mode<presentation>
+
+% here you can modify if you want to have subsecion name on every slide 
+%\useoutertheme{miniframes}
+\useoutertheme[subsection=false]{miniframes}
+
+\useinnertheme{rectangles}
+\usecolortheme{beaver}
+
+% \definecolor{darkblue}{RGB}{33,84,157}
+\definecolor{tumblue}{RGB}{0,101,189}
+\definecolor{limegreen}{RGB}{50,205,50}
+\definecolor{green}{RGB}{0,128,0}
+\definecolor{forestgreen}{RGB}{34,139,34}
+\definecolor{mainpink}{HTML}{DA4B85}
+\definecolor{maroon}{RGB}{143,56,56}
+
+
+% here you can easily change the color for this presentation
+\definecolor{thiscolor}{named}{maroon}
+
+\setbeamercolor{author in head/foot}{fg=white,bg=thiscolor}
+\setbeamercolor{title}{fg=white,bg=thiscolor}
+\setbeamercolor{title in head/foot}{fg=white,bg=thiscolor}
+\setbeamercolor{page number in head/foot}{fg=white,bg=thiscolor}
+\setbeamercolor{item}{fg=thiscolor}
+\setbeamercolor{subitem}{fg=thiscolor}
+\setbeamercolor{subsubitem}{fg=thiscolor}
+\setbeamercolor{itemize item}{fg=thiscolor}
+\setbeamercolor{itemize subitem}{fg=thiscolor}
+\setbeamercolor{itemize subsubitem}{fg=thiscolor}
+\setbeamercolor{enumerate item}{fg=thiscolor}
+\setbeamercolor{enumerate subitem}{fg=thiscolor}
+\setbeamercolor{enumerate subsubitem}{fg=thiscolor}
+\setbeamercolor{section number projected}{bg=thiscolor}
+\setbeamercolor{subsection number projected}{bg=thiscolor}
+\setbeamercolor{subsubsection number projected}{bg=thiscolor}
+\setbeamercolor{section in head/foot}{fg=white,bg=thiscolor}
+\setbeamercolor{subsection in head/foot}{fg=black,bg=white!90!black}
+\setbeamercolor{frametitle}{fg=black,bg=white!95!black}
+\setbeamercolor{block title}{fg=white,bg=thiscolor}
+\setbeamercolor{block body}{fg=black,bg=white!90!black}
+\setbeamercolor{caption name}{fg=thiscolor}
+
+\setbeamertemplate{bibliography entry title}{}
+\setbeamertemplate{bibliography entry location}{}
+\setbeamertemplate{bibliography entry note}{}
+
+\setbeamertemplate{bibliography item}[text]
+
+\setbeamertemplate{navigation symbols}{}
+
+% Slide title line
+\setbeamertemplate{frametitle}{%
+    \nointerlineskip%
+    % wd for width, ht for height, dp for something (position of title inside the line)
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=0.9ex]{frametitle}
+        \hspace*{1ex}\insertframetitle%
+    \end{beamercolorbox}%
+}
+\setbeamertemplate{footline}
+{%
+\begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
+\end{beamercolorbox}
+\begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+	leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+	\leavevmode{\usebeamerfont{author in head/foot}\insertshortauthor}%
+	\hfill%
+	{\usebeamerfont{title in head/foot}\usebeamercolor[fg]{title in head/foot}\insertshorttitle}%
+	\hfill%
+	{\usebeamerfont{page number in head/foot}\usebeamercolor[fg]{page number in head/foot}\insertframenumber\,/\,\inserttotalframenumber}%
+\end{beamercolorbox}%
+\begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
+\end{beamercolorbox}
+}
+
+\mode<all>

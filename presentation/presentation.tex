@@ -1,0 +1,150 @@
+\documentclass[aspectratio=169]{beamer}
+%\documentclass[compact]{beamer}
+\usetheme{Hamburg}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{lmodern}
+
+\usepackage[english]{babel}
+%\usepackage[ngerman]{babel}
+
+\usepackage{eurosym}
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{microtype}
+\usepackage{textcomp}
+\usepackage{units}
+\DeclareSymbolFont{frenchscript}{OMS}{ztmcm}{m}{n}
+%\DeclareMathSymbol{\P}{\mathord}{frenchscript}{65}
+
+% For figures next to each other
+\usepackage{graphicx}
+\usepackage{graphbox}
+
+\lstset{
+	basicstyle=\ttfamily\footnotesize,
+	frame=single,
+	numbers=left,
+	language=C,
+	breaklines=true,
+	breakatwhitespace=true,
+	postbreak=\hbox{$\hookrightarrow$ },
+	showstringspaces=false,
+	autogobble=true,
+	upquote=true,
+	tabsize=4,
+	captionpos=b,
+	morekeywords={int8_t,uint8_t,int16_t,uint16_t,int32_t,uint32_t,int64_t,uint64_t,size_t,ssize_t,off_t,intptr_t,uintptr_t,mode_t}
+}
+
+\title[here is short]{Necessary Liberal Preconditions}
+
+\subtitle{Here is a subtitle \\ and linebreak if you like}
+\author{Anran Wang}
+\institute{Department of Informatics\\Your Uni}
+\date{\today}
+
+% here you can have a logo, but not necessary
+\titlegraphic{\includegraphics[width=0.15\textwidth]{images/onion.png}}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}
+	\frametitle{Agenda}
+	% this hides the subsection
+    % \tableofcontents[hidesubsections]
+	\tableofcontents
+\end{frame}
+
+\section{Introduction}
+\subsection{The name for subsection, it is hidden from every slide currently but you can change it in .sty file}
+
+\begin{frame}[fragile]
+	\frametitle{Here is the title for this frame}
+	You can have text here, or have text inside of itemize:
+	\begin{itemize}
+	    \item You can use itemize environment to have a dot in the front. 
+	    \item And you can use maximum 2 layers of itemize environment. 
+	    \begin{itemize}
+	        \item items here
+	        \item and so much more
+	        \item you can have image here or outside of the itemize environment, with or without caption
+	    \end{itemize}
+	\end{itemize}
+	
+	\begin{figure}
+        \centering
+        \includegraphics[width=0.3\textwidth]{images/dst.png} 
+    \end{figure}
+\end{frame}
+
+\subsection{If you have multiple subsections, you will have multiple lines on top of the slide}
+\begin{frame}[fragile]
+	\frametitle{Here is how you have an image with captions and sources}
+	\begin{figure}
+	    \centering
+	    \includegraphics[width=0.3\textwidth]{images/dst.png}
+	    \vspace{-3mm}\caption{Caption for your image, position can be changed via $\backslash$ vspace and $\backslash$ hspace \footnote{\tiny Source: you can put your source here if you like }}
+	    \label{dst}
+	\end{figure}
+	You can use label and reference to it: Figure \ref{dst}, but in presentations I find it unnecessary. 
+\end{frame}
+
+\section{Body}
+\subsection{More on images}
+
+\begin{frame}[fragile]
+	\frametitle{If you want to have multiple images, here is a template using minipage}
+	\begin{itemize}
+	    \item Or you can use whatever you are used to, but don't forget to include the packages! 
+	    \item But using minipage, you can also easily have half image half words, or one third, or however you like.
+	\end{itemize}
+
+    \begin{minipage}{.5\textwidth}
+      \centering
+      \includegraphics[width=0.7\linewidth]{images/dst.png}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+      \begin{itemize}
+          \item Now there is a game that you can play!
+          \begin{itemize}
+              \item It is fun!
+              \item You can play it with me! 
+              \item Also the graphic is so cute! 
+          \end{itemize}
+      \end{itemize}
+    \end{minipage}
+\end{frame}
+
+
+\section{Summary}
+\subsection{}
+
+\begin{frame}
+	\frametitle{This is the summary section}
+	\begin{itemize}
+	    \item Intro
+	    \item Body 
+	    \item End
+	\end{itemize}
+	
+	\vspace{10mm}
+	\Large
+	\hfill\textit{Thank you!}
+\end{frame}
+
+\begin{frame}
+	\frametitle{References}
+	\bibliographystyle{alpha}
+	\nocite{*}
+	\bibliography{literature}
+\end{frame}
+
+\end{document}
