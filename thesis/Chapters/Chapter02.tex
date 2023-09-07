@@ -18,12 +18,12 @@ With deterministic programs, one initial state corresponds to one final state, a
 \mathl{\{F[x/e]\}} is obtained by substituting occurrences of $x$ by $e$. 
 
 \begin{table}[ht]\centering
-    \begin{tabular}{ll}
+    \begin{tabular}{l;{1pt/1pt}l}
       \hline \hline
-      \textbf{Axiom of Assignment}     &  \hoare{F[x/e]}{x:=e}{F}   \\
+      \textbf{Axiom of Assignment}     &  \hoare{F[x/e]}{x:=e}{F}   \\ \hdashline[1pt/1pt]
       \textbf{Rules of Consequence}   &  If \hoare{G}{C}{F} and $F\Rightarrow P$ then \hoare{G}{C}{P} \\
-                                      &  If \hoare{G}{C}{F} and $P\Rightarrow G$ then \hoare{P}{C}{F} \\
-      \textbf{Rule of Composition}   &  If \hoare{G}{C_1}{F_1} and \hoare{F_1}{C_2}{F} then \hoare{G}{C_1;C_2}{F} \\
+                                      &  If \hoare{G}{C}{F} and $P\Rightarrow G$ then \hoare{P}{C}{F} \\ \hdashline[1pt/1pt]
+      \textbf{Rule of Composition}   &  If \hoare{G}{C_1}{F_1} and \hoare{F_1}{C_2}{F} then \hoare{G}{C_1;C_2}{F} \\\hdashline[1pt/1pt]
       \textbf{Rule of Iteration}  &  If \hoare{(F\wedge B)}{C}{F} then \hoare{F}{\text{while } B \text{ do } C }{\neg B \wedge F}  \\
       % \textbf{Rule of Condition}   &  $wp.C_1.(wp.C_2.F)$\\
       \hline\hline
@@ -110,14 +110,14 @@ We can see that on the right side, the arrows from $G$ to non-termination and fr
 We define the \define{weakest precondition} transformer inductively over the program structure in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where wp is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function to $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here wp is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the type of wp. } as in \autoref{tab:wp-det}: 
 
 \begin{table}[ht!]\centering
-    \begin{tabular}{ll}
+    \begin{tabular}{l;{1pt/1pt}l}
     \hline\hline
       \textbf{C}&\textbf{wp.C.F}    \\ \hline
-      $skip$&   $F$   \\
-      $diverge$&  $false$\\
-      $x:= e $&  $F[x/e]$\\
-      $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\
-      $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wp.C_1.F)\vee(\neg\varphi\wedge wp.C_2.F)$\\
+      $skip$&   $F$   \\ \hdashline[1pt/1pt]
+      $diverge$&  $false$\\ \hdashline[1pt/1pt]
+      $x:= e $&  $F[x/e]$\\ \hdashline[1pt/1pt]
+      $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\ \hdashline[1pt/1pt]
+      $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $(\varphi\wedge wp.C_1.F)\vee(\neg\varphi\wedge wp.C_2.F)$\\ \hdashline[1pt/1pt]
       % $\{C_1\}\square \{C_2\}$ & $wp.C_1.F\vee wlp.C_2.F$ \\
       $while\ (\varphi)\ \{C'\}$&  $lfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$\\
     \hline\hline
@@ -239,17 +239,21 @@ Both choices are justifiable, we choose to follow Zhang and Kaminski's work, fav
 
 
 \begin{table}[ht!]\centering
-    \begin{tabular}{lll}
+    \begin{tabular}{l;{1pt/1pt}l;{1pt/1pt}l}
     \hline\hline
       \textbf{C}&\textbf{wp.C.F} & \textbf{wlp.C.F}   \\ \hline
-      $skip$&   $F$   \\
-      $diverge$&  $false$\\
-      $x:= e $&  $F[x/e]$\\
-      $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$\\
-      $if\ (\varphi)\ \{C_1\} $&  $(\varphi\wedge wp.C_1.F)$\\
-      $\ \ \ \ \ \ \ \  else\ \{C_2\} $&  $\ \ \ \ \ \ \ \  \vee(\neg\varphi\wedge wp.C_2.F)$\\
-      {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wp.C_1.F\vee wp.C_2.F$} & {\color{Maroon}$wlp.C_1.F\wedge wlp.C_2.F$}\\
-      $while\ (\varphi)\ \{C'\}$&  $lfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$ & {\color{Maroon} $gfp\ X.(\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X)$}\\
+      $skip$&   $F$ &   $F$   \\ \hdashline[1pt/1pt]
+      $diverge$&  $false$&  $true$\\ \hdashline[1pt/1pt]
+      $x:= e $&  $F[x/e]$&  $F[x/e]$\\\hdashline[1pt/1pt]
+      $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$&  $wp.C_1.(wp.C_2.F)$\\\hdashline[1pt/1pt]
+
+      $if\ (\varphi)\ \{C_1\} $ &  $(\varphi\wedge wp.C_1.F)$ &  $(\varphi\wedge wp.C_1.F)$\\
+      $\ \ \ \ \ \ \ \  else\ \{C_2\} $&  $\ \ \ \ \ \ \ \ \vee(\neg\varphi\wedge wp.C_2.F)$ &  $\ \ \ \ \ \ \ \ \vee(\neg\varphi\wedge wp.C_2.F)$\\\hdashline[1pt/1pt]
+
+      {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wp.C_1.F\vee wp.C_2.F$} & {\color{Maroon}$wlp.C_1.F\wedge wlp.C_2.F$}\\\hdashline[1pt/1pt]
+
+      {\color{Maroon}$while\ (\varphi)\ \{C'\}$} &  $lfp\ X.\ (\neg\varphi\wedge F)$ & {\color{Maroon} $gfp\ X.\ (\neg\varphi\wedge F)$}\\
+       &  $\ \ \ \ \ \ \ \ \vee(\varphi\wedge wp.C'.X)$ & {\color{Maroon} $\ \ \ \ \ \ \ \ \vee(\varphi\wedge wlp.C'.X)$}\\
     \hline\hline
     \end{tabular}
     \caption{The Weakest (Liberal) Precondition Transformer for Non-deterministic Programs~\cite{kaminski19}}
