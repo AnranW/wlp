@@ -1,0 +1,1422 @@
+<?xml version="1.0"?>
+<!DOCTYPE ipe SYSTEM "ipe.dtd">
+<ipe version="70218" creator="Ipe 7.2.27">
+<info created="D:20230506130932" modified="D:20230910180557"/>
+<ipestyle name="basic">
+<symbol name="arrow/arc(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/farc(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/ptarc(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/fptarc(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="mark/circle(sx)" transformations="translations">
+<path fill="sym-stroke">
+0.6 0 0 0.6 0 0 e
+0.4 0 0 0.4 0 0 e
+</path>
+</symbol>
+<symbol name="mark/disk(sx)" transformations="translations">
+<path fill="sym-stroke">
+0.6 0 0 0.6 0 0 e
+</path>
+</symbol>
+<symbol name="mark/fdisk(sfx)" transformations="translations">
+<group>
+<path fill="sym-fill">
+0.5 0 0 0.5 0 0 e
+</path>
+<path fill="sym-stroke" fillrule="eofill">
+0.6 0 0 0.6 0 0 e
+0.4 0 0 0.4 0 0 e
+</path>
+</group>
+</symbol>
+<symbol name="mark/box(sx)" transformations="translations">
+<path fill="sym-stroke" fillrule="eofill">
+-0.6 -0.6 m
+0.6 -0.6 l
+0.6 0.6 l
+-0.6 0.6 l
+h
+-0.4 -0.4 m
+0.4 -0.4 l
+0.4 0.4 l
+-0.4 0.4 l
+h
+</path>
+</symbol>
+<symbol name="mark/square(sx)" transformations="translations">
+<path fill="sym-stroke">
+-0.6 -0.6 m
+0.6 -0.6 l
+0.6 0.6 l
+-0.6 0.6 l
+h
+</path>
+</symbol>
+<symbol name="mark/fsquare(sfx)" transformations="translations">
+<group>
+<path fill="sym-fill">
+-0.5 -0.5 m
+0.5 -0.5 l
+0.5 0.5 l
+-0.5 0.5 l
+h
+</path>
+<path fill="sym-stroke" fillrule="eofill">
+-0.6 -0.6 m
+0.6 -0.6 l
+0.6 0.6 l
+-0.6 0.6 l
+h
+-0.4 -0.4 m
+0.4 -0.4 l
+0.4 0.4 l
+-0.4 0.4 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="mark/cross(sx)" transformations="translations">
+<group>
+<path fill="sym-stroke">
+-0.43 -0.57 m
+0.57 0.43 l
+0.43 0.57 l
+-0.57 -0.43 l
+h
+</path>
+<path fill="sym-stroke">
+-0.43 0.57 m
+0.57 -0.43 l
+0.43 -0.57 l
+-0.57 0.43 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="arrow/fnormal(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/pointed(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/fpointed(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/linear(spx)">
+<path stroke="sym-stroke" pen="sym-pen">
+-1 0.333 m
+0 0 l
+-1 -0.333 l
+</path>
+</symbol>
+<symbol name="arrow/fdouble(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+-1 0 m
+-2 0.333 l
+-2 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/double(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+-1 0 m
+-2 0.333 l
+-2 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-normal(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0.5 0 m
+-0.5 0.333 l
+-0.5 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-fnormal(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0.5 0 m
+-0.5 0.333 l
+-0.5 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-pointed(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0.5 0 m
+-0.5 0.333 l
+-0.3 0 l
+-0.5 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-fpointed(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0.5 0 m
+-0.5 0.333 l
+-0.3 0 l
+-0.5 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-double(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+1 0 m
+0 0.333 l
+0 -0.333 l
+h
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-fdouble(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+1 0 m
+0 0.333 l
+0 -0.333 l
+h
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<anglesize name="22.5 deg" value="22.5"/>
+<anglesize name="30 deg" value="30"/>
+<anglesize name="45 deg" value="45"/>
+<anglesize name="60 deg" value="60"/>
+<anglesize name="90 deg" value="90"/>
+<arrowsize name="large" value="10"/>
+<arrowsize name="small" value="5"/>
+<arrowsize name="tiny" value="3"/>
+<color name="blue" value="0 0 1"/>
+<color name="brown" value="0.647 0.165 0.165"/>
+<color name="darkblue" value="0 0 0.545"/>
+<color name="darkcyan" value="0 0.545 0.545"/>
+<color name="darkgray" value="0.663"/>
+<color name="darkgreen" value="0 0.392 0"/>
+<color name="darkmagenta" value="0.545 0 0.545"/>
+<color name="darkorange" value="1 0.549 0"/>
+<color name="darkred" value="0.545 0 0"/>
+<color name="gold" value="1 0.843 0"/>
+<color name="gray" value="0.745"/>
+<color name="green" value="0 1 0"/>
+<color name="lightblue" value="0.678 0.847 0.902"/>
+<color name="lightcyan" value="0.878 1 1"/>
+<color name="lightgray" value="0.827"/>
+<color name="lightgreen" value="0.565 0.933 0.565"/>
+<color name="lightyellow" value="1 1 0.878"/>
+<color name="navy" value="0 0 0.502"/>
+<color name="orange" value="1 0.647 0"/>
+<color name="pink" value="1 0.753 0.796"/>
+<color name="purple" value="0.627 0.125 0.941"/>
+<color name="red" value="1 0 0"/>
+<color name="seagreen" value="0.18 0.545 0.341"/>
+<color name="turquoise" value="0.251 0.878 0.816"/>
+<color name="violet" value="0.933 0.51 0.933"/>
+<color name="yellow" value="1 1 0"/>
+<dashstyle name="dash dot dotted" value="[4 2 1 2 1 2] 0"/>
+<dashstyle name="dash dotted" value="[4 2 1 2] 0"/>
+<dashstyle name="dashed" value="[4] 0"/>
+<dashstyle name="dotted" value="[1 3] 0"/>
+<gridsize name="10 pts (~3.5 mm)" value="10"/>
+<gridsize name="14 pts (~5 mm)" value="14"/>
+<gridsize name="16 pts (~6 mm)" value="16"/>
+<gridsize name="20 pts (~7 mm)" value="20"/>
+<gridsize name="28 pts (~10 mm)" value="28"/>
+<gridsize name="32 pts (~12 mm)" value="32"/>
+<gridsize name="4 pts" value="4"/>
+<gridsize name="56 pts (~20 mm)" value="56"/>
+<gridsize name="8 pts (~3 mm)" value="8"/>
+<opacity name="10%" value="0.1"/>
+<opacity name="30%" value="0.3"/>
+<opacity name="50%" value="0.5"/>
+<opacity name="75%" value="0.75"/>
+<pen name="fat" value="1.2"/>
+<pen name="heavier" value="0.8"/>
+<pen name="ultrafat" value="2"/>
+<symbolsize name="large" value="5"/>
+<symbolsize name="small" value="2"/>
+<symbolsize name="tiny" value="1.1"/>
+<textsize name="Huge" value="\Huge"/>
+<textsize name="LARGE" value="\LARGE"/>
+<textsize name="Large" value="\Large"/>
+<textsize name="footnote" value="\footnotesize"/>
+<textsize name="huge" value="\huge"/>
+<textsize name="large" value="\large"/>
+<textsize name="script" value="\scriptsize"/>
+<textsize name="small" value="\small"/>
+<textsize name="tiny" value="\tiny"/>
+<textstyle name="center" begin="\begin{center}" end="\end{center}"/>
+<textstyle name="item" begin="\begin{itemize}\item{}" end="\end{itemize}"/>
+<textstyle name="itemize" begin="\begin{itemize}" end="\end{itemize}"/>
+<tiling name="falling" angle="-60" step="4" width="1"/>
+<tiling name="rising" angle="30" step="4" width="1"/>
+</ipestyle>
+<page title="title page">
+<layer name="alpha"/>
+<view layers="alpha" active="alpha"/>
+</page>
+<page title="hoare-wp">
+<layer name="alpha"/>
+<view layers="alpha" active="alpha"/>
+<path layer="alpha" matrix="1 0 0 1 -112 16" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 -112 -16" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 -112 16" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 -108 4" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 -112 -48" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 48 16" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 48 -16" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 48 16" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 52 4" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 48 -48" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 -112 16" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 720 m
+216 712
+216 732
+232 720
+236 740
+256 724
+268 740 c
+</path>
+<path matrix="1 0 0 1 -112 16" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+304 704 l
+</path>
+<path matrix="1 0 0 1 -112 -40" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+304 704 l
+</path>
+<path matrix="1 0 0 1 -112 16" stroke="black" pen="heavier" arrow="normal/normal">
+192 660 m
+296 696 l
+</path>
+<path matrix="1 0 0 1 -112 16" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 636 m
+208 624
+216 636
+228 624
+240 636
+244 620
+256 632
+264 620 c
+</path>
+<text matrix="1 0 0 1 -44 -36" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<path matrix="1 0 0 1 208 16" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 208 -16" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 208 16" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 212 4" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 208 -48" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 368 16" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 368 -16" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 368 16" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 372 4" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 368 -48" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 208 16" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+304 704 l
+</path>
+<path matrix="1 0 0 1 208 -40" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+304 704 l
+</path>
+<path matrix="1 0 0 1 208 16" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 636 m
+208 624
+216 636
+228 624
+240 636
+244 620
+256 632
+264 620 c
+</path>
+<text matrix="1 0 0 1 280 -44" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<text matrix="1 0 0 1 276 -108" transformations="translations" pos="156 716" stroke="black" type="label" width="63.835" height="8.174" depth="2.32" valign="baseline" size="large" style="math">G=wp.C.F</text>
+<text matrix="1 0 0 1 -48 -108" transformations="translations" pos="156 716" stroke="black" type="label" width="39.626" height="8.965" depth="2.99" valign="baseline" size="large" style="math">G\{C\}F </text>
+<path matrix="1 0 0 1 4 8" stroke="black">
+292 784 m
+292 592 l
+</path>
+</page>
+<page title="wp-wlp">
+<layer name="alpha"/>
+<view layers="alpha" active="alpha"/>
+<path layer="alpha" matrix="1 0 0 1 -96 0" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 -96 -32" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 -92 -12" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 -96 -64" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 64 0" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 64 -32" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 64 0" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 68 -12" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 64 -64" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 -96 12" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+308 708 l
+</path>
+<text matrix="1 0 0 1 -28 -44" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<use matrix="1 0 0 1 -96 12" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
+<use matrix="1 0 0 1 -96 -12" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+252 732
+304 724 c
+</path>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+248 704
+304 712 c
+</path>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier" arrow="normal/normal">
+192 652 m
+300 652 l
+</path>
+<path matrix="1 0 0 1 -96 -12" stroke="black" pen="heavier" arrow="normal/normal">
+192 664 m
+300 676 l
+</path>
+<use matrix="1 0 0 1 -96 -12" name="mark/disk(sx)" pos="192 664" size="normal" stroke="black"/>
+<text matrix="1 0 0 1 -84 -12" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
+<text matrix="1 0 0 1 -84 -68" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots </text>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier" arrow="normal/normal">
+192 652 m
+244 672
+300 672 c
+</path>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier" arrow="normal/normal">
+192 692 m
+300 680 l
+</path>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier" arrow="normal/normal">
+192 692 m
+252 704
+304 700 c
+</path>
+<use matrix="1 0 0 1 -96 -8" name="mark/disk(sx)" pos="192 700" size="normal" stroke="black"/>
+<text matrix="1 0 0 1 -40 -116" transformations="translations" pos="156 716" stroke="black" type="label" width="63.835" height="8.174" depth="2.32" valign="baseline" size="large" style="math">G=wp.C.F</text>
+<path matrix="1 0 0 1 -104 0" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 636 m
+208 624
+216 636
+228 624
+240 636
+244 620
+256 632
+264 620 c
+</path>
+<path matrix="1 0 0 1 192 0" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 188 -32" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 192 0" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 192 -12" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 188 -64" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 348 0" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 348 -32" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 348 0" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 352 -12" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 348 -64" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 188 4" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+308 708 l
+</path>
+<path matrix="1 0 0 1 188 -60" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+304 704 l
+</path>
+<text matrix="1 0 0 1 260 -48" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<use matrix="1 0 0 1 188 4" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
+<use matrix="1 0 0 1 188 -4" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 188 -8" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+252 732
+304 724 c
+</path>
+<path matrix="1 0 0 1 188 4" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+248 692
+304 704 c
+</path>
+<path matrix="1 0 0 1 188 0" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 656 m
+304 656 l
+</path>
+<path matrix="1 0 0 1 188 -8" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 664 m
+300 676 l
+</path>
+<path matrix="1 0 0 1 188 0" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 656 m
+264 672
+296 700 c
+</path>
+<use matrix="1 0 0 1 188 -8" name="mark/disk(sx)" pos="192 664" size="normal" stroke="seagreen"/>
+<text matrix="1 0 0 1 200 -20" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
+<text matrix="1 0 0 1 200 -64" transformations="translations" pos="244 724" stroke="seagreen" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots </text>
+<use matrix="1 0 0 1 188 88" name="mark/disk(sx)" pos="192 636" size="normal" stroke="black"/>
+<text matrix="1 0 0 1 248 -116" transformations="translations" pos="156 716" stroke="black" type="label" width="67.585" height="8.307" depth="2.32" valign="baseline" size="large" style="math">G=wlp.C.F </text>
+<path matrix="1 0 0 1 180 4" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 720 m
+216 712
+216 732
+232 720
+236 740
+256 724
+268 740 c
+</path>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 -96 -32" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 -92 -12" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 -96 -64" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 64 0" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 64 -32" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 64 0" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 68 -12" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 64 -64" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 -96 12" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+308 708 l
+</path>
+<text matrix="1 0 0 1 -28 -44" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<use matrix="1 0 0 1 -96 12" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
+<use matrix="1 0 0 1 -96 -12" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+252 732
+304 724 c
+</path>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+248 704
+304 712 c
+</path>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier" arrow="normal/normal">
+192 652 m
+300 652 l
+</path>
+<path matrix="1 0 0 1 -96 -12" stroke="black" pen="heavier" arrow="normal/normal">
+192 664 m
+300 676 l
+</path>
+<use matrix="1 0 0 1 -96 -12" name="mark/disk(sx)" pos="192 664" size="normal" stroke="black"/>
+<text matrix="1 0 0 1 -84 -12" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
+<text matrix="1 0 0 1 -84 -68" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots </text>
+<path matrix="1 0 0 1 -96 0" stroke="black" pen="heavier" arrow="normal/normal">
+192 652 m
+244 672
+300 672 c
+</path>
+<path matrix="1 0 0 1 -96 0" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 692 m
+300 680 l
+</path>
+<path matrix="1 0 0 1 -96 0" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 692 m
+252 704
+304 700 c
+</path>
+<use matrix="1 0 0 1 -96 -8" name="mark/disk(sx)" pos="192 700" size="normal" stroke="seagreen"/>
+<text matrix="1 0 0 1 -40 -116" transformations="translations" pos="156 716" stroke="black" type="label" width="63.835" height="8.174" depth="2.32" valign="baseline" size="large" style="math">G=wp.C.F</text>
+<path matrix="1 0 0 1 -104 0" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 636 m
+208 624
+216 636
+228 624
+240 636
+244 620
+256 632
+264 620 c
+</path>
+<path matrix="1 0 0 1 4 -4" stroke="black">
+292 784 m
+292 592 l
+</path>
+</page>
+<page title="wp-wlp-angelic-demonic">
+<layer name="alpha"/>
+<view layers="alpha" active="alpha"/>
+<path layer="alpha" matrix="1 0 0 1 -96 32" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 -96 0" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 -92 20" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 -96 -32" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 64 32" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 64 0" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 64 32" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 68 20" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 64 -32" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 -96 44" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+308 708 l
+</path>
+<text matrix="1 0 0 1 -28 -12" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<use matrix="1 0 0 1 -96 44" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
+<use matrix="1 0 0 1 -96 20" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+252 732
+304 724 c
+</path>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+248 704
+304 712 c
+</path>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 652 m
+300 652 l
+</path>
+<path matrix="1 0 0 1 -96 20" stroke="black" pen="heavier" arrow="normal/normal">
+192 664 m
+300 676 l
+</path>
+<use matrix="1 0 0 1 -96 20" name="mark/disk(sx)" pos="192 664" size="normal" stroke="black"/>
+<text matrix="1 0 0 1 -84 20" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
+<text matrix="1 0 0 1 -84 -36" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots </text>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 652 m
+244 672
+300 672 c
+</path>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 692 m
+300 680 l
+</path>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 692 m
+252 704
+304 700 c
+</path>
+<use matrix="1 0 0 1 -96 24" name="mark/disk(sx)" pos="192 700" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 -104 32" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 636 m
+208 624
+216 636
+228 624
+240 636
+244 620
+256 632
+264 620 c
+</path>
+<path matrix="1 0 0 1 192 -160" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 188 -192" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 192 -160" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 192 -172" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 188 -224" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 352 -160" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 352 -192" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 352 -160" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 356 -172" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 352 -224" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 192 -156" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+308 708 l
+</path>
+<path matrix="1 0 0 1 192 -220" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+304 704 l
+</path>
+<text matrix="1 0 0 1 260 -208" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<use matrix="1 0 0 1 192 -156" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
+<use matrix="1 0 0 1 192 -164" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 192 -168" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+252 732
+304 724 c
+</path>
+<path matrix="1 0 0 1 192 -156" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+248 692
+304 704 c
+</path>
+<path matrix="1 0 0 1 192 -160" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 656 m
+304 656 l
+</path>
+<path matrix="1 0 0 1 192 -168" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 664 m
+300 676 l
+</path>
+<path matrix="1 0 0 1 192 -160" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 656 m
+264 672
+296 700 c
+</path>
+<use matrix="1 0 0 1 192 -168" name="mark/disk(sx)" pos="192 664" size="normal" stroke="seagreen"/>
+<text matrix="1 0 0 1 204 -180" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
+<text matrix="1 0 0 1 204 -224" transformations="translations" pos="244 724" stroke="seagreen" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots </text>
+<use matrix="1 0 0 1 192 -72" name="mark/disk(sx)" pos="192 636" size="normal" stroke="black"/>
+<text matrix="1 0 0 1 248 -276" transformations="translations" pos="156 716" stroke="black" type="label" width="72.44" height="8.307" depth="2.32" valign="baseline" size="large" style="math">G=wlp_d.C.F </text>
+<path matrix="1 0 0 1 184 -156" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 720 m
+216 712
+216 732
+232 720
+236 740
+256 724
+268 740 c
+</path>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 -96 0" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 -92 20" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 -96 -32" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 64 32" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 64 0" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 64 32" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 68 20" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 64 -32" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 -96 44" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+308 708 l
+</path>
+<text matrix="1 0 0 1 -28 -12" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<use matrix="1 0 0 1 -96 44" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
+<use matrix="1 0 0 1 -96 20" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+252 732
+304 724 c
+</path>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+248 704
+304 712 c
+</path>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 652 m
+300 652 l
+</path>
+<path matrix="1 0 0 1 -96 20" stroke="black" pen="heavier" arrow="normal/normal">
+192 664 m
+300 676 l
+</path>
+<use matrix="1 0 0 1 -96 20" name="mark/disk(sx)" pos="192 664" size="normal" stroke="black"/>
+<text matrix="1 0 0 1 -84 20" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
+<text matrix="1 0 0 1 -84 -36" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots </text>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 652 m
+244 672
+300 672 c
+</path>
+<path matrix="1 0 0 1 -96 32" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 692 m
+300 680 l
+</path>
+<path matrix="1 0 0 1 -96 32" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 692 m
+252 704
+304 700 c
+</path>
+<use matrix="1 0 0 1 -96 24" name="mark/disk(sx)" pos="192 700" size="normal" stroke="seagreen"/>
+<text matrix="1 0 0 1 -40 -84" transformations="translations" pos="156 716" stroke="black" type="label" width="68.831" height="8.174" depth="2.32" valign="baseline" size="large" style="math">G=wp_a.C.F</text>
+<path matrix="1 0 0 1 -104 32" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 636 m
+208 624
+216 636
+228 624
+240 636
+244 620
+256 632
+264 620 c
+</path>
+<path matrix="1 0 0 1 0 -32" stroke="darkgray" pen="heavier">
+296 832 m
+296 444 l
+</path>
+<path matrix="1 0 0 1 192 32" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 192 0" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 192 32" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 196 20" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 192 -32" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 352 32" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 352 0" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 352 32" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 356 20" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 352 -32" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 192 44" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+308 708 l
+</path>
+<text matrix="1 0 0 1 260 -12" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<use matrix="1 0 0 1 192 44" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
+<use matrix="1 0 0 1 192 20" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 192 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+252 732
+304 724 c
+</path>
+<path matrix="1 0 0 1 192 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+248 704
+304 712 c
+</path>
+<use matrix="1 0 0 1 192 20" name="mark/disk(sx)" pos="192 664" size="normal" stroke="seagreen"/>
+<text matrix="1 0 0 1 204 20" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
+<path matrix="1 0 0 1 184 32" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 636 m
+208 624
+216 636
+228 624
+240 636
+244 620
+256 632
+264 620 c
+</path>
+<path matrix="1 0 0 1 192 32" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 192 0" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 192 32" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 196 20" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 192 -32" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 352 32" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 352 0" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 352 32" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 356 20" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 352 -32" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 192 44" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+308 708 l
+</path>
+<text matrix="1 0 0 1 260 -12" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<use matrix="1 0 0 1 192 44" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
+<use matrix="1 0 0 1 192 20" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 192 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+252 732
+304 724 c
+</path>
+<path matrix="1 0 0 1 192 32" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+248 704
+304 712 c
+</path>
+<path matrix="1 0 0 1 192 32" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 652 m
+300 652 l
+</path>
+<path matrix="1 0 0 1 192 20" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 664 m
+300 676 l
+</path>
+<text matrix="1 0 0 1 204 20" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
+<text matrix="1 0 0 1 204 -36" transformations="translations" pos="244 724" stroke="seagreen" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots </text>
+<path matrix="1 0 0 1 0 16" stroke="seagreen" pen="heavier" arrow="normal/normal">
+384 668 m
+436 688
+488 716 c
+</path>
+<text matrix="1 0 0 1 248 -84" transformations="translations" pos="156 716" stroke="black" type="label" width="68.69" height="8.174" depth="2.32" valign="baseline" size="large" style="math">G=wp_d.C.F</text>
+<path matrix="1 0 0 1 184 32" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 636 m
+208 624
+216 636
+228 624
+240 636
+244 620
+256 632
+264 620 c
+</path>
+<path matrix="1 0 0 1 -96 -160" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 -100 -192" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 -96 -160" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 -96 -172" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 -100 -224" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 64 -160" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 64 -192" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 64 -160" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 68 -172" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 64 -224" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<path matrix="1 0 0 1 -96 -228" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+304 704 l
+</path>
+<text matrix="1 0 0 1 -28 -208" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<use matrix="1 0 0 1 -96 -156" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
+<use matrix="1 0 0 1 -96 -172" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
+<use matrix="1 0 0 1 -96 -72" name="mark/disk(sx)" pos="192 636" size="normal" stroke="black"/>
+<text matrix="1 0 0 1 -40 -276" transformations="translations" pos="156 716" stroke="black" type="label" width="72.581" height="8.307" depth="2.32" valign="baseline" size="large" style="math">G=wlp_a.C.F </text>
+<path matrix="1 0 0 1 -104 -156" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 720 m
+216 712
+216 732
+232 720
+236 740
+256 724
+268 740 c
+</path>
+<path matrix="1 0 0 1 -96 -160" stroke="black" pen="heavier" arrow="normal/normal">
+192 652 m
+300 652 l
+</path>
+<path matrix="1 0 0 1 -96 -172" stroke="black" pen="heavier" arrow="normal/normal">
+192 664 m
+300 676 l
+</path>
+<use matrix="1 0 0 1 -96 -156" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 -96 -156" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+308 708 l
+</path>
+<path matrix="1 0 0 1 -96 -168" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+252 732
+304 724 c
+</path>
+<path matrix="1 0 0 1 -96 -168" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+248 704
+304 712 c
+</path>
+<text matrix="1 0 0 1 -84 -180" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
+<path matrix="1 0 0 1 -96 -168" stroke="black" pen="heavier" arrow="normal/normal">
+192 692 m
+300 680 l
+</path>
+<path matrix="1 0 0 1 -96 -168" stroke="black" pen="heavier" arrow="normal/normal">
+192 692 m
+252 704
+304 700 c
+</path>
+<path matrix="1 0 0 1 -96 -156" stroke="black" pen="heavier" arrow="normal/normal">
+192 704 m
+308 708 l
+</path>
+<path matrix="1 0 0 1 -96 -168" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+252 732
+304 724 c
+</path>
+<path matrix="1 0 0 1 -96 -168" stroke="black" pen="heavier" arrow="normal/normal">
+192 716 m
+248 704
+304 712 c
+</path>
+<text matrix="1 0 0 1 -84 -180" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots </text>
+<path matrix="1 0 0 1 -96 -168" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 692 m
+300 680 l
+</path>
+<path matrix="1 0 0 1 -96 -168" stroke="seagreen" pen="heavier" arrow="normal/normal">
+192 692 m
+252 704
+304 700 c
+</path>
+<use matrix="1 0 0 1 -96 -176" name="mark/disk(sx)" pos="192 700" size="normal" stroke="seagreen"/>
+</page>
+<page title="sp-slp">
+<layer name="alpha"/>
+<view layers="alpha" active="alpha"/>
+<path layer="alpha" matrix="1 0 0 1 192 -144" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 188 -176" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 192 -144" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 192 -156" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 188 -208" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 352 -144" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 352 -176" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 352 -144" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 356 -156" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 352 -208" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<text matrix="1 0 0 1 260 -192" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<text matrix="1 0 0 1 248 -260" transformations="translations" pos="156 716" stroke="black" type="label" width="69.265" height="8.307" depth="2.32" valign="baseline" size="large" style="math">F=slp_d.C.G</text>
+<text matrix="1 0 0 1 -40 -84" transformations="translations" pos="156 716" stroke="black" type="label" width="65.655" height="8.174" depth="2.32" valign="baseline" size="large" style="math">F=sp_a.C.G
+</text>
+<path matrix="1 0 0 1 0 384" stroke="darkgray" pen="heavier">
+296 432 m
+296 44 l
+</path>
+<text matrix="1 0 0 1 -40 -96" transformations="translations" pos="156 716" stroke="black" type="label" width="84.095" height="8.965" depth="2.99" valign="baseline" size="large" style="math">F=wpo.C.G(?)</text>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 -100 0" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 -96 20" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 -100 -32" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 64 32" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 64 0" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 64 32" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 68 20" transformations="translations" pos="156 716" stroke="black" type="label" width="7.79" height="6.808" depth="0" valign="baseline" style="math">F</text>
+<text matrix="1 0 0 1 64 -32" transformations="translations" pos="156 716" stroke="black" type="label" width="14.432" height="6.808" depth="0" valign="baseline" style="math">\neg F</text>
+<text matrix="1 0 0 1 -28 -16" transformations="translations" pos="168 792" stroke="black" type="label" width="11.08" height="9.803" depth="0" valign="baseline" size="Large" style="math">C</text>
+<text matrix="1 0 0 1 -96 -16" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots </text>
+<use matrix="1 0 0 1 -32 -4" name="mark/disk(sx)" pos="240 736" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 -32 -4" stroke="black" pen="heavier" arrow="normal/normal">
+128 692 m
+192 708
+240 736 c
+</path>
+<path matrix="1 0 0 1 -32 -4" stroke="black" pen="heavier" arrow="normal/normal">
+128 720 m
+240 736 l
+</path>
+<use matrix="1 0 0 1 -32 -16" name="mark/disk(sx)" pos="240 688" size="normal" stroke="black"/>
+<path matrix="1 0 0 1 -32 -8" stroke="black" pen="heavier" arrow="normal/normal">
+128 688 m
+240 688 l
+</path>
+<use name="mark/disk(sx)" pos="496 556" size="normal" stroke="black"/>
+<path stroke="black" pen="heavier" arrow="normal/normal">
+384 568 m
+496 556 l
+</path>
+<path stroke="black" pen="heavier" arrow="normal/normal">
+384 544 m
+496 556 l
+</path>
+<text matrix="1 0 0 1 176 -172" transformations="translations" pos="244 724" stroke="black" type="label" width="2.767" height="14.999" depth="0" valign="baseline" style="math">\vdots</text>
+<use name="mark/disk(sx)" pos="496 516" size="normal" stroke="black"/>
+<path stroke="black" pen="heavier" arrow="normal/normal">
+384 544 m
+496 516 l
+</path>
+<path stroke="black" pen="heavier" arrow="normal/normal">
+384 516 m
+496 516 l
+</path>
+<text matrix="1 0 0 1 -48 0" transformations="translations" pos="400 436" stroke="black" type="label" width="227.993" height="6.918" depth="0" valign="baseline">F also contains states that are unreachable from G. </text>
+<text matrix="1 0 0 1 -12 -8" transformations="translations" pos="68 616" stroke="black" type="label" width="220.382" height="6.926" depth="1.93" valign="baseline">Final states satisfying F are all reachable from G. 
+</text>
+<path matrix="1 0 0 1 -60 -68" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+200 720 m
+216 712
+216 732
+232 720
+236 740
+256 724
+268 740 c
+</path>
+<text matrix="1 0 0 1 -12 0" transformations="translations" pos="68 600" stroke="black" type="label" width="227.232" height="6.926" depth="1.93" valign="baseline">
+The dotted line represents unreachable final states. </text>
+<path stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
+432 588 m
+440 580
+448 592
+460 580
+472 592
+476 576
+488 588
+496 576 c
+</path>
+<use name="mark/disk(sx)" pos="496 576" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="208 680" size="normal" stroke="black"/>
+</page>
+</ipe>
