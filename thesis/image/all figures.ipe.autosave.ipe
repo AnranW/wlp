@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.27">
-<info created="D:20230506130932" modified="D:20230922144102"/>
+<info created="D:20230506130932" modified="D:20230922143820"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -1263,13 +1263,9 @@ h
 304 700 c
 </path>
 <use matrix="1 0 0 1 -96 -176" name="mark/disk(sx)" pos="192 700" size="normal" stroke="seagreen"/>
-<path matrix="1 0 0 1 0 24" stroke="lightgray" pen="fat">
+<path matrix="1 0 0 1 0 16" stroke="lightgray" pen="fat">
 16 592 m
 576 592 l
-</path>
-<path matrix="1 0 0 1 0 384" stroke="darkgray" dash="dotted" pen="fat">
-296 432 m
-296 44 l
 </path>
 </page>
 <page title="sp-slp">
