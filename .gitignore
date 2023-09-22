@@ -1,5 +1,7 @@
+# ignore all auxiliary files
 */aux/
-
+# ignore ipe autosave files
+*.autosave.ipe
 
 
 ## Core latex/pdflatex auxiliary files:
