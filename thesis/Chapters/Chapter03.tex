@@ -1,10 +1,31 @@
 %************************************************
 \chapter{A Proof System}\label{ch:system} % $\mathbb{ZNR}$
 %************************************************
+We are interested in studying the \define{necessary liberal precondition}, a weakening of the weakest liberal precondition: 
+$$wlp.C.F\implies G$$
+The weaker $G$ can contain various preconditions: on the one hand, $G$ can be so general that it is satisfied by any program state; on the other hand, a $G$ that is barely weaker than $wlp.C.F$ is also not much different from the latter. 
+Alternatively, $G$ can also contain all kinds of preconditions that starting from it, any postcondition is reachable. 
+One thing we are certain about, though, is that a program with an original state satisfying $\neg G$ will terminate, and the final state can satisfy $\neg F$: 
+\begin{align*}
+wlp.C.F\implies G & = \neg G \implies \neg wlp.C.F \\
+	& = \neg G \implies wp.C.\neg F 
+	\hspace{0.3\textwidth} | \ \todo{insert theorem: wlp and wp are conjugates} 
+\end{align*}
+In the upcoming sections, we first discuss various forms that the necessary liberal precondition can take and try to identify a $G$ that is most characteristic. 
+We proceed then to propose a proof system stemming from the necessary liberal precondition and show its usefulness using an example. \todo{replace with concrete example} 
+
+\section{A Liberal Precondition Weaker Than the Weakest Liberal Precondition }
+In \autoref{sec:wlp} we defined the weakest liberal precondition and state that it characterizes all the preconditions under whose control the program either \imptt{diverges} or \imptt{will} terminate in a state satisfying $F$. 
+We are certain to use ``will'' instead of ``can'', because we view the non-determinism as demonic, so the behavior of wlp can be depicted by \autoref{fig:wlpd}. 
+
+\begin{figure}[ht!]\centering
+\includegraphics[width=\textwidth]{image/wlpd.eps}
+\caption{Weakest Liberal Precondition (Demonic Nondeterminism) }
+\label{fig:wlpd}
+\end{figure}
+
 
 \section{A Proof System}
-In this section we study the necessary liberal precondition: 
-$$wlp.C.F\implies G$$
 
 
 \section{Sketches} 

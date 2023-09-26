@@ -3,6 +3,7 @@
 %*****************************************
 %\setcounter{figure}{10}
 % \NoCaseChange{Homo Sapiens}
+\setcounter{figure}{0}
 
 \section{Hoare Logic}
 Since the beginning of the 1960s, scholars have been researching the establishment of mathematics in computation~\cite{floyd93, mccarthy93} to have a formal understanding and reasoning of programs. 
@@ -316,7 +317,7 @@ A condition under whose control the required postcondition is \imptt{reachable b
 
 
 
-\section{Weakest Liberal Preconditions}
+\section{Weakest Liberal Preconditions}\label{sec:wlp}
 While the wp-transformer excludes non-termination, the wlp-transformer takes a more liberal approach. 
 The weakest precondition delivers a precondition so that the program terminates and a state satisfying the postcondition is \imptt{reachable}. 
 The weakest liberal precondition, however, delivers a precondition so that the program either terminates satisfying the postcondition, or diverges. 
