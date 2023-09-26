@@ -16,13 +16,62 @@ We proceed then to propose a proof system stemming from the necessary liberal pr
 
 \section{A Liberal Precondition Weaker Than the Weakest Liberal Precondition }
 In \autoref{sec:wlp} we defined the weakest liberal precondition and state that it characterizes all the preconditions under whose control the program either \imptt{diverges} or \imptt{will} terminate in a state satisfying $F$. 
-We are certain to use ``will'' instead of ``can'', because we view the non-determinism as demonic, so the behavior of wlp can be depicted by \autoref{fig:wlpd}. 
+We are certain to use ``will'' instead of ``can'', because we view the non-determinism as demonic, so the behavior of wlp can be depicted by \autoref{subfig:wlpd}. 
+We can categorize the executions of the program in four ways: 
+\begin{enumerate}
+	\item the dashed arrow means non-terminating executions; 
+	\item the black arrows are executions starting from an initial state satisfying $wlp.C.F$ and only terminating in final states satisfying $F$; 
+	\item the green arrows are the executions starting from an initial state satisfying $\neg wlp.C.F$ but can terminate in states either satisfying $F$ or satisfying $\neg F$;
+	\item the red arrow represents executions starting from an initial state satisfying $\neg wlp.C.F$ and only terminating in final states satisfying $\neg F$. 
+\end{enumerate}
+
+If we were to weaken the precondition, it can happen in various ways as shown in \autoref{subfig:wlp-g-g}{\color{RoyalBlue}-9}. 
+We argue that $G$ is most characteristic, when it takes the form as in \autoref{subfig:wlp-g-gg}, because under its control, the program always \imptt{can} reach a final state satisfying $F$ if it terminates, while with an initial state satisfying $\neg G$, the program is guaranteed to terminate satisfying $\neg F$. 
+This behavior is exactly the behavior of wlp, if we were to regard the non-deterministic choice as angelic, as highlighted by the similarities between \autoref{subfig:wlp-g-gg} and 
 
 \begin{figure}[ht!]\centering
-\includegraphics[width=\textwidth]{image/wlpd.eps}
-\caption{Weakest Liberal Precondition (Demonic Nondeterminism) }
-\label{fig:wlpd}
+	\subfloat[Weakest liberal precondition (demonic nondeterminism) \label{subfig:wlpd}]{
+		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlpd.eps}
+	}
+	\hfill
+
+	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains some green arrows \label{subfig:wlp-g-g}]{
+		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-g.eps}
+	}
+	\hfill
+	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains all the green arrows \label{subfig:wlp-g-gg}]{
+		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-gg.eps}
+	}
+
+	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains some red arrows \label{subfig:wlp-g-r}]{
+		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-r.eps}
+	}
+	\hfill
+	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains all the red arrows \label{subfig:wlp-g-rr}]{
+		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-rr.eps}
+	}
+
+	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains some green arrows and some red arrows \label{subfig:wlp-g-gr}]{
+		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-gr.eps}
+	}
+	\hfill
+	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains all the green arrows and some red arrows \label{subfig:wlp-g-ggr}]{
+		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-ggr.eps}
+	}
+
+	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains some green arrows and all the red arrows \label{subfig:wlp-g-grr}]{
+		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-grr.eps}
+	}
+	\hfill
+	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains all the arrows \label{subfig:wlp-g-ggrr}]{
+		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-ggrr.eps}
+	}
+
+
+\caption{Case Distinction of Preconditions Weaker Than wlp }
+\label{fig:wlp-g}
 \end{figure}
+
 
 
 \section{A Proof System}
@@ -60,24 +109,6 @@ But negative is not pretty.
 \end{figure}
 
 
-\begin{figure}[ht!]\centering
-\includegraphics[width=\textwidth]{image/wlp-g-1.eps}
-\caption{When wlp implies G - situation 1}
-\label{fig:wlp-g-1}
-\end{figure}
-
-\begin{figure}[ht!]\centering
-\includegraphics[width=\textwidth]{image/wlp-g-2.eps}
-\caption{When wlp implies G - situation 2}
-\label{fig:wlp-g-2}
-\end{figure}
-
-
-\begin{figure}[ht!]\centering
-\includegraphics[width=\textwidth]{image/wlp-g-boarder.eps}
-\caption{Connection: nlp, wlpa, wlpd}
-\label{fig:wlp-g-2}
-\end{figure}
 
 %*****************************************
 %*****************************************

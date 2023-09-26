@@ -138,6 +138,7 @@
 % http://tex.stackexchange.com/questions/69349/spacedlowsmallcaps-in-caption-label
 % [REMOVED DUE TO OTHER PROBLEMS, SEE ISSUE #82]
 %\DeclareCaptionLabelFormat{smallcaps}{\bothIfFirst{#1}{~}\MakeTextLowercase{\textsc{#2}}}
+% \DeclareCaptionSubType*[arabic]{figure} % anran: to make autoref behavior better
 %\captionsetup{font=small,labelformat=smallcaps} % format=hang,
 \captionsetup{font=small} % format=hang,
 \usepackage{subfig}
@@ -241,6 +242,11 @@
                 }%
             % Fix to getting autorefs for subfigures right (thanks to Belinda Vogt for changing the definition)
             \providecommand{\subfigureautorefname}{\figureautorefname}%
+            % anran: to make autoref work better
+            \renewcommand*\thesubfigure{\arabic{subfigure}} % instead of using letters a,b,c use numbers 1,2,3
+            \makeatletter
+            \renewcommand\p@subfigure{\thefigure.} % add a dot before the subfigure number
+            \makeatother
     }{\relax}
 \makeatother
 
