@@ -30,7 +30,7 @@ If we were to weaken the precondition, it can happen in various ways as shown in
 We argue that $G$ is most characteristic, when it takes the form as in \autoref{subfig:wlp-g-gg}, because under its control, the program always \imptt{can} reach a final state satisfying $F$ if it terminates, while with an initial state satisfying $\neg G$, the program is \imptt{will} terminate satisfying $\neg F$. 
 This behavior is exactly the behavior of wlp, if we were to regard the non-deterministic choice as angelic, as hinted by the similarities between \autoref{subfig:wlp-g-gg} and \autoref{subfig:wp-angelic}. 
 
-\begin{figure}[h!]\centering
+\begin{figure}[ht!]\centering
 	\subfloat[Weakest liberal precondition (demonic nondeterminism) \label{subfig:wlpd}]{
 		\includegraphics[width=0.4\textwidth]{image/wlp-g/wlpd.eps}
 	}
@@ -51,7 +51,12 @@ This behavior is exactly the behavior of wlp, if we were to regard the non-deter
 	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains all the red arrows \label{subfig:wlp-g-rr}]{
 		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-rr.eps}
 	}
+\caption{Case Distinction of Preconditions Weaker Than wlp (Part 1) }
+\label{fig:wlp-g-1}
+\end{figure}
 
+\begin{figure}[ht!]\centering
+	\ContinuedFloat
 	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains some green arrows and some red arrows \label{subfig:wlp-g-gr}]{
 		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-gr.eps}
 	}
@@ -67,8 +72,8 @@ This behavior is exactly the behavior of wlp, if we were to regard the non-deter
 	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains all the arrows \label{subfig:wlp-g-ggrr}]{
 		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-ggrr.eps}
 	}
-\caption{Case Distinction of Preconditions Weaker Than wlp }
-\label{fig:wlp-g}
+\caption{Case Distinction of Preconditions Weaker Than wlp (Part 2) }
+\label{fig:wlp-g-2}
 \end{figure}
 
 Luckily, we can find statements using wlp and sp that captures this specific $G$, hence giving us a way to express wlp with angelic non-determinism (denoted by $wlp_a$) without having to define it: 
@@ -100,31 +105,10 @@ Luckily, we can find statements using wlp and sp that captures this specific $G$
 
 
 
+
 \newpage
-
-
 \section{A Proof System}
 
-
-
-
-\section{Sketches} 
-\note{In this section are informal sketches of my thoughts.}
-
-\paragraph{Possible ways to approach this}\ 
-
-\textbf{1.} $wlp.C.F \Longrightarrow G $ but restrict G by requiring that the postcondition F is always reachable. 
-Effectively this transfers wlp in demonic setting to wlp in angelic setting, the postcondition being ``guaranteed'' changes into ``reachable''. 
-Remember: both Dijkstra's wp and wlp are in demonic setting, and they are related by $wp_d.C.X = wp_d.C.true \wedge wlp_d.C.X$. 
-Explore the relationship between $wp_angelic$, $wp_demonic$, $wlp_angelic$, $wlp_demonic$? 
-Then the results in \cite{zhang22} and \cite{dijkstra90} can be linked. 
-But then who uses angelic wlp? 
-Also, does it even make sense to investigate this, since they are both extrema, specially in a quantitative setting. 
-
-\textbf{2.}$$wlp.C.F \Longrightarrow G \equiv \neg G \Longrightarrow \neg wlp.C.F \equiv \neg G \Longrightarrow  wp.C.\neg F $$ 
-This corresponds to total correctness, but negatively. 
-\hoare{\neg G}{C}{\neg F} would be a valid Hoare Triple. 
-But negative is not pretty. 
 
 \begin{figure}[ht!]\centering
 \includegraphics[width=\textwidth]{image/wp-wlp-angelic-demonic.eps}
