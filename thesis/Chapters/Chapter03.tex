@@ -1,6 +1,7 @@
 %************************************************
 \chapter{A Proof System}\label{ch:system} % $\mathbb{ZNR}$
 %************************************************
+
 We are interested in studying the \define{necessary liberal precondition}, a weakening of the weakest liberal precondition: 
 $$wlp.C.F\implies G$$
 The weaker $G$ can contain various preconditions: on the one hand, $G$ can be so general that it is satisfied by any program state; on the other hand, a $G$ that is barely weaker than $wlp.C.F$ is also not much different from the latter. 
@@ -26,12 +27,12 @@ We can categorize the executions of the program in four ways:
 \end{enumerate}
 
 If we were to weaken the precondition, it can happen in various ways as shown in \autoref{subfig:wlp-g-g}{\color{RoyalBlue}-9}. 
-We argue that $G$ is most characteristic, when it takes the form as in \autoref{subfig:wlp-g-gg}, because under its control, the program always \imptt{can} reach a final state satisfying $F$ if it terminates, while with an initial state satisfying $\neg G$, the program is guaranteed to terminate satisfying $\neg F$. 
-This behavior is exactly the behavior of wlp, if we were to regard the non-deterministic choice as angelic, as highlighted by the similarities between \autoref{subfig:wlp-g-gg} and 
+We argue that $G$ is most characteristic, when it takes the form as in \autoref{subfig:wlp-g-gg}, because under its control, the program always \imptt{can} reach a final state satisfying $F$ if it terminates, while with an initial state satisfying $\neg G$, the program is \imptt{will} terminate satisfying $\neg F$. 
+This behavior is exactly the behavior of wlp, if we were to regard the non-deterministic choice as angelic, as hinted by the similarities between \autoref{subfig:wlp-g-gg} and \autoref{subfig:wp-angelic}. 
 
-\begin{figure}[ht!]\centering
+\begin{figure}[h!]\centering
 	\subfloat[Weakest liberal precondition (demonic nondeterminism) \label{subfig:wlpd}]{
-		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlpd.eps}
+		\includegraphics[width=0.4\textwidth]{image/wlp-g/wlpd.eps}
 	}
 	\hfill
 
@@ -66,15 +67,45 @@ This behavior is exactly the behavior of wlp, if we were to regard the non-deter
 	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains all the arrows \label{subfig:wlp-g-ggrr}]{
 		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-ggrr.eps}
 	}
-
-
 \caption{Case Distinction of Preconditions Weaker Than wlp }
 \label{fig:wlp-g}
 \end{figure}
 
+Luckily, we can find statements using wlp and sp that captures this specific $G$, hence giving us a way to express wlp with angelic non-determinism (denoted by $wlp_a$) without having to define it: 
+\begin{lemma}
+\textbf{If }$wlp.C.F\implies G$\textbf{ and }$sp.C.\neg G \implies \neg F$\textbf{ then }$wlp_a.C.F \implies G$. 
+\end{lemma}
+
+\begin{lemma}
+\textbf{If }$wlp.C.F\implies G$\textbf{ and }$(P\implies G) \implies \neg(sp.C.P \implies \neg F)$\textbf{ then }$G \implies wlp_a.C.F$. 
+\end{lemma}
+
+\begin{corollary}
+\textbf{If }$wlp.C.F\implies G$\textbf{ and }$sp.C.\neg G \implies \neg F$ 
+\textbf{ and }$(P\implies G) \implies \neg(sp.C.P \implies \neg F)$
+\textbf{ then }$G = wlp_a.C.F$. 
+\end{corollary}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
 
 
 \section{A Proof System}
+
+
 
 
 \section{Sketches} 

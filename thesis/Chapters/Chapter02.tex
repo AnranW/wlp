@@ -100,10 +100,16 @@ Consequently, non-termination can only originate from either the \mathl{diverge}
 To better relate Hoare triples and Dijkstra's weakest precondition transformer, we first focus on deterministic programs. 
 The goal is to find the \imptt{necessary and sufficient} precondition such that the program is guaranteed to \imptt{terminate} in a state that satisfies the postcondition. 
 \autoref{fig:hoare-wp-det} shows it graphically alongside the figure for valid Hoare triples. 
-We can see that on the right side, the arrows from $G$ to non-termination and from $\neg G$ to $F$ are absent. 
+We can see that in \autoref{subfig:wp-det}, the arrows from $G$ to non-termination and from $\neg G$ to $F$ are absent. 
 
 \begin{figure}[ht!]\centering
-\includegraphics[width=\textwidth]{image/hoare-wp.eps}
+  \subfloat[Valid Hoare Triple \label{subfig:hoare}]{
+    \includegraphics[width=0.45\textwidth]{image/hoare.eps}
+  }
+  \hfill
+  \subfloat[Weakest precondition \label{subfig:wp-det}]{
+    \includegraphics[width=0.45\textwidth]{image/wp-det.eps}
+  }
 \caption{Valid Hoare Triple vs. Weakest Precondition (Deterministic)}
 \label{fig:hoare-wp-det}
 \end{figure}
@@ -248,10 +254,10 @@ Both choices are justifiable, we choose to follow Zhang and Kaminski's work, fav
       $x:= e $&  $F[x/e]$&  $F[x/e]$\\\hdashline[1pt/1pt]
       $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$&  $wp.C_1.(wp.C_2.F)$\\\hdashline[1pt/1pt]
 
+      {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wp.C_1.F\vee wp.C_2.F$} & {\color{Maroon}$wlp.C_1.F\wedge wlp.C_2.F$}\\\hdashline[1pt/1pt]
+
       $if\ (\varphi)\ \{C_1\} $ &  $(\varphi\wedge wp.C_1.F)$ &  $(\varphi\wedge wp.C_1.F)$\\
       $\ \ \ \ \ \ \ \  else\ \{C_2\} $&  $\ \ \ \ \ \ \ \ \vee(\neg\varphi\wedge wp.C_2.F)$ &  $\ \ \ \ \ \ \ \ \vee(\neg\varphi\wedge wp.C_2.F)$\\\hdashline[1pt/1pt]
-
-      {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wp.C_1.F\vee wp.C_2.F$} & {\color{Maroon}$wlp.C_1.F\wedge wlp.C_2.F$}\\\hdashline[1pt/1pt]
 
       {\color{Maroon}$while\ (\varphi)\ \{C'\}$} &  $lfp\ X.\ (\neg\varphi\wedge F)$ & {\color{Maroon} $gfp\ X.\ (\neg\varphi\wedge F)$}\\
        &  $\ \ \ \ \ \ \ \ \vee(\varphi\wedge wp.C'.X)$ & {\color{Maroon} $\ \ \ \ \ \ \ \ \vee(\varphi\wedge wlp.C'.X)$}\\
@@ -290,8 +296,14 @@ A condition under whose control the required postcondition is \imptt{reachable b
 % \end{figure}
 
 \begin{figure}[ht!]\centering
-\includegraphics[width=\textwidth]{image/wp-wlp-together.eps}
-\caption{Weakest Precondition (Angelic Non-determinism), Weakest Liberal Precondition (Demonic Non-determinism)}
+  \subfloat[wp (angelic non-determinism) \label{subfig:wp-angelic}]{
+    \includegraphics[width=0.45\textwidth]{image/wp-angelic.eps}
+  }
+  \hfill
+  \subfloat[wlp (demonic non-determinism) \label{subfig:wlp-demonic}]{
+    \includegraphics[width=0.45\textwidth]{image/wlp-demonic.eps}
+  }
+\caption{Weakest Precondition (Angelic Non-determinism) and Weakest Liberal Precondition (Demonic Non-determinism)}
 \label{fig:wp-wlp-together}
 \end{figure}
 
@@ -338,11 +350,44 @@ It is an easy choice, since wlp is semantically the \imptt{weakest} liberal prec
 % \label{fig:wlp-det}
 % \end{figure}
 
-% \begin{figure}[ht!]\centering
-% \includegraphics[width=0.7\textwidth]{image/wlp-nondet.eps}
-% \caption{Weakest Liberal Precondition (Demonic Non-determinism)}
-% \label{fig:wlp-nondet}
-% \end{figure}
+
+
+\section{Strongest Postconditions}\label{sec:sp}
+Following the style to define wp and wlp, Zhang and Kaminski~\cite{zhang22} (re-)defined \define{strongest postconditions} that capture the characteristics of all reachable states after the execution. 
+In essence, $sp.C.G$ is a postcondition that is satisfied by \imptt{all} states that is \imptt{reachable} from $G$. 
+The definition of the predicate transformer sp is shown in \autoref{tab:sp}. 
+
+\begin{table}[ht!]\centering
+    \begin{tabular}{l;{1pt/1pt}l}
+    \hline\hline
+      \textbf{C}&\textbf{sp.C.G}    \\ \hline
+      $skip$&   $G$   \\ \hdashline[1pt/1pt]
+      $diverge$&  $false$\\ \hdashline[1pt/1pt]
+      $x:= e $&  $\exists a. x=e[x/a] \wedge G[x/a]$\\ \hdashline[1pt/1pt]
+      $C_1;C_2$&  $sp.C_2.(sp.C_1.G)$\\ \hdashline[1pt/1pt]
+      $\{C_1\}\square \{C_2\}$ & $sp.C_1.G\vee sp.C_2.G$ \\ \hdashline[1pt/1pt]
+      $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $&  $sp.C_1.(\varphi\wedge G)\vee sp.C_2.(\neg\varphi\wedge G)$\\ \hdashline[1pt/1pt]
+      $while\ (\varphi)\ \{C'\}$&  $\neg\varphi \wedge lfp\ X. G\vee sp.C.(\varphi\wedge X)$\\
+    \hline\hline
+    \end{tabular}
+    \caption{The Strongest Postcondition Transformer~\cite{zhang22}}
+    \label{tab:sp}
+\end{table}
+
+We can also illustrate the behavior of a program controlled by sp in \autoref{fig:sp-angelic}. 
+Instead of discussing termination starting from a precondition, sp focuses on reachability of states satisfying postconditions. 
+The dotted arrow points to postconditions describing unreachable final states after the execution of $C$. 
+For example, no state would satisfy $x=2$ after the execution of $x:=1$. 
+
+\begin{figure}[ht!]\centering
+\includegraphics[width=0.45\textwidth]{image/sp-angelic.eps}
+\caption{Strongest Postcondition (Angelic Non-determinism)}
+\label{fig:sp-angelic}
+\end{figure}
+
+
+
+
 
 
 

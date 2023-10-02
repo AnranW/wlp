@@ -30,9 +30,7 @@
 
 
 %%%%			Theorem-like environments			  %%%%
-\newtheorem{theorem}{\color{Maroon}Theorem}
-\newtheorem{lemma}{\color{Maroon}Lemma}
-\newtheorem{corollary}{\color{Maroon}Corollary}
-
-
-
+\theoremstyle{definition}
+\newtheorem{theorem}{\color{Maroon}Theorem}[chapter] % [chapter] makes theorem follow chapter counting
+\newtheorem{lemma}[theorem]{\color{Maroon}Lemma} % positioning [theorem] here makes lemma continue theorem counting, if it were to be at the end of line then it becomes "lemma 2.1.1"
+\newtheorem{corollary}[theorem]{\color{Maroon}Corollary}
