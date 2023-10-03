@@ -5,6 +5,25 @@
 % \NoCaseChange{Homo Sapiens}
 \setcounter{figure}{0}
 
+
+\section{Notations}\label{sec:notation}
+Before proceeding, we clarify the notations used in this thesis, which are not uncommon in materials of computer science and mathematics. 
+Readers are encouraged to skip this section and refer back to it if needed. 
+
+Let \define{$\X$} be the set of program variables, \define{$\V$} the set of values. 
+Then a state is a (total) function\footnote{We can assign some default value to all variables to make the function here total. } from variables to values: \define{$s:\X\rightarrow\V$} and let \define{$\S$} denote the set of all states. 
+Let \define{$\P$} denote the set of predicates, where a predicate is a total function from states to truth values: 
+\define{ $F : \S\rightarrow \{true, false\}$ }\footnote{We simplify matters by assuming that there is only one interpretation over predicates to truth values. }. 
+We overload the symbols for predicates and use it to identify the set it describes: \define{$F:=\{\sigma\in\S\mid F(\sigma)\}$}. 
+As a result, it is equivalent to write \mathl{F(\sigma)}, \mathl{\sigma\vDash F}, or \mathl{\sigma\in F}, which all mean \textit{``state $s$ satisfies predicate $F$''} or \textit{``$F$ is true when system is in state $\sigma$''}. 
+
+Let \define{$\C$} denote the set of all programs, let \define{$\sigma\goto{c}\tau$} denote an execution by program $c$ from initial state $\sigma$ ending in final state $\tau$. 
+In case the execution does not terminate, we write \define{$\sigma\goto{c}\bot$}. 
+Now we can proceed to discuss proof rules and systems that are relevant for this thesis. 
+
+
+
+
 \section{Hoare Logic}
 Since the beginning of the 1960s, scholars have been researching the establishment of mathematics in computation~\cite{floyd93, mccarthy93} to have a formal understanding and reasoning of programs. 
 One of the most known methods is \define{Hoare logic}. 
@@ -93,6 +112,7 @@ When \mathl{diverge} is executed, the program goes to a state symbolizing non-te
 In our representation of GCL, non-determinism is explicitly constructed via the infix operator \mathl{\square}, whereas in its original definition, non-determinism occurs when the guards within the \mathl{if} and \mathl{while} commands are not mutually exclusive~\cite{dijkstra90}. 
 Additionally, the \mathl{if} statement in Dijkstra's GCL is equivalent to divergence in case non of its guards are true, but in our version this can no longer happen because of the Law of Excluded Middle: the predicate $\varphi$ must be either true or false, so either the ``then'' branch or the ``else'' branch is activated.
 Consequently, non-termination can only originate from either the \mathl{diverge} or the \mathl{while} command. 
+
 
 \section{Weakest Preconditions}\label{sec:wp}
 

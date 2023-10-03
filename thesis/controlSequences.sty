@@ -14,6 +14,7 @@
 \newcommand{\meet}{\curlyvee}
 \newcommand{\bigjoin}{\varcurlywedge}
 \newcommand{\bigmeet}{\varcurlyvee}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \newcommand{\tab}[1]{Table~\ref{tab:#1}}
 \newcommand{\define}[1]{{\color{RoyalBlue}{#1}}} % color to highlight definitions
@@ -34,3 +35,64 @@
 \newtheorem{theorem}{\color{Maroon}Theorem}[chapter] % [chapter] makes theorem follow chapter counting
 \newtheorem{lemma}[theorem]{\color{Maroon}Lemma} % positioning [theorem] here makes lemma continue theorem counting, if it were to be at the end of line then it becomes "lemma 2.1.1"
 \newtheorem{corollary}[theorem]{\color{Maroon}Corollary}
+
+
+
+%%%%% Symbols used in notation %%%%%
+\newcommand{\X}{\mathcal{X}} % symbol for variables
+\newcommand{\V}{\mathcal{V}} % symbol for values
+\renewcommand{\S}{\mathcal{S}} % symbol for states
+\renewcommand{\P}{\Sigma} % symbol for predicates
+\newcommand{\C}{\mathcal{C}} % symbol for programs
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%        expanding ARROWS from James; changed by Rob  14-12-10.        %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\def\comesfrom{\@transition\leftarrowfill}
+\def\goesto{\@transition\rightarrowfill}
+\def\ngoesto{\@transition\nrightarrowfill}
+\def\Goesto{\@transition\Rightarrowfill}
+\def\nGoesto{\@transition\nRightarrowfill}
+\def\xmapsto{\@transition\mapstofill}
+\def\nxmapsto{\@transition\nmapstofill}
+\def\@transition#1{\@@transition{#1}}
+\newbox\@transbox
+\newbox\@arrowbox
+\newbox\@downbox
+\def\@@transition#1#2%
+   {\setbox\@transbox\hbox
+      {\vrule height 1.5ex depth .8ex width 0ex\hskip0.25em$\scriptstyle#2$\hskip0.25em}
+   \ifdim\wd\@transbox<1.5em
+      \setbox\@transbox\hbox to 1.5em{\hfil\box\@transbox\hfil}\fi
+   \setbox\@arrowbox\hbox to \wd\@transbox{#1}
+   \ht\@arrowbox\z@\dp\@arrowbox\z@
+   \setbox\@transbox\hbox{$\mathop{\box\@arrowbox}\limits^{\box\@transbox}$}
+   \dp\@transbox\z@\ht\@transbox 10pt
+   \mathrel{\box\@transbox}}
+\def\nrightarrowfill{$\m@th\mathord-\mkern-6mu%
+  \cleaders\hbox{$\mkern-2mu\mathord-\mkern-2mu$}\hfill
+  \mkern-6mu\mathord\not\mkern-2mu\mathord\rightarrow$}
+\def\Rightarrowfill{$\m@th\mathord=\mkern-6mu%
+  \cleaders\hbox{$\mkern-2mu\mathord=\mkern-2mu$}\hfill
+  \mkern-6mu\mathord\Rightarrow$}
+\def\nRightarrowfill{$\m@th\mathord=\mkern-6mu%
+  \cleaders\hbox{$\mkern-2mu\mathord=\mkern-2mu$}\hfill
+  \mkern-6mu\mathord\not\mathord\Rightarrow$}
+\def\mapstofill{$\m@th\mathord\mapstochar\mathord-\mkern-6mu%
+  \cleaders\hbox{$\mkern-2mu\mathord-\mkern-2mu$}\hfill
+  \mkern-6mu\mathord\rightarrow$}
+\def\nmapstofill{$\m@th\mathord\mapstochar\mathord-\mkern-6mu%
+  \cleaders\hbox{$\mkern-2mu\mathord-\mkern-2mu$}\hfill
+  \mkern-6mu\mathord\not\mkern-2mu\mathord\rightarrow$}
+\makeatother %%%%% end of arrows definition
+\newcommand{\ar}[1]{\mathrel{\goesto{#1}}}            % arrow
+\newcommand{\nar}[1]{{\ngoesto{#1\;}}}                % negated arrow
+\newcommand{\goto}[1]{\stackrel{#1}{\longrightarrow}} % transition
+\newcommand{\gonotto}[1]{\mbox{$\,\,\,\not\!\!\!\stackrel{#1~}{\longrightarrow}$}} % negated tr.
