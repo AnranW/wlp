@@ -10,6 +10,22 @@
 Before proceeding, we clarify the notations used in this thesis, which are not uncommon in materials of computer science and mathematics. 
 Readers are encouraged to skip this section and refer back to it if needed. 
 
+\begin{table}[ht]\centering
+    \begin{tabular}{l;{1pt/1pt}l}
+      \hline \hline
+      \textbf{Notation}  & \textbf{Meaning} \\\hline
+      \textbf{Axiom of Assignment}     &  \hoare{F[x/e]}{x:=e}{F}   \\ 
+      \textbf{Rules of Consequence}   &  If \hoare{G}{C}{F} and $F\Rightarrow P$ then \hoare{G}{C}{P} \\
+                                      &  If \hoare{G}{C}{F} and $P\Rightarrow G$ then \hoare{P}{C}{F} \\ \hdashline[1pt/1pt]
+      \textbf{Rule of Composition}   &  If \hoare{G}{C_1}{F_1} and \hoare{F_1}{C_2}{F} then \hoare{G}{C_1;C_2}{F} \\\hdashline[1pt/1pt]
+      \textbf{Rule of Iteration}  &  If \hoare{(F\wedge B)}{C}{F} then \hoare{F}{\text{while } B \text{ do } C }{\neg B \wedge F}  \\
+      % \textbf{Rule of Condition}   &  $wp.C_1.(wp.C_2.F)$\\
+      \hline\hline
+    \end{tabular}
+    \caption{Symbols and Notations}
+    \label{tab:notation}
+\end{table}
+
 Let \define{$\X$} be the set of program variables, \define{$\V$} the set of values. 
 Then a state is a (total) function\footnote{We can assign some default value to all variables to make the function here total. } from variables to values: \define{$s:\X\rightarrow\V$} and let \define{$\S$} denote the set of all states. 
 Let \define{$\P$} denote the set of predicates, where a predicate is a total function from states to truth values: 
@@ -48,7 +64,7 @@ With deterministic programs, one initial state corresponds to one final state, a
       % \textbf{Rule of Condition}   &  $wp.C_1.(wp.C_2.F)$\\
       \hline\hline
     \end{tabular}
-    \caption{Valid Hoare Triple}
+    \caption{Inference Rules for Valid Hoare Triple}
     \label{tab:hoare}
 \end{table}
 
