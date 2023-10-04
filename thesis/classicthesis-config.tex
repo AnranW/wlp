@@ -246,9 +246,9 @@
             % Fix to getting autorefs for subfigures right (thanks to Belinda Vogt for changing the definition)
             \providecommand{\subfigureautorefname}{\figureautorefname}%
             % anran: to make autoref work better
-            \renewcommand*\thesubfigure{\arabic{subfigure}} % instead of using letters a,b,c use numbers 1,2,3
+            \renewcommand*\thesubfigure{\arabic{subfigure}} % anran: instead of using letters a,b,c use numbers 1,2,3
             \makeatletter
-            \renewcommand\p@subfigure{\thefigure.} % add a dot before the subfigure number
+            \renewcommand\p@subfigure{\thefigure.} % anran: add a dot before the subfigure number
             \makeatother
     }{\relax}
 \makeatother

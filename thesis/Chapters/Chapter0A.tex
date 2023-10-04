@@ -3,6 +3,8 @@
 %*******************************************************
 % If problems with the headers: get headings in appendix etc. right
 %\markboth{\spacedlowsmallcaps{Appendix}}{\spacedlowsmallcaps{Appendix}}
+\renewcommand\thefigure{\thechapter.\arabic{figure}}  
+
 \chapter{Symbols and Acronyms}
 
 \begin{tabularx}{\textwidth}{lXr} %{>{\raggedright\arraybackslash}Xr}
@@ -16,4 +18,19 @@
 
   quaestio philosophia && facto \\
 \end{tabularx}
+
+\chapter{Graphical Illustration of Predicate Transformers}
+
+\begin{figure}[ht!]\centering
+\includegraphics[width=\textwidth]{image/wp-wlp-angelic-demonic.eps}
+\caption{Angelic and Demonic Nondeterminism}
+\label{fig:ang-dem}
+\end{figure}
+
+
+\begin{figure}[ht!]\centering
+\includegraphics[width=\textwidth]{image/sp-slp.eps}
+\caption{sp and slp}
+\label{fig:sp-slp}
+\end{figure}
 

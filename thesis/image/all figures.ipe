@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.28">
-<info created="D:20230506130932" modified="D:20231002155634"/>
+<info created="D:20230506130932" modified="D:20231004144137"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -1684,7 +1684,6 @@ h
 296 432 m
 296 44 l
 </path>
-<text matrix="1 0 0 1 -40 -96" transformations="translations" pos="156 716" stroke="black" type="label" width="84.095" height="8.965" depth="2.99" valign="baseline" size="large" style="math">F=wpo.C.G(?)</text>
 <path matrix="1 0 0 1 -96 32" stroke="black" pen="heavier">
 128 736 m
 128 624 l
@@ -1726,9 +1725,6 @@ h
 128 688 m
 240 688 l
 </path>
-<text matrix="1 0 0 1 -48 -32" transformations="translations" pos="400 436" stroke="black" type="label" width="227.993" height="6.918" depth="0" valign="baseline">F also contains states that are unreachable from G. </text>
-<text matrix="1 0 0 1 -12 -8" transformations="translations" pos="68 616" stroke="black" type="label" width="220.382" height="6.926" depth="1.93" valign="baseline">Final states satisfying F are all reachable from G. 
-</text>
 <path matrix="1 0 0 1 -60 -68" stroke="black" dash="dotted" pen="heavier" arrow="normal/normal">
 200 720 m
 216 712
@@ -1738,8 +1734,6 @@ h
 256 724
 268 740 c
 </path>
-<text matrix="1 0 0 1 -12 0" transformations="translations" pos="68 600" stroke="black" type="label" width="227.232" height="6.926" depth="1.93" valign="baseline">
-The dotted line represents unreachable final states. </text>
 <use name="mark/disk(sx)" pos="208 680" size="normal" stroke="black"/>
 <text matrix="1 0 0 1 248 -84" transformations="translations" pos="156 716" stroke="black" type="label" width="65.515" height="8.174" depth="2.32" valign="baseline" size="large" style="math">F=sp_d.C.G</text>
 <text matrix="1 0 0 1 -40 -292" transformations="translations" pos="156 716" stroke="black" type="label" width="69.405" height="8.307" depth="2.32" valign="baseline" size="large" style="math">F=slp_a.C.G

@@ -9,32 +9,57 @@
 \section{Notations}\label{sec:notation}
 Before proceeding, we clarify the notations used in this thesis, which are not uncommon in materials of computer science and mathematics. 
 Readers are encouraged to skip this section and refer back to it if needed. 
+The notations and their meaning are listed in \autoref{tab:notation}. 
 
 \begin{table}[ht]\centering
-    \begin{tabular}{l;{1pt/1pt}l}
+    \begin{tabular}{@{}l;{1pt/1pt}l@{}}
       \hline \hline
       \textbf{Notation}  & \textbf{Meaning} \\\hline
-      \textbf{Axiom of Assignment}     &  \hoare{F[x/e]}{x:=e}{F}   \\ 
-      \textbf{Rules of Consequence}   &  If \hoare{G}{C}{F} and $F\Rightarrow P$ then \hoare{G}{C}{P} \\
-                                      &  If \hoare{G}{C}{F} and $P\Rightarrow G$ then \hoare{P}{C}{F} \\ \hdashline[1pt/1pt]
-      \textbf{Rule of Composition}   &  If \hoare{G}{C_1}{F_1} and \hoare{F_1}{C_2}{F} then \hoare{G}{C_1;C_2}{F} \\\hdashline[1pt/1pt]
-      \textbf{Rule of Iteration}  &  If \hoare{(F\wedge B)}{C}{F} then \hoare{F}{\text{while } B \text{ do } C }{\neg B \wedge F}  \\
-      % \textbf{Rule of Condition}   &  $wp.C_1.(wp.C_2.F)$\\
+      $\X$     &  set of program variables \\ \hdashline[1pt/1pt]
+      $\V$   & set of values\\ \hdashline[1pt/1pt]
+      $s:\X\rightarrow\V$   &  program states \\\hdashline[1pt/1pt]
+      $\S$  &  set of program states \\\hdashline[1pt/1pt]
+      $\C$  &  set of programs \\\hdashline[1pt/1pt]
+      $\P$  &  set of predicates \\\hdashline[1pt/1pt]
+      $F : \S\rightarrow \{true, false\}$  &  predicates \\
+      $F:=\{\sigma\in\S\mid F(\sigma)\}$ \hypertarget{(*)}{(*)} &  the set described by a predicate \\ \hdashline[1pt/1pt] 
+
+      \begin{tabular}{@{}l}
+        $F(\sigma)$ \hypertarget{(**)}{(**)}\\
+        $F(\sigma) = true$ \hypertarget{(**)}{(**)}\\ 
+        $\sigma\vDash F$   \\
+        $\sigma\in F$  
+      \end{tabular}        &  
+      \begin{tabular}{@{}l}
+        state $s$ satisfies predicate $F$; \\
+        $F$ is true when system is in state $\sigma$
+      \end{tabular}    \\  \hdashline[1pt/1pt]  
+
+      $\sigma\goto{c}\tau$   & 
+      \begin{tabular}{@{}l}
+        from initial state $\sigma$, an execution of program $c$ \\ 
+        terminates at final state $\tau$ 
+      \end{tabular}    \\  \hdashline[1pt/1pt] 
+
+      $\sigma\goto{c}\bot$  & 
+      \begin{tabular}{@{}l}     
+        from initial state $\sigma$, an execution of program $c$ \\ 
+        diverges
+      \end{tabular}    \\ 
+
       \hline\hline
     \end{tabular}
     \caption{Symbols and Notations}
     \label{tab:notation}
 \end{table}
 
-Let \define{$\X$} be the set of program variables, \define{$\V$} the set of values. 
-Then a state is a (total) function\footnote{We can assign some default value to all variables to make the function here total. } from variables to values: \define{$s:\X\rightarrow\V$} and let \define{$\S$} denote the set of all states. 
-Let \define{$\P$} denote the set of predicates, where a predicate is a total function from states to truth values: 
-\define{ $F : \S\rightarrow \{true, false\}$ }\footnote{We simplify matters by assuming that there is only one interpretation over predicates to truth values. }. 
-We overload the symbols for predicates and use it to identify the set it describes: \define{$F:=\{\sigma\in\S\mid F(\sigma)\}$}. 
-As a result, it is equivalent to write \mathl{F(\sigma)}, \mathl{\sigma\vDash F}, or \mathl{\sigma\in F}, which all mean \textit{``state $s$ satisfies predicate $F$''} or \textit{``$F$ is true when system is in state $\sigma$''}. 
+It is worth noting that we regard program states as total functions - we assume that we can assign some default values to variables in case they are undefined. 
+We also simplify matters by assuming that there is only one interpretation as a total function from predicates to truth values. 
+As a result, we can regard predicates as (total) functions from program states to truth values. 
+We also overload the symbols for predicates and use them to identify the sets they describe as shown in \hyperlink{(*)}{Line (*)}. 
 
-Let \define{$\C$} denote the set of all programs, let \define{$\sigma\goto{c}\tau$} denote an execution by program $c$ from initial state $\sigma$ ending in final state $\tau$. 
-In case the execution does not terminate, we write \define{$\sigma\goto{c}\bot$}. 
+By default, we take \mathl{F(\sigma)} to mean the same as \mathl{F(\sigma)= true} for convenience's sake as shown in \hyperlink{(**)}{Lines (**)}. 
+We also omit the use of equivalence symbol ``\mathl{\equiv}'' since we always use ``\mathl{:=}'' while defining objects, so we simply use the equation symbol ``\mathl{=}'' for equivalences instead. 
 Now we can proceed to discuss proof rules and systems that are relevant for this thesis. 
 
 
@@ -82,7 +107,9 @@ However, this while-loop will not terminate in case $x\leq 0$ in the initial sta
 \end{prooftree}}
 \end{center}
 
-Using style taken from Benjamin L. Kaminski's dissertation~\cite{kaminski19}, \autoref{fig:hoare} illustrates a valid Hoare triple: $\Sigma$ represents the set of all states, the section denoted with $G$ includes the states that satisfy the predicate $G$. The arrow from left to right denotes the execution of the program $C$. 
+Using style taken from Benjamin L. Kaminski's dissertation~\cite{kaminski19}, \autoref{fig:hoare} illustrates a valid Hoare triple: $\S$ represents the set of all states, the section denoted with $G$ includes the states that satisfy the predicate $G$. 
+The arrows from left to right denote the executions of program $C$. 
+The dashed arrows denote non-terminating executions. 
 
 \begin{figure}[ht!]\centering
 \includegraphics[width=0.5\textwidth]{image/hoare.eps}
@@ -435,7 +462,7 @@ wp and wlp are each other's conjugate:
 % \[wp.C.false = false\]
 % \[wlp.C.true = true\]
 % \[wp.C.true = preconditions that lead to termination\]
-% \[wlp.C.false = preconditions that lead to nontermination\]
+% \[wlp.C.false = preconditions that lead to non-termination\]
 
 
 \textbf{[TO BE CONTINUED]}
