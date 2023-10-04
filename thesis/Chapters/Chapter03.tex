@@ -79,21 +79,35 @@ This behavior is exactly the behavior of wlp, if we were to regard the non-deter
 \end{figure}
 
 Luckily, we can find statements using wlp and sp that captures this specific $G$, hence giving us a way to express wlp with angelic non-determinism (denoted by $wlp_a$) without having to define it: 
-\begin{lemma}
-\textbf{If }$wlp.C.F\implies G$\textbf{ and }$sp.C.\neg G \implies \neg F$\textbf{ then }$wlp_a.C.F \implies G$. 
+\begin{lemma}[Angelic wlp implies G]
+{If }$wlp.C.F\implies G${ and }$sp.C.\neg G \implies \neg F${ then }$wlp_a.C.F \implies G$. 
 \end{lemma}
 
-\begin{lemma}
-\textbf{If }$wlp.C.F\implies G$\textbf{ and }$(P\implies G) \implies \neg(sp.C.P \implies \neg F)$\textbf{ then }$G \implies wlp_a.C.F$. 
-\end{lemma}
+\begin{lemmabk}[G implies angelic wlp]
+\tab[5mm]{If }$wlp.C.F\implies G${ and }$(P\implies G) \implies \neg(sp.C.P \implies \neg F)${ then }$G \implies wlp_a.C.F$. 
+\end{lemmabk}
 
-\begin{corollary}
-\textbf{If }$wlp.C.F\implies G$\textbf{ and }$sp.C.\neg G \implies \neg F$ 
-\textbf{ and }$(P\implies G) \implies \neg(sp.C.P \implies \neg F)$
-\textbf{ then }$G = wlp_a.C.F$. 
-\end{corollary}
+\begin{corollarybk} [G equivalent to angelic wlp]
+{If }$wlp.C.F\implies G${ and }$sp.C.\neg G \implies \neg F$ 
+{ and }$(P\implies G) \implies \neg(sp.C.P \implies \neg F)$
+{ then }$G = wlp_a.C.F$. 
+\end{corollarybk}
 
 
+% bold version of the above lemmas
+% \begin{lemma}[Angelic wlp implies G]
+% \textbf{If }$wlp.C.F\implies G$\textbf{ and }$sp.C.\neg G \implies \neg F$\textbf{ then }$wlp_a.C.F \implies G$. 
+% \end{lemma}
+
+% \begin{lemma}
+% \textbf{If }$wlp.C.F\implies G$\textbf{ and }$(P\implies G) \implies \neg(sp.C.P \implies \neg F)$\textbf{ then }$G \implies wlp_a.C.F$. 
+% \end{lemma}
+
+% \begin{corollary}
+% \textbf{If }$wlp.C.F\implies G$\textbf{ and }$sp.C.\neg G \implies \neg F$ 
+% \textbf{ and }$(P\implies G) \implies \neg(sp.C.P \implies \neg F)$
+% \textbf{ then }$G = wlp_a.C.F$. 
+% \end{corollary}
 
 
 

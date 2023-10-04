@@ -15,8 +15,6 @@
 \newcommand{\bigjoin}{\varcurlywedge}
 \newcommand{\bigmeet}{\varcurlyvee}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \newcommand{\tab}[1]{Table~\ref{tab:#1}}
 \newcommand{\define}[1]{{\color{RoyalBlue}{#1}}} % color to highlight definitions
 \newcommand{\imptt}[1]{{\color{Maroon}{#1}}} % color to highlight important things
 \newcommand{\todoshow}[1]{\colorbox{lightpink!10}{\begin{minipage}{\textwidth}\color{LimeGreen}\textbf{\\TODO: }#1\end{minipage}}}
@@ -29,14 +27,7 @@
 \newcommand{\example}[1]{\begin{center}\colorbox{ForestGreen!5}{#1}\end{center}} % block with green background for example
 \newcommand{\seq}[0]{\stackrel{!}{=}} % should equal
 
-
-%%%%			Theorem-like environments			  %%%%
-\theoremstyle{definition}
-\newtheorem{theorem}{\color{Maroon}Theorem}[chapter] % [chapter] makes theorem follow chapter counting
-\newtheorem{lemma}[theorem]{\color{Maroon}Lemma} % positioning [theorem] here makes lemma continue theorem counting, if it were to be at the end of line then it becomes "lemma 2.1.1"
-\newtheorem{corollary}[theorem]{\color{Maroon}Corollary}
-
-
+\newcommand\tab[1][1cm]{\hspace*{#1}}
 
 %%%%% Symbols used in notation %%%%%
 \newcommand{\X}{\mathcal{X}} % symbol for variables
@@ -50,6 +41,43 @@
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%                    Anran's theorem style                             %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheoremstyle{anranstyle} % name
+    {\topsep}                    % Space above
+    {\topsep}                    % Space below
+    {\itshape}                   % Body font
+    {}                           % Indent amount
+    {\bfseries}                   % Theorem head font
+    {}                          % Punctuation after theorem head
+    {.5em}                       % Space after theorem head
+    {\thmname{#1}\thmnumber{ #2}\color{black}\itshape\thmnote{\ (#3)}}  % Theorem head spec (can be left empty, meaning ‘normal’)
+
+\newtheoremstyle{break} % name
+    {\topsep}                    % Space above
+    {\topsep}                    % Space below
+    {\itshape}                   % Body font
+    {}                           % Indent amount
+    {\bfseries}                   % Theorem head font
+    {}                          % Punctuation after theorem head
+    {\newline}                       % Space after theorem head
+    {\thmname{#1}\thmnumber{ #2}\color{black}\itshape\thmnote{\ (#3)}}  % Theorem head spec (can be left empty, meaning ‘normal’)
+
+%%%%      Theorem-like environments       %%%%
+\theoremstyle{anranstyle}
+% \theoremstyle{definition}
+\newtheorem{theorem}{\color{Maroon}Theorem}[chapter] % [chapter] makes theorem follow chapter counting
+\newtheorem{lemma}[theorem]{\color{Maroon}Lemma} % positioning [theorem] here makes lemma continue theorem counting, if it were to be at the end of line then it becomes "lemma 2.1.1"
+% \providecommand*\lemmaautorefname{Lemma}
+\newtheorem{corollary}[theorem]{\color{Maroon}Corollary}
+
+% break after theorem head
+\theoremstyle{break}
+\newtheorem{corollarybk}[theorem]{\color{Maroon}Corollary}
+\newtheorem{theorembk}[theorem]{\color{Maroon}Theorem} 
+\newtheorem{lemmabk}[theorem]{\color{Maroon}Lemma} 
+% \providecommand*\lemmabkautorefname{Lemma}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%        expanding ARROWS from James; changed by Rob  14-12-10.        %%%%
