@@ -52,25 +52,28 @@
     {\bfseries}                   % Theorem head font
     {}                          % Punctuation after theorem head
     {.5em}                       % Space after theorem head
-    {\thmname{#1}\thmnumber{ #2}\color{black}\itshape\thmnote{\ (#3)}}  % Theorem head spec (can be left empty, meaning ‘normal’)
+    {\thmname{#1}\thmnumber{ \thechapter.#2}\color{black}\itshape\thmnote{\ (#3)}}  % Theorem head spec (can be left empty, meaning ‘normal’)
 
-\newtheoremstyle{break} % name
-    {\topsep}                    % Space above
-    {\topsep}                    % Space below
-    {\itshape}                   % Body font
-    {}                           % Indent amount
-    {\bfseries}                   % Theorem head font
-    {}                          % Punctuation after theorem head
-    {\newline}                       % Space after theorem head
-    {\thmname{#1}\thmnumber{ #2}\color{black}\itshape\thmnote{\ (#3)}}  % Theorem head spec (can be left empty, meaning ‘normal’)
+% \newtheoremstyle{break} % name
+%     {\topsep}                    % Space above
+%     {\topsep}                    % Space below
+%     {\itshape}                   % Body font
+%     {}                           % Indent amount
+%     {\bfseries}                   % Theorem head font
+%     {}                          % Punctuation after theorem head
+%     {\newline}                       % Space after theorem head
+%     {\thmname{#1}\thmnumber{\thechapter. #2}\color{black}\itshape\thmnote{\ (#3)}}  % Theorem head spec (can be left empty, meaning ‘normal’)
 
 %%%%      Theorem-like environments       %%%%
 \theoremstyle{anranstyle}
 % \theoremstyle{definition}
-\newtheorem{theorem}{\color{Maroon}Theorem}[chapter] % [chapter] makes theorem follow chapter counting
+% \renewcommand{\thechapter}{\arabic{chapter}}
+\newtheorem{theorem}{\color{Maroon}Theorem} %[chapter] % [chapter] makes theorem follow chapter counting
+% \renewcommand*{\theoremautorefname}{Theorem \thechapter.}
 \newtheorem{lemma}[theorem]{\color{Maroon}Lemma} % positioning [theorem] here makes lemma continue theorem counting, if it were to be at the end of line then it becomes "lemma 2.1.1"
 % \providecommand*\lemmaautorefname{Lemma}
 \newtheorem{corollary}[theorem]{\color{Maroon}Corollary}
+\newtheorem{statement}[theorem]{\color{Maroon}Statement}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%        expanding ARROWS from James; changed by Rob  14-12-10.        %%%%

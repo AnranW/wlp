@@ -1,6 +1,7 @@
 %!TEX root = ../main-anran-ma.tex 
 % so I can build in this tex file too. 
 %************************************************
+% \setcounter{theorem}{6}
 \chapter{A Proof System}\label{ch:system} % $\mathbb{ZNR}$
 %************************************************
 
@@ -79,7 +80,7 @@ This behavior is exactly the behavior of wlp, if we were to regard the non-deter
 \end{figure}
 
 Dual to the semantics of wp and wlp as shown in \autoref{thm:wp} and \autoref{thm:wlp}, we can deduce the semantics of wlp with angelic non-determinism (denoted by \define{wlp$_a$}): 
-\begin{theorem}[Soundness of $wlp_a$]
+\begin{statement}[Semantics of $wlp_a$]
 \ \vspace{-1.5mm}
 \[
 wlp_a.C.F = \{ \sigma\in\S \mid
@@ -88,7 +89,7 @@ wlp_a.C.F = \{ \sigma\in\S \mid
  \}
 \]
 \label{thm:wlpa}
-\end{theorem}
+\end{statement}
 
 Luckily, we can find statements using wlp and sp that captures this specific $G$, hence giving us a way to express wlp$_a$ without having to define it: 
 \begin{lemma}[Angelic wlp implies G]
@@ -104,6 +105,7 @@ Luckily, we can find statements using wlp and sp that captures this specific $G$
 \end{lemma}
 
 \begin{proof}
+
 \end{proof}
 
 \begin{lemma}[G implies angelic wlp]
