@@ -461,11 +461,12 @@ For example, no state would satisfy $x=2$ after the execution of $x:=1$.
 
 
 \section{Soundness}
-\begin{theorem}[Soundness of wp]{\normalfont\cite{zhang22}}
+\begin{theorem}[Soundness of wp]{\normalfont\cite{zhang22}} 
 \ \vspace{-1.5mm}
 \[
 wp.C.F = \{ \sigma\in\S \mid \exists \tau. \sigma\goto{C}\tau: \  \tau\vDash F\}
 \]
+\label{thm:wp}
 \end{theorem}
 
 \todo{make sure the theorem and its content is on the same page}
@@ -477,6 +478,7 @@ wlp.C.F = \{ \sigma\in\S \mid
 \forall \tau. \sigma\goto{C}\tau:\  \tau\vDash F
  \}
 \]
+\label{thm:wlp}
 \end{theorem}
 
 \begin{theorem}[Soundness of sp]{\normalfont\cite{vries11,zhang22}}
@@ -484,6 +486,7 @@ wlp.C.F = \{ \sigma\in\S \mid
 \[
 sp.C.G = \{ \tau\in\S \mid \exists \sigma. \sigma\goto{C}\tau: \  \sigma\vDash G\}
 \]
+\label{thm:sp}
 \end{theorem}
 
 

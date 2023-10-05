@@ -78,7 +78,19 @@ This behavior is exactly the behavior of wlp, if we were to regard the non-deter
 \label{fig:wlp-g-2}
 \end{figure}
 
-Luckily, we can find statements using wlp and sp that captures this specific $G$, hence giving us a way to express wlp with angelic non-determinism (denoted by $wlp_a$) without having to define it: 
+Dual to the semantics of wp and wlp as shown in \autoref{thm:wp} and \autoref{thm:wlp}, we can deduce the semantics of wlp with angelic non-determinism (denoted by \define{wlp$_a$}): 
+\begin{theorem}[Soundness of $wlp_a$]
+\ \vspace{-1.5mm}
+\[
+wlp_a.C.F = \{ \sigma\in\S \mid
+\sigma\goto{C}\bot \ \vee\ 
+\exists \tau. \sigma\goto{C}\tau:\  \tau\vDash F
+ \}
+\]
+\label{thm:wlpa}
+\end{theorem}
+
+Luckily, we can find statements using wlp and sp that captures this specific $G$, hence giving us a way to express wlp$_a$ without having to define it: 
 \begin{lemma}[Angelic wlp implies G]
 \ \\ \vspace{-3mm}
 	\[\hspace{-2mm}
@@ -90,6 +102,9 @@ Luckily, we can find statements using wlp and sp that captures this specific $G$
 	wlp_a.C.F \implies G
 	\] 
 \end{lemma}
+
+\begin{proof}
+\end{proof}
 
 \begin{lemma}[G implies angelic wlp]
 \ \\ \vspace{-3mm}
