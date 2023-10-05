@@ -17,7 +17,7 @@ wlp.C.F\implies G & = \neg G \implies \neg wlp.C.F \\
 In the upcoming sections, we first discuss various forms that the necessary liberal precondition can take and try to identify a $G$ that is most characteristic. 
 We proceed then to propose a proof system stemming from the necessary liberal precondition and show its usefulness using an example. \todo{replace with concrete example} 
 
-\section{A Liberal Precondition Weaker Than the Weakest Liberal Precondition }
+\section{A Precondition Weaker Than the Weakest Liberal Precondition}
 In \autoref{sec:wlp} we defined the weakest liberal precondition and state that it characterizes all the preconditions under whose control the program either \imptt{diverges} or \imptt{will} terminate in a state satisfying $F$. 
 We are certain to use ``will'' instead of ``can'', because we view the non-determinism as demonic, so the behavior of wlp can be depicted by \autoref{subfig:wlpd}. 
 We can categorize the executions of the program in four ways: 
@@ -80,18 +80,41 @@ This behavior is exactly the behavior of wlp, if we were to regard the non-deter
 
 Luckily, we can find statements using wlp and sp that captures this specific $G$, hence giving us a way to express wlp with angelic non-determinism (denoted by $wlp_a$) without having to define it: 
 \begin{lemma}[Angelic wlp implies G]
-{If }$wlp.C.F\implies G${ and }$sp.C.\neg G \implies \neg F${ then }$wlp_a.C.F \implies G$. 
+\ \\ \vspace{-3mm}
+	\[\hspace{-2mm}
+	\text{ if } \\
+	wlp.C.F\implies G
+	\\\text{ and } \\ 
+	sp.C.\neg G \implies \neg F 
+	\\\text{ then } \\ 
+	wlp_a.C.F \implies G
+	\] 
 \end{lemma}
 
-\begin{lemmabk}[G implies angelic wlp]
-\tab[5mm]{If }$wlp.C.F\implies G${ and }$(P\implies G) \implies \neg(sp.C.P \implies \neg F)${ then }$G \implies wlp_a.C.F$. 
-\end{lemmabk}
+\begin{lemma}[G implies angelic wlp]
+\ \\ \vspace{-3mm}
+	\[\hspace{-5mm}
+	\text{ if } \\
+	wlp.C.F\Longrightarrow G
+	\\\text{ and } \\ 
+	(P\Longrightarrow G) \implies \neg(sp.C.P \Longrightarrow \neg F)
+	\text{ then } 
+	G \Longrightarrow wlp_a.C.F
+	\] 
+\end{lemma}
 
-\begin{corollarybk} [G equivalent to angelic wlp]
-{If }$wlp.C.F\implies G${ and }$sp.C.\neg G \implies \neg F$ 
-{ and }$(P\implies G) \implies \neg(sp.C.P \implies \neg F)$
-{ then }$G = wlp_a.C.F$. 
-\end{corollarybk}
+\begin{corollary} [G equivalent to angelic wlp]
+	\text{ if } 	$wlp.C.F\Longrightarrow G$
+	\  \vspace{-3mm}
+	\[\hspace{-6mm}
+	\\\text{ and } \\ 
+	sp.C.\neg G \Longrightarrow \neg F
+	\\\text{ and } \\
+	(P\Longrightarrow G) \implies \neg(sp.C.P \Longrightarrow \neg F)
+	\\\text{ then } \\ 
+	G = wlp_a.C.F
+	\] 
+\end{corollary}
 
 
 % bold version of the above lemmas

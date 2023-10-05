@@ -47,7 +47,14 @@ The notations and their meaning are listed in \autoref{tab:notation}.
       \begin{tabular}{@{}l}     
         from initial state $\sigma$, an execution of program $c$ \\ 
         diverges
-      \end{tabular}    \\ 
+      \end{tabular}    \\  \hdashline[1pt/1pt] 
+      
+      \begin{tabular}{@{}l}     
+        $\exists x . P : F $\\ 
+        $\forall x . P : F $
+      \end{tabular} 
+      & there exists/for all $x$ such that $P$ is true: $F$ is true
+      \\
 
       \hline\hline
     \end{tabular}
@@ -454,10 +461,30 @@ For example, no state would satisfy $x=2$ after the execution of $x:=1$.
 
 
 \section{Soundness}
-\begin{theorem}[Soundness of wp]
-yoyo
+\begin{theorem}[Soundness of wp]{\normalfont\cite{zhang22}}
+\ \vspace{-1.5mm}
+\[
+wp.C.F = \{ \sigma\in\S \mid \exists \tau. \sigma\goto{C}\tau: \  \tau\vDash F\}
+\]
 \end{theorem}
 
+\todo{make sure the theorem and its content is on the same page}
+\begin{theorem}[Soundness of wlp]{\normalfont\cite{dijkstra90}}
+\ \vspace{-1.5mm}
+\[
+wlp.C.F = \{ \sigma\in\S \mid
+\sigma\goto{C}\bot \ \vee\ 
+\forall \tau. \sigma\goto{C}\tau:\  \tau\vDash F
+ \}
+\]
+\end{theorem}
+
+\begin{theorem}[Soundness of sp]{\normalfont\cite{vries11,zhang22}}
+\ \vspace{-1.5mm}
+\[
+sp.C.G = \{ \tau\in\S \mid \exists \sigma. \sigma\goto{C}\tau: \  \sigma\vDash G\}
+\]
+\end{theorem}
 
 
 \section{Properties of wp and wlp}
