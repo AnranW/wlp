@@ -105,12 +105,30 @@ Luckily, we can find statements using wlp and sp that captures this specific $G$
 	\label{lem:wlp-g}
 \end{lemma}
 
+\vspace{-1cm}
 \begin{proof}
-\thm{lfp}
-\stm{wlpa-sound}
+\begin{align*} 
+	wlp.C.F\implies G &= \sigma\in wlp.C.F \implies \sigma\in G \\
+	& = \sigma\goto{C}\bot\vee \forall \tau.\sigma\goto{C}\tau:\tau\in F \implies \sigma\in G \\
+	&\hspace{0.45\textwidth}  \mid \thm{wlp-sound} \\
+	& = (\sigma\goto{C}\bot\Longrightarrow \sigma\in G)\vee (\forall \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G) \\
+	&\hspace{0.45\textwidth}  \\%\mid \hyperref{(**)}{(**)} \\
+	sp.C.\neg G \implies \neg F &= \tau\in sp.C.\neg G \implies \tau\in \neg F \\
+	&= \exists \sigma.\sigma\goto{C}\tau:\sigma\in\neg G \implies \tau\in\neg F \\ 
+	&\hspace{0.45\textwidth} \mid \thm{sp-sound}\\
+	&= \neg (\tau\in\neg F) \implies \neg ( \exists \sigma.\sigma\goto{C}\tau:\sigma\in\neg G ) \\
+	&= \tau\in F \implies \forall \sigma.\sigma\goto{C}\tau : \neg (\sigma\in\neg G)\\
+	&= \tau\in F \implies \forall \sigma.\sigma\goto{C}\tau : \sigma\in G\\
+	wlp_a.C.F \implies G &= \sigma\in wlp_a.C.F \implies \sigma\in G \\
+	&= \sigma\goto{C}\bot\vee \exists \tau.\sigma\goto{C}\tau:\tau\in F \implies \sigma\in G \\
+	&\hspace{0.45\textwidth} \mid \stm{wlpa-sound}\\
+	&= (\sigma\goto{C}\bot\Longrightarrow \sigma\in G )\vee (\exists \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G) \\
+yo
+\end{align*}
+
 \end{proof}
 
-\begin{lemma}{wlpa-g}[G implies angelic wlp]
+\begin{lemma}{g-wlpa}[G implies angelic wlp]
 \ \\ \vspace{-3mm}
 	\[\hspace{-5mm}
 	\text{ if } \\
@@ -122,18 +140,18 @@ Luckily, we can find statements using wlp and sp that captures this specific $G$
 	\] 
 \end{lemma}
 
-% \begin{corollary} [G equivalent to angelic wlp]
-% 	\text{ if } 	$wlp.C.F\Longrightarrow G$
-% 	\  \vspace{-3mm}
-% 	\[\hspace{-6mm}
-% 	\\\text{ and } \\ 
-% 	sp.C.\neg G \Longrightarrow \neg F
-% 	\\\text{ and } \\
-% 	(P\Longrightarrow G) \implies \neg(sp.C.P \Longrightarrow \neg F)
-% 	\\\text{ then } \\ 
-% 	G = wlp_a.C.F
-% 	\] 
-% \end{corollary}
+\begin{corollary} [G equivalent to angelic wlp]
+	\text{ if } 	$wlp.C.F\Longrightarrow G$
+	\  \vspace{-3mm}
+	\[\hspace{-6mm}
+	\\\text{ and } \\ 
+	sp.C.\neg G \Longrightarrow \neg F
+	\\\text{ and } \\
+	(P\Longrightarrow G) \implies \neg(sp.C.P \Longrightarrow \neg F)
+	\\\text{ then } \\ 
+	G = wlp_a.C.F
+	\] 
+\end{corollary}
 
 
 % bold version of the above lemmas

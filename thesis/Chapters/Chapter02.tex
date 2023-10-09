@@ -24,11 +24,11 @@ The notations and their meaning are listed in \autoref{tab:notation}.
       $\C$  &  set of programs \\\hdashline[1pt/1pt]
       $\P$  &  set of predicates \\\hdashline[1pt/1pt]
       $F : \S\rightarrow \{true, false\}$  &  predicates \\
-      $F:=\{\sigma\in\S\mid F(\sigma)\}$ \hypertarget{(*)}{(*)} &  the set described by a predicate \\ \hdashline[1pt/1pt] 
+      $F:=\{\sigma\in\S\mid F(\sigma)\}$ \hypertarget{2.*}{(*)} &  the set described by a predicate \\ \hdashline[1pt/1pt] 
 
       \begin{tabular}{@{}l}
-        $F(\sigma)$ \hypertarget{(**)}{(**)}\\
-        $F(\sigma) = true$ \hypertarget{(**)}{(**)}\\ 
+        $F(\sigma)$ \hypertarget{2.**}{(**)}\\
+        $F(\sigma) = true$ (**)\\ 
         $\sigma\vDash F$   \\
         $\sigma\in F$  
       \end{tabular}        &  
@@ -65,9 +65,9 @@ The notations and their meaning are listed in \autoref{tab:notation}.
 It is worth noting that we regard program states as total functions - we assume that we can assign some default values to variables in case they are undefined. 
 We also simplify matters by assuming that there is only one interpretation as a total function from predicates to truth values. 
 As a result, we can regard predicates as (total) functions from program states to truth values. 
-We also overload the symbols for predicates and use them to identify the sets they describe as shown in \hyperlink{(*)}{Line (*)}. 
+We also overload the symbols for predicates and use them to identify the sets they describe as shown in \hyperlink{2.*}{Line (*)}. 
 
-By default, we take \mathl{F(\sigma)} to mean the same as \mathl{F(\sigma)= true} for convenience's sake as shown in \hyperlink{(**)}{Lines (**)}. 
+By default, we take \mathl{F(\sigma)} to mean the same as \mathl{F(\sigma)= true} for convenience's sake as shown in \hyperlink{2.**}{Lines (**)}. 
 We also omit the use of equivalence symbol ``\mathl{\equiv}'' since we always use ``\mathl{:=}'' while defining objects, so we simply use the equation symbol ``\mathl{=}'' for equivalences instead. 
 Now we can proceed to discuss proof rules and systems that are relevant for this thesis. 
 
@@ -245,16 +245,15 @@ As a result, $H_k(F)$ corresponds to the weakest precondition such that the prog
 
 Then by definition: 
 \begin{equation}
-\hspace{2.8cm} wp.WHILE.F=(\exists k\geq 0: H_k(F))  \label{eq:while}
+  \hspace{2.5cm}wp.WHILE.F=(\exists k\geq 0: H_k(F)) \label{eq:while}
 \end{equation}
-
 
 The definition in \autoref{tab:wp-det}, however, uses the least fixed point of the characteristic function that is not obvious. 
 We understand the use of fixed point in two ways. 
 First, a precondition $G$ being a fixed point of the characteristic function $G= \Phi(G)=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.G)$ means that under control of $G$, termination is possible (left side of the disjunction) and repeated execution of $C'$ is possible(right side of the disjunction), since $G$ is invariant before and after the execution of $C'$. 
 Second, if we were to believe that the semantics of $WHILE$ should be equivalent to the semantics of $if(\varphi)\{C;WHILE\}else\{skip\}$, we can derive the need for fixed point: 
 \begin{align*} 
-  wp.WHILE.F    & \seq wp.(if(\varphi)\{C;WHILE\}else\{skip\}.F) \\
+  wp.WHILE.F    & \seq wp.(\text{if }(\varphi)\{C;WHILE\}\text{ else }\{skip\}.F) \\
                 & \seq \varphi\wedge wp.(C;WHILE).F \vee \neg\varphi\wedge wp.skip.F\\ 
                 & \seq \varphi\wedge wp.C.(wp.WHILE.F) \vee \neg\varphi\wedge F\\ 
                 & \seq \Phi(wp.WHILE.F)\\ 
@@ -281,11 +280,11 @@ Proof by induction.
 \vspace{-0.25cm}\paragraph{Base case: } 
   \begin{align*} 
     \Phi(false)   & = (\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.false)  & \\ 
-                  & = (\neg\varphi\wedge F)\vee(\varphi\wedge false)         && |\ (*)\\
+                  & = (\neg\varphi\wedge F)\vee(\varphi\wedge false)         && |\ \hypertarget{2.***}{\text{(***)}}\\
                   & = \neg\varphi\wedge F                                    && |\ \text{predicate calculus} \\
                   & = H_0(F)
   \end{align*}
-The equation (*) is supported by the Law of Excluded Miracle~\cite[p.18]{dijkstra76}: for all programs $C$, $wp.C.false = false$. 
+\hyperlink{2.***}{Line (***)} is supported by the Law of Excluded Miracle~\cite[p.18]{dijkstra76}: for all programs $C$, $wp.C.false = false$. 
 It states that it is impossible for a program to terminate in a state satisfying no postcondition. 
 
 \vspace{-0.25cm}\paragraph{Step case: } 
@@ -358,10 +357,10 @@ Both choices are justifiable, we choose to follow Zhang and Kaminski's work, fav
 %     \label{tab:wp-nondet}
 % \end{table}
 
-The left side of \autoref{fig:wp-wlp-together} shows wp with non-deterministic programs. 
+\autoref{subfig:wp-angelic} shows wp with non-deterministic programs. 
 Each arrow from left to right shows a \imptt{possible} execution of program $C$. 
 The effects of demonic and angelic non-determinism is highlighted in green. 
-A condition under whose control the required postcondition is \imptt{reachable but not guaranteed} is considered as a valid precondition in an angelic setting (left half of \autoref{fig:wp-wlp-together}), but not in a demonic setting (right half of \autoref{fig:wp-wlp-together}). 
+A condition under whose control the required postcondition is \imptt{reachable but not guaranteed} is considered as a valid precondition in an angelic setting (\autoref{subfig:wp-angelic}), but not in a demonic setting (\autoref{subfig:wlp-demonic}). 
 
 % \begin{figure}[ht!]\centering
 % \includegraphics[width=0.7\textwidth]{image/wp-nondet.eps}
@@ -410,7 +409,7 @@ The weakest liberal precondition, however, delivers a precondition so that the p
 The postcondition in the wlp setting is \imptt{guaranteed} upon termination, because we regard the non-deterministic choice as demonic, again favoring to establish a Galois connection~\cite{zhang22}. 
 
 We define the weakest liberal precondition transformer in \autoref{tab:wp-wlp}. 
-A graphical representation can be found on the right side of \autoref{fig:wp-wlp-together}. 
+A graphical representation can be found on \autoref{subfig:wlp-demonic}. 
 
 As preluded earlier, greatest fixed points are used to define wlp for while-loops. 
 It is an easy choice, since wlp is semantically the \imptt{weakest} liberal precondition, and $wlp.WHILE.F$ should be a fixed point of its characteristic function, similar to \autoref{sec:define loops}. 
@@ -463,7 +462,7 @@ For example, no state would satisfy $x=2$ after the execution of $x:=1$.
 
 
 \section{Soundness}
-\begin{theorem}{wp-sound}[Soundness of wp]{\normalfont\cite{zhang22}} 
+\begin{theorem}{wp-sound}[Soundness of wp]~{\normalfont\cite{zhang22}} 
 \ \vspace{-1.5mm}
 \[
 wp.C.F = \{ \sigma\in\S \mid \exists \tau. \sigma\goto{C}\tau: \  \tau\vDash F\}
@@ -471,7 +470,7 @@ wp.C.F = \{ \sigma\in\S \mid \exists \tau. \sigma\goto{C}\tau: \  \tau\vDash F\}
 \end{theorem}
 
 \todo{make sure the theorem and its content is on the same page}
-\begin{theorem}{wlp-sound}[Soundness of wlp]{\normalfont\cite{dijkstra90}}
+\begin{theorem}{wlp-sound}[Soundness of wlp]~{\normalfont\cite{dijkstra90}}
 \ \vspace{-1.5mm}
 \[
 wlp.C.F = \{ \sigma\in\S \mid
@@ -482,7 +481,7 @@ wlp.C.F = \{ \sigma\in\S \mid
 % \label{thm:wlp}
 \end{theorem}
 
-\begin{theorem}{sp-sound}[Soundness of sp]{\normalfont\cite{vries11,zhang22}}
+\begin{theorem}{sp-sound}[Soundness of sp]~{\normalfont\cite{vries11,zhang22}}
 \ \vspace{-1.5mm}
 \[
 sp.C.G = \{ \tau\in\S \mid \exists \sigma. \sigma\goto{C}\tau: \  \sigma\vDash G\}

@@ -38,7 +38,7 @@
 % in order to deactivate the time-stamp on the pages
 % ****************************************************************************************************
 \PassOptionsToPackage{eulerchapternumbers,listings,%drafting,%
-					 pdfspacing,%floatperchapter,%linedheaders,%
+					 pdfspacing,floatperchapter,%linedheaders,%
 					 subfig,beramono,eulermath,parts,dottedtoc}{classicthesis}
 % ********************************************************************
 % Available options for classicthesis.sty
@@ -110,6 +110,8 @@
 
 \PassOptionsToPackage{fleqn}{amsmath}       % math environments and more by the AMS
     \usepackage{amsmath}
+    % \renewcommand{\proofname}{\rm\bf{Proof.}}
+    
 
 % ********************************************************************
 % General useful packages
@@ -260,6 +262,7 @@
         \makeatletter
         \renewcommand\p@subfigure{\thefigure.} % anran: add a dot before the subfigure number
         \renewcommand\p@theo{\thechapter.} % anran: add a chapter number before theorem number
+        % \renewcommand\p@equation{\thechapter.} % anran: add a chapter number before equation number
         \makeatother
 
     }{\relax}
