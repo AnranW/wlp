@@ -59,14 +59,22 @@
 % \theoremstyle{definition}
 % \newtheorem{env_name}{title}[numbered_within]
 % \newtheorem{env_name}[numbered_like]{title}
-\newtheorem{theorem}{\color{Maroon}Theorem} %[chapter] % [chapter] makes theorem follow chapter counting
-% \renewcommand*{\theoremautorefname}{Theorem \thechapter.}
-\newtheorem{lemma}[theorem]{\color{Maroon}Lemma} % positioning [theorem] here makes lemma continue theorem counting, if it were to be at the end of line then it becomes "lemma 2.1.1"
-% \newcommand{\lem}[1]{{\color{RoyalBlue}Lemma~\ref{lem:#1}}}
-\newcommand{\lem}[1]{\hypertarget{lem:#1}{ }} % use instead of \label
-\newcommand{\Lem}[1]{\hyperlink{lem:#1}{Lemma~\ref{lem:#1}}} % use instead of \autoref
-\newtheorem{corollary}[theorem]{\color{Maroon}Corollary}
-\newtheorem{statement}[theorem]{\color{Maroon}Statement}
+\newtheorem{theo}{\color{Maroon}Theorem} %[chapter] % [chapter] makes theorem follow chapter counting
+\newenvironment{theorem}[1]{\begin{theo} \label{thm:#1}\hypertarget{thm:#1}{}}{\end{theo}}
+\newcommand{\thm}[1]{\hyperlink{thm:#1}{Theorem~\ref{thm:#1}}}
+
+\newtheorem{lemm}[theo]{\color{Maroon}Lemma} % positioning [theorem] here makes lemma continue theorem counting, if it were to be at the end of line then it becomes "lemma 2.1.1"
+\newenvironment{lemma}[1]{\begin{lemm} \label{lem:#1}\hypertarget{lem:#1}{}}{\end{lemm}}
+\newcommand{\lem}[1]{\hyperlink{lem:#1}{Lemma~\ref{lem:#1}}}
+% \newcommand{\lem}[1]{\label{lem:#1}\hypertarget{lem:#1}{ }} % use instead of \label
+% \newcommand{\Lem}[1]{\hyperlink{lem:#1}{Lemma~\ref{lem:#1}}} % use instead of \autoref
+\newtheorem{cor}[theo]{\color{Maroon}Corollary}
+\newenvironment{corollary}[1]{\begin{cor} \label{cor:#1}\hypertarget{cor:#1}{}}{\end{cor}}
+\newcommand{\coro}[1]{\hyperlink{cor:#1}{Corollary~\ref{cor:#1}}}
+
+\newtheorem{state}[theo]{\color{Maroon}Statement}
+\newenvironment{statement}[1]{\begin{state} \label{stm:#1}\hypertarget{stm:#1}{}}{\end{state}}
+\newcommand{\stm}[1]{\hyperlink{stm:#1}{Statement~\ref{stm:#1}}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

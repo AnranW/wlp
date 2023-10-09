@@ -79,8 +79,8 @@ This behavior is exactly the behavior of wlp, if we were to regard the non-deter
 \label{fig:wlp-g-2}
 \end{figure}
 
-Dual to the semantics of wp and wlp as shown in \autoref{thm:wp} and \autoref{thm:wlp}, we can deduce the semantics of wlp with angelic non-determinism (denoted by \define{wlp$_a$}): 
-\begin{statement}[Semantics of $wlp_a$]
+Dual to the semantics of wp and wlp as shown in \thm{wp-sound} and \thm{wlp-sound}, we can deduce the semantics of wlp with angelic non-determinism (denoted by \define{wlp$_a$}): 
+\begin{statement}{wlpa-sound}[Semantics of $wlp_a$]
 \ \vspace{-1.5mm}
 \[
 wlp_a.C.F = \{ \sigma\in\S \mid
@@ -92,7 +92,7 @@ wlp_a.C.F = \{ \sigma\in\S \mid
 \end{statement}
 
 Luckily, we can find statements using wlp and sp that captures this specific $G$, hence giving us a way to express wlp$_a$ without having to define it: 
-\begin{lemma}[Angelic wlp implies G]
+\begin{lemma}{wlpa-g}[Angelic wlp implies G]
 \ \\ \vspace{-3mm}
 	\[\hspace{-2mm}
 	\text{ if } \\
@@ -106,11 +106,11 @@ Luckily, we can find statements using wlp and sp that captures this specific $G$
 \end{lemma}
 
 \begin{proof}
-% \hyperlink{thm:wp}{Lemma \chapter.\p@theorem}
- \Lem{hk-phi}
+\thm{lfp}
+\stm{wlpa-sound}
 \end{proof}
 
-\begin{lemma}[G implies angelic wlp]
+\begin{lemma}{wlpa-g}[G implies angelic wlp]
 \ \\ \vspace{-3mm}
 	\[\hspace{-5mm}
 	\text{ if } \\
@@ -122,18 +122,18 @@ Luckily, we can find statements using wlp and sp that captures this specific $G$
 	\] 
 \end{lemma}
 
-\begin{corollary} [G equivalent to angelic wlp]
-	\text{ if } 	$wlp.C.F\Longrightarrow G$
-	\  \vspace{-3mm}
-	\[\hspace{-6mm}
-	\\\text{ and } \\ 
-	sp.C.\neg G \Longrightarrow \neg F
-	\\\text{ and } \\
-	(P\Longrightarrow G) \implies \neg(sp.C.P \Longrightarrow \neg F)
-	\\\text{ then } \\ 
-	G = wlp_a.C.F
-	\] 
-\end{corollary}
+% \begin{corollary} [G equivalent to angelic wlp]
+% 	\text{ if } 	$wlp.C.F\Longrightarrow G$
+% 	\  \vspace{-3mm}
+% 	\[\hspace{-6mm}
+% 	\\\text{ and } \\ 
+% 	sp.C.\neg G \Longrightarrow \neg F
+% 	\\\text{ and } \\
+% 	(P\Longrightarrow G) \implies \neg(sp.C.P \Longrightarrow \neg F)
+% 	\\\text{ then } \\ 
+% 	G = wlp_a.C.F
+% 	\] 
+% \end{corollary}
 
 
 % bold version of the above lemmas
