@@ -140,7 +140,7 @@ For better readability, we use an equivalent\footnote{Specifically, \mathl{if\ (
 form of GCL that is similar to modern pseudo-code as shown in \autoref{tab:gcl}. 
 
 
-\begin{table}[h!]\centering
+\begin{table}[ht!]\centering
     \begin{tabular}{clll}
     $C\ ::=$ 
       & $x:= e$ &  $\mid \ C;C $ & $\mid\  \{C\}\square \{C\} $ \\
@@ -465,7 +465,7 @@ For example, no state would satisfy $x=2$ after the execution of $x:=1$.
 \begin{theorem}{wp-sound}[Soundness of wp]~{\normalfont\cite{zhang22}} 
 \ \vspace{-1.5mm}
 \[
-wp.C.F = \{ \sigma\in\S \mid \exists \tau. \sigma\goto{C}\tau: \  \tau\vDash F\}
+wp.C.F = \{\sigma\in\S \mid \neg(\sigma\goto{C}\bot)\ \wedge\  \exists \tau\in\S.\, \sigma\goto{C}\tau: \  \tau\vDash F\}
 \]
 \end{theorem}
 
@@ -475,7 +475,7 @@ wp.C.F = \{ \sigma\in\S \mid \exists \tau. \sigma\goto{C}\tau: \  \tau\vDash F\}
 \[
 wlp.C.F = \{ \sigma\in\S \mid
 \sigma\goto{C}\bot \ \vee\ 
-\forall \tau. \sigma\goto{C}\tau:\  \tau\vDash F
+\forall \tau\in\S.\, \sigma\goto{C}\tau:\  \tau\vDash F
  \}
 \]
 % \label{thm:wlp}
@@ -484,7 +484,7 @@ wlp.C.F = \{ \sigma\in\S \mid
 \begin{theorem}{sp-sound}[Soundness of sp]~{\normalfont\cite{vries11,zhang22}}
 \ \vspace{-1.5mm}
 \[
-sp.C.G = \{ \tau\in\S \mid \exists \sigma. \sigma\goto{C}\tau: \  \sigma\vDash G\}
+sp.C.G = \{ \tau\in\S \mid \exists \sigma\in\S.\, \sigma\goto{C}\tau: \  \sigma\vDash G\}
 \]
 \label{thm:sp}
 \end{theorem}

@@ -104,44 +104,80 @@ Luckily, we can find statements using wlp and sp that captures this specific $G$
 	\] 
 	\label{lem:wlp-g}
 \end{lemma}
+The second prerequisite \mathl{sp.C.\neg G \implies \neg F } states that from $\neg G$ we are only allowed to reach $\neg F$, making sure that all green arrows as in \autoref{fig:wlp-g-1} are included in $G$. 
 
-\vspace{-1cm}
+% macros for referencing to lines in this chapter
+\newcommand{\lblth}[1]{\hypertarget{3.#1}{{\text{(#1)}}}}
+\newcommand{\refth}[1]{\hyperlink{3.#1}{{\text{Line (#1)}}}}
 \begin{proof}
 \begin{align*} 
 	wlp.C.F\implies G &= \sigma\in wlp.C.F \implies \sigma\in G \\
 	& = \sigma\goto{C}\bot\vee \forall \tau.\sigma\goto{C}\tau:\tau\in F \implies \sigma\in G \\
 	&\hspace{0.45\textwidth}  \mid \thm{wlp-sound} \\
-	& = (\sigma\goto{C}\bot\Longrightarrow \sigma\in G)\vee (\forall \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G) \\
-	&\hspace{0.45\textwidth}  \\%\mid \hyperref{(**)}{(**)} \\
-	sp.C.\neg G \implies \neg F &= \tau\in sp.C.\neg G \implies \tau\in \neg F \\
-	&= \exists \sigma.\sigma\goto{C}\tau:\sigma\in\neg G \implies \tau\in\neg F \\ 
-	&\hspace{0.45\textwidth} \mid \thm{sp-sound}\\
+	& = (\sigma\goto{C}\bot\Longrightarrow \sigma\in G)
+		\hspace{0.16\textwidth} \mid \lblth{a} \\
+	&\ \ \ \  \vee (\forall \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G) 
+		\hspace{0.017\textwidth} \mid \lblth{b} \\
+	%
+	sp.C.\neg G \Longrightarrow \neg F &= \tau\in sp.C.\neg G \implies \tau\in \neg F \\
+	&= \exists \sigma.\sigma\goto{C}\tau:\sigma\in\neg G \implies \tau\in\neg F 
+	\hspace{0.012\textwidth} \mid \thm{sp-sound}\\
 	&= \neg (\tau\in\neg F) \implies \neg ( \exists \sigma.\sigma\goto{C}\tau:\sigma\in\neg G ) \\
 	&= \tau\in F \implies \forall \sigma.\sigma\goto{C}\tau : \neg (\sigma\in\neg G)\\
-	&= \tau\in F \implies \forall \sigma.\sigma\goto{C}\tau : \sigma\in G\\
+	&= \tau\in F \implies \forall \sigma.\sigma\goto{C}\tau : \sigma\in G 
+	\hspace{0.05\textwidth} \mid \lblth{c}\\
+	%
 	wlp_a.C.F \implies G &= \sigma\in wlp_a.C.F \implies \sigma\in G \\
 	&= \sigma\goto{C}\bot\vee \exists \tau.\sigma\goto{C}\tau:\tau\in F \implies \sigma\in G \\
 	&\hspace{0.45\textwidth} \mid \stm{wlpa-sound}\\
-	&= (\sigma\goto{C}\bot\Longrightarrow \sigma\in G )\vee (\exists \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G) \\
-yo
+	&= (\sigma\goto{C}\bot\Longrightarrow \sigma\in G )
+		\hspace{0.159\textwidth} \mid \lblth{d}\\
+	&\ \ \ \  \vee (\exists \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G)
+		\hspace{0.016\textwidth} \mid \lblth{e}\\
 \end{align*}
+Doing case distinction of the first assumption (\refth{a} and \refth{b}) gives us two options: if the \refth{a} is true, then \refth{d} is obviously also true; 
+if merely \refth{b} is true, then we need to use \refth{c} as well. 
+This requires case distinction whether $F$ is empty. 
 
+If $F$ is empty, then the prerequisite of \refth{e} is trivially false, hence \refth{e} is true. 
+If $F$ is non-empty, discharging the prerequisite of \refth{e}, we can find a witness $t\in F$ such that $\sigma\goto{C}t$. 
+Because of \refth{c} we know that all initial states that lead to final state $t$ via program $C$ are in G, hence $\sigma\in G$ and we proved our goal. 
 \end{proof}
 
 
 \begin{lemma}{g-wlpa}[G implies angelic wlp]
 \ \\ \vspace{-3mm}
-	\[\hspace{-5mm}
-	\text{ if } \\
-	wlp.C.F\Longrightarrow G
-	\\\text{ and } \\ 
+	\[%\hspace{-5mm}
+	\text{ if \ \ \ \ } 
 	(P\Longrightarrow G) \implies \neg(sp.C.P \Longrightarrow \neg F)
-	\text{ then } 
+	\text{\ \ \ \  then\ \ \ \  } 
 	G \Longrightarrow wlp_a.C.F
 	\] 
 \end{lemma}
+Here, the prerequisite states that we do not allow executions starting from $G$ that \imptt{only} finish in $\neg F$, making sure that $G$ does not include the red arrows as in \autoref{fig:wlp-g-1}.  
 
-\begin{corollary} [G equivalent to angelic wlp]
+\begin{proof}
+\begin{align*} 
+	(P\Longrightarrow G) & \implies \neg(sp.C.P \Longrightarrow \neg F) \\ 
+	&= (\sigma\in P \Longrightarrow \sigma\in G) \implies \neg(\forall\tau.\tau\in sp.C.P:\tau\in\neg F) \\ 
+	&= (\sigma\in P \Longrightarrow \sigma\in G) \implies \exists\tau.\tau\in sp.C.P:\tau\in F \\ 
+	&= (\sigma\in P \Longrightarrow \sigma\in G) \implies \exists\tau.(\exists \sigma. \sigma\goto{C}\tau: \  \sigma\in P):\tau\in F 
+		\hspace{0.04\textwidth}\mid\lblth{f}\\ 
+	%
+	G\Longrightarrow & wlp_a.C.F \\ 
+	&= \sigma\in G\implies\sigma\in wlp_a.C.F\\
+	&=\sigma\in G\implies (\sigma\goto{C}\bot\vee \exists \tau.\sigma\goto{C}\tau:\tau\in F) 
+		\hspace{0.195\textwidth}\mid\lblth{g}\\
+\end{align*}
+Assume $\sigma\in G$, then we can construct set $P=\{\sigma\}$ such that the prerequisits in \refth{f} holds. 
+Now we can find witnesses $t$ and $s$ such that $s\goto{C}t$ and $s\in P$, $t\in F$. 
+
+Since $P$ is a singleton set, $s$ can only be $\sigma$. 
+Then we have found a witness $t$ such that $\sigma\goto{C}t$ and $t\in F$, satisfying the postrequisite of \refth{g}. 
+\end{proof}
+
+
+\begin{corollary}{g=wlp}[G equivalent to angelic wlp]
 	\text{ if } 	$wlp.C.F\Longrightarrow G$
 	\  \vspace{-3mm}
 	\[\hspace{-6mm}
