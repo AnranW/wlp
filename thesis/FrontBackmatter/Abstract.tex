@@ -1,3 +1,5 @@
+%!TEX root = ../main-anran-ma.tex 
+% so I can build in this tex file too. 
 %*******************************************************
 % Abstract
 %*******************************************************
@@ -19,8 +21,17 @@ This is where the abstract goes.
 Kurze Zusammenfassung des Inhaltes in deutscher Sprache\dots
 \end{otherlanguage}
 
-%TODO: add chinese abstract?
+\vfill
 
-\endgroup
+\begin{otherlanguage}{chinese}
+% \pdfbookmark[1]{Zusammenfassung}{Zusammenfassung}
+
+\CJK{UTF8}{gbsn}
+\chapter*{摘要}
+这里是中文摘要   hi
+
+\end{otherlanguage}
 
 \vfill
+
+\endgroup
