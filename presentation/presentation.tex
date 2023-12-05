@@ -14,7 +14,7 @@
 \usepackage{eurosym}
 \usepackage{listings}
 \usepackage{lstautogobble}
-\usepackage{microtype}
+% \usepackage{microtype} 
 \usepackage{textcomp}
 \usepackage{units}
 \DeclareSymbolFont{frenchscript}{OMS}{ztmcm}{m}{n}
@@ -40,15 +40,14 @@
 	morekeywords={int8_t,uint8_t,int16_t,uint16_t,int32_t,uint32_t,int64_t,uint64_t,size_t,ssize_t,off_t,intptr_t,uintptr_t,mode_t}
 }
 
-\title[here is short]{Necessary Liberal Preconditions}
-
-\subtitle{Here is a subtitle \\ and linebreak if you like}
+\title{Waling Through My Thesis}
+\subtitle{Necessary Liberal Preconditions: A Proof System}
 \author{Anran Wang}
-\institute{Department of Informatics\\Your Uni}
+\institute{Department of Informatics\\ Technical University of Munich}
 \date{\today}
 
 % here you can have a logo, but not necessary
-\titlegraphic{\includegraphics[width=0.15\textwidth]{images/onion.png}}
+\titlegraphic{\includegraphics[width=0.15\textwidth]{images/tum-logo.png}}
 
 \begin{document}
 
@@ -63,41 +62,92 @@
 	\tableofcontents
 \end{frame}
 
-\section{Introduction}
-\subsection{The name for subsection, it is hidden from every slide currently but you can change it in .sty file}
+\section{Thesis Structure}
+% \subsection{Overview}
+\begin{frame}[fragile]
+	\frametitle{Overview: 3 Parts, 30 Pages, N Images}
+	\begin{minipage}{0.49\linewidth}	
+		\begin{figure}
+	    \centering\includegraphics[width=0.75\textwidth]{images/toc-split.png} 
+	  \end{figure}
+	\end{minipage}
+\begin{minipage}{0.49\linewidth}
+	Currently divided into three parts: 
+		\begin{enumerate}
+		    \item[] \hl{Part I} Definitions, explanations, illustrations. 
+		    \item[] \hl{Part II} Proposals, proofs, examples. 
+		    \item[] \hl{Part III} Tables, figures, acronyms. 
+		\end{enumerate}
+	\end{minipage}
+\end{frame}
+
+% \subsection{Contents by Chapter}
+\begin{frame}[fragile]
+	\frametitle{Part I: Hoare Triples, Weakest Preconditions, Weakest Liberal
+Preconditions}
+	\begin{minipage}[t]{0.49\linewidth}	
+		\begin{figure}
+			\centering \includegraphics[width=\textwidth]{images/part1.png} 
+	  \end{figure}
+	\end{minipage}
+	\begin{minipage}[t]{0.5\linewidth}
+		\begin{enumerate}
+			\item[] \hl{Chapter 1: }Background 
+			\begin{itemize}
+				\item Convince that proof systems are important
+				\item Show the structure of the thesis
+			\end{itemize}
+			\item[] \hl{Chapter 2: }Preliminaries
+			\begin{itemize}
+				\item Table of Notations 
+				\item Definitions of Hoare Triples, GCL, wp, wlp, sp
+				\begin{itemize}
+					\item Explain the use of lfp and gfp
+				\end{itemize}
+				\item Soundness: semantics of wp, wlp, sp
+				\item Properties of wp and wlp that will be used in part II (forthcoming)
+			\end{itemize}
+		\end{enumerate}
+	\end{minipage}
+\end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Here is the title for this frame}
-	You can have text here, or have text inside of itemize:
-	\begin{itemize}
-	    \item You can use itemize environment to have a dot in the front. 
-	    \item And you can use maximum 2 layers of itemize environment. 
-	    \begin{itemize}
-	        \item items here
-	        \item and so much more
-	        \item you can have image here or outside of the itemize environment, with or without caption
-	    \end{itemize}
-	\end{itemize}
+	\frametitle{Part II: Necessary Liberal Preconditions}
+	\begin{minipage}[t]{0.49\linewidth}	
+		\begin{figure}
+		\centering \includegraphics[width=\textwidth]{images/part2.png} 
+	  \end{figure}
+	\end{minipage}
+	\begin{minipage}[t]{0.5\linewidth}
+		\begin{enumerate}
+				\item[] \hl{Chapter 3: }A Proof System
+				\begin{itemize}
+					\item (Forthcoming) Literature review: the similar triples that have been studied
+					\item Studying a special $G$ such that $wlp.C.F \implies G$: establish wlp with angelic non-determinism using $G$ and sp. 
+					\item Studying $G$ in general: proving things negatively
+				\end{itemize}
+			\item[] \hl{Chapter 4: }Conclusion
+				\begin{itemize}
+					\item Conclusion (forthcoming)
+					\item Future work (forthcoming)
+				\end{itemize}
+	\end{enumerate}
+	\end{minipage}
 	
-	\begin{figure}
-        \centering
-        \includegraphics[width=0.3\textwidth]{images/dst.png} 
-    \end{figure}
 \end{frame}
-
-\subsection{If you have multiple subsections, you will have multiple lines on top of the slide}
 \begin{frame}[fragile]
-	\frametitle{Here is how you have an image with captions and sources}
-	\begin{figure}
-	    \centering
-	    \includegraphics[width=0.3\textwidth]{images/dst.png}
-	    \vspace{-3mm}\caption{Caption for your image, position can be changed via $\backslash$ vspace and $\backslash$ hspace \footnote{\tiny Source: you can put your source here if you like }}
-	    \label{dst}
-	\end{figure}
-	You can use label and reference to it: Figure \ref{dst}, but in presentations I find it unnecessary. 
-\end{frame}
+	\frametitle{Part III: Appendix}
+	\begin{minipage}[t]{0.49\linewidth}	
+		\begin{figure}
+			\centering \includegraphics[width=\textwidth]{images/part3.png} 
+		\end{figure}
+	\end{minipage}
+	\begin{minipage}[t]{0.49\linewidth}
 
-\section{Body}
+	\end{minipage}
+	
+\end{frame}
+\section{Contribution}
 \subsection{More on images}
 
 \begin{frame}[fragile]
