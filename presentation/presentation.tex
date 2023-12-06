@@ -1,4 +1,5 @@
 \documentclass[aspectratio=169]{beamer}
+% \documentclass[aspectratio=43]{beamer}
 %\documentclass[compact]{beamer}
 \usetheme{Hamburg}
 
@@ -10,7 +11,7 @@
 
 \usepackage[english]{babel}
 %\usepackage[ngerman]{babel}
-
+\usepackage{emoji}
 \usepackage{eurosym}
 \usepackage{listings}
 \usepackage{lstautogobble}
@@ -60,18 +61,19 @@
 	% this hides the subsection
     % \tableofcontents[hidesubsections]
 	\tableofcontents
+	\textit{Link to repository:} {\color{tumblue}\small\url{https://github.com/AnranW/wlp/blob/main/thesis/main-anran-ma.pdf}}
 \end{frame}
 
 \section{Thesis Structure}
 % \subsection{Overview}
 \begin{frame}[fragile]
 	\frametitle{Overview: 3 Parts, 30 Pages, N Images}
-	\begin{minipage}{0.49\linewidth}	
+	\begin{minipage}{0.42\linewidth}	
 		\begin{figure}
-	    \centering\includegraphics[width=0.85\textwidth]{images/toc-split.png} 
+	    \centering\includegraphics[width=\textwidth]{images/toc-split.png} 
 	  \end{figure}
 	\end{minipage}
-\begin{minipage}{0.49\linewidth}
+\begin{minipage}{0.57\linewidth}
 	Currently divided into three parts: 
 		\begin{enumerate}
 		    \item[] \hl{Part I} Definitions, explanations, illustrations. 
@@ -105,7 +107,7 @@ Preconditions}
 					\item Explain the use of lfp and gfp
 				\end{itemize}
 				\item Soundness: semantics of wp, wlp, sp
-				\item Properties of wp and wlp that will be used in part II (forthcoming)
+				\item Properties of wp and wlp that will be used in part II 
 			\end{itemize}
 		\end{enumerate}
 	\end{minipage}
@@ -122,14 +124,14 @@ Preconditions}
 		\begin{enumerate}
 				\item[] \hl{Chapter 3: }A Proof System
 				\begin{itemize}
-					\item (Forthcoming) Literature review: the similar triples that have been studied
+					\item Literature review: the similar triples that have been studied 
 					\item Studying a special $G$ such that $wlp.C.F \implies G$: establish wlp with angelic non-determinism using $G$ and sp. 
 					\item Studying $G$ in general: proving things negatively
 				\end{itemize}
 			\item[] \hl{Chapter 4: }Conclusion
 				\begin{itemize}
-					\item Conclusion (forthcoming)
-					\item Future work (forthcoming)
+					\item Conclusion 
+					\item Future work
 				\end{itemize}
 	\end{enumerate}
 	\end{minipage}
@@ -139,12 +141,12 @@ Preconditions}
 	\frametitle{Part III: Appendix}
 	\begin{minipage}[t]{0.49\linewidth}	
 		\begin{figure}
-			\centering \includegraphics[width=1.05\textwidth]{images/part3.png} 
+			\centering \includegraphics[width=\textwidth]{images/part3.png} 
 		\end{figure}
 	\end{minipage}
 	\begin{minipage}[t]{0.49\linewidth}
 		\begin{itemize}
-			\item Symbols and Acronyms (delete?)
+			\item Symbols and Acronyms
 			\item Graphical illustration of predicate transformers (all combinations)
 		\end{itemize}
 	\end{minipage}
@@ -165,17 +167,26 @@ Preconditions}
 
 \begin{frame}
 	\frametitle{Current TODOs}
+	Tons of refining and correcting, plus: 
 	
+	\medskip
+	(Code: \emoji{full-moon-face}-happy for now, \emoji{last-quarter-moon}-halfway there, \emoji{new-moon-face}-to be continued)
+
+	\begin{minipage}[t]{0.49\linewidth}
+		\begin{figure} 
+		\centering\includegraphics[width=\textwidth]{images/progress1.jpg}
+		\end{figure}
+	\end{minipage}
+	\begin{minipage}[t]{0.49\linewidth}
+		\begin{figure} 
+		\centering\includegraphics[width=\textwidth]{images/progress2.jpg}
+		\end{figure}
+	\end{minipage}
+
 	\vspace{10mm}
 	\Large
 	\hfill\textit{Thank you!}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Link to Repository}
-	\bibliographystyle{plain}
-	\nocite{*}
-	\bibliography{literature}
-\end{frame}
 
 \end{document}
