@@ -29,6 +29,10 @@
 
 \newcommand\tab[1][1cm]{\hspace*{#1}}
 
+\newcommand{\mylabel}[1]{\hypertarget{lab:#1}{\ \mbox{{\scriptsize #1}}}}
+\newcommand{\myref}[1]{\hyperlink{lab:#1}{\scriptsize #1}}
+\newcommand{\moreref}[2]{\hyperlink{#1}{#1~\ref{#2}}}
+
 %%%%% Symbols used in notation %%%%%
 \newcommand{\X}{\mathcal{X}} % symbol for variables
 \newcommand{\V}{\mathcal{V}} % symbol for values

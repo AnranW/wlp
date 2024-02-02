@@ -10,12 +10,11 @@
 % http://postcards.miede.de
 % ****************************************************************************************************
 %packages added by Anran
-
 \usepackage{amssymb}
 \usepackage{amsthm} % for theorem environment
 \usepackage{dsfont}
 \usepackage{stmaryrd}
-\usepackage{controlSequences}
+\usepackage{_controlSequences}
 \usepackage{comment}
 % \usepackage{hhline}
 \usepackage{ebproof} % typesetting inference rules 
@@ -26,6 +25,8 @@
 % \usepackage{xeCJK} % for chinese
 \usepackage{CJKutf8} % chinese
 % \setCJKmainfont{SimSun}
+
+
 % ****************************************************************************************************
 % 0. Set the encoding of your files. UTF-8 is the only sensible encoding nowadays. If you can't read
 % äöüßáéçèê∂åëæƒÏ€ then change the encoding setting in your editor, not the line below. If your editor
@@ -96,8 +97,8 @@
 
 \usepackage{csquotes}
 \PassOptionsToPackage{%
-    %backend=biber, %instead of bibtex
-	backend=bibtex8,bibencoding=ascii,%
+    backend=biber, %instead of bibtex
+	% backend=bibtex8,bibencoding=ascii,%
 	language=auto,%
 	style=numeric-comp,%
     %style=authoryear-comp, % Author 1999, 2010
@@ -124,7 +125,7 @@
 \usepackage{scrhack} % fix warnings when using KOMA with listings package
 \usepackage{xspace} % to get the spacing after macros right
 \usepackage{mparhack} % get marginpar right
-\usepackage{fixltx2e} % fixes some LaTeX stuff --> since 2015 in the LaTeX kernel (see below)
+% \usepackage{fixltx2e} % fixes some LaTeX stuff --> since 2015 in the LaTeX kernel (see below)
 %\usepackage[latest]{latexrelease} % will be used once available in more distributions (ISSUE #107)
 \PassOptionsToPackage{printonlyused,smaller}{acronym}
     \usepackage{acronym} % nice macros for handling all acronyms in the thesis
@@ -153,7 +154,6 @@
 % ****************************************************************************************************
 % packages added by Anran, this needs to load after tabularx
 \usepackage{arydshln} % to provide dashed lines in tablular
-
 
 % ****************************************************************************************************
 % 5. Setup code listings
@@ -315,3 +315,5 @@
 %\usepackage[default,osfigures]{opensans} % scale=0.95
 %\usepackage[sfdefault]{FiraSans}
 % ****************************************************************************************************
+% packages added by Anran, somehow these packages need to be at the end
+\usepackage{svg}

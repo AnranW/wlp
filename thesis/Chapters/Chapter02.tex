@@ -19,12 +19,12 @@ The notations and their meaning are listed in \autoref{tab:notation}.
       \textbf{Notation}  & \textbf{Meaning} \\\hline
       $\X$     &  set of program variables \\ \hdashline[1pt/1pt]
       $\V$   & set of values\\ \hdashline[1pt/1pt]
-      $s:\X\rightarrow\V$   &  program states \\\hdashline[1pt/1pt]
+      $\sigma:\X\rightarrow\V$   &  program state \\\hdashline[1pt/1pt]
       $\S$  &  set of program states \\\hdashline[1pt/1pt]
       $\C$  &  set of programs \\\hdashline[1pt/1pt]
       $\P$  &  set of predicates \\\hdashline[1pt/1pt]
-      $F : \S\rightarrow \{true, false\}$  &  predicates \\
-      $F:=\{\sigma\in\S\mid F(\sigma)\}$ \hypertarget{2.*}{(*)} &  the set described by a predicate \\ \hdashline[1pt/1pt] 
+      $F : \S\rightarrow \{true, false\}$  &  predicate \\
+      $F:=\{\sigma\in\S\mid F(\sigma)\}$ \hypertarget{2.*}{(*)} &  the set described by a predicate $F\in\P$ \\ \hdashline[1pt/1pt] 
 
       \begin{tabular}{@{}l}
         $F(\sigma)$ \hypertarget{2.**}{(**)}\\
@@ -53,7 +53,12 @@ The notations and their meaning are listed in \autoref{tab:notation}.
         $\exists x . P : F $\\ 
         $\forall x . P : F $
       \end{tabular} 
-      & there exists/for all $x$ such that $P$ is true: $F$ is true
+      & if \ \ 
+      \begin{tabular}{@{}c}
+        there exists \\
+        for all
+      \end{tabular}
+      $x$ such that $P$ is true, then $F$ is true
       \\
 
       \hline\hline
@@ -68,7 +73,7 @@ As a result, we can regard predicates as (total) functions from program states t
 We also overload the symbols for predicates and use them to identify the sets they describe as shown in \hyperlink{2.*}{Line (*)}. 
 
 By default, we take \mathl{F(\sigma)} to mean the same as \mathl{F(\sigma)= true} for convenience's sake as shown in \hyperlink{2.**}{Lines (**)}. 
-We also omit the use of equivalence symbol ``\mathl{\equiv}'' since we always use ``\mathl{:=}'' while defining objects, so we simply use the equation symbol ``\mathl{=}'' for equivalences instead. 
+We use the equation symbol \mathl{=} to denote equivalences, and the symbols \mathl{:=} for assignments and definitions. 
 Now we can proceed to discuss proof rules and systems that are relevant for this thesis. 
 
 
@@ -111,7 +116,8 @@ However, this while-loop will not terminate in case $x\leq 0$ in the initial sta
 \begin{center}
 \colorbox{ForestGreen!5}{
 \begin{prooftree}
-  \infer0[\ \ \textbf{Axiom of Assignment}]{\hoarenm{x\leq 1}{x:=x*2}{x\leq 2}}
+  \infer0[]{}
+  \infer1[\ \ \textbf{Axiom of Assignment}]{\hoarenm{x\leq 1}{x:=x*2}{x\leq 2}}
   \infer1[\ \ \textbf{Rule of Iteration}]{\hoarenm{x\leq 2}{\text{while } x\leq 1 \text{ do } x:=x*2}{1<x\leq 2}}
 \end{prooftree}}
 \end{center}
@@ -260,11 +266,12 @@ Second, if we were to believe that the semantics of $WHILE$ should be equivalent
 \end{align*}
 
 The question then arises: can we define wp with any fixed point? 
-The answer is no and we show it by verifying that the definition in \autoref{tab:wp-det} coincides with Dijkstra's definition at the beginning of this chapter.\footnote{In fact, Dijkstra and Scholten\cite{dijkstra90} later also gave definitions for wp and wlp in an equivalent form of least and greatest fixed points, they called it "strongest" and "weakest solution". They also proved that it is necessary to use the extreme solutions. }
+The answer is no and we show it by verifying that the definition in \autoref{tab:wp-det} coincides with Dijkstra's definition at the beginning of this chapter.\footnote{In fact, Dijkstra and Scholten~\cite{dijkstra90} later also gave definitions for wp and wlp in an equivalent form of least and greatest fixed points, they called it "strongest" and "weakest solution". They also proved that it is necessary to use the extreme solutions. }
 We borrow a theorem from domain theory that yields a computation for least fixed points, provided they exist: 
 \begin{theorem}{lfp}
-hello test 
+$lfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(false)$
 \textbf{[Insert theorem]}%TODO
+\todo{add theorem}
 
 \end{theorem}
 
@@ -302,11 +309,11 @@ It states that it is impossible for a program to terminate in a state satisfying
 
 \end{proof}
 
-Thus by identifying the least fixed point, we find a $k$ that satisfies \autoref{eq:while}.
-The advantage of using least fixed point to define wp is that there are heuristics to find it, whereas \autoref{eq:while} excels at giving intuitions for the preconditions that guarantee loop termination. 
+Thus, by identifying the least fixed point, we find a $k$ that satisfies \autoref{eq:while}.
+The advantage of using the least fixed point to define wp is that there are heuristics to find it, whereas \autoref{eq:while} excels at giving intuitions for the preconditions that guarantee loop termination. 
 Essentially, they express the same predicate, i.e. the ``weakest'' precondition for while-loops which is unique. 
 Consequently, it means that we can not use other fixed points to define $wp.WHILE$, which are weaker than the least fixed point. 
-For the same reason, we will see that greatest fixed point is necessary to define weakest liberal precondition. 
+For the same reason, we will see that greatest fixed point is necessary to define the weakest liberal precondition. 
 
 
 \subsection{The Non-deterministic Case: Angelic vs. Demonic}\label{sec:wp-nondet}
@@ -414,6 +421,11 @@ A graphical representation can be found on \autoref{subfig:wlp-demonic}.
 As preluded earlier, greatest fixed points are used to define wlp for while-loops. 
 It is an easy choice, since wlp is semantically the \imptt{weakest} liberal precondition, and $wlp.WHILE.F$ should be a fixed point of its characteristic function, similar to \autoref{sec:define loops}. 
 
+\begin{theorem}{gfp}
+  $gfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(true)$
+  \textbf{[Insert theorem]}%TODO
+  \todo{add theorem}
+\end{theorem}
 
 %done{Explain the use of gfp. Possibly relate to page 185 of Dijkstra and Scholten 1990 book. }
 
@@ -459,9 +471,47 @@ For example, no state would satisfy $x=2$ after the execution of $x:=1$.
 \end{figure}
 
 
+\section{Big Step Semantics}
+To express the meaning of programs, we choose \define{big-step semantics} to describe executions of a program. 
+We take inspiration from Nipkow and Klein's book~\cite{nipkow2014} and define our big-step semantics in \autoref{tab:big-step}. 
+
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+\begin{table}[t]
+  \normalsize
+  \centering
+  \framebox{
+  $\begin{array}{@{}ccc@{}}
+  \displaystyle\frac{}{\sigma\ar{skip}\sigma} skip &
+  % \displaystyle\frac{\tau.x=\sigma.e}{\sigma\ar{x:=e}\tau} assign &
+  \displaystyle\frac{}{\sigma\ar{x:=e}\sigma(x:=\sigma.e)} assign &
+  \\[3ex]
+  \displaystyle\frac{\sigma\ar{C_1}\mu,\ \mu\ar{C_2}\tau}{\sigma\ar{C_1;C_2}\tau} seq &
+  \displaystyle\frac{\sigma\ar{C_i}\tau,\ i\in\{1,2\}}{\sigma\ar{C_1\square C_2}\tau} par_i 
+  \\[3ex]
+  \displaystyle\frac{\sigma\in\varphi,\ \sigma\ar{C_1}\tau}{\sigma\ar{IF}\tau} if_1 &
+  \displaystyle\frac{\sigma\notin\varphi,\ \sigma\ar{C_2}\tau}{\sigma\ar{IF}\tau} if_0 
+  \\[3ex]
+  \displaystyle\frac{\sigma\notin\varphi}{\sigma\ar{WHILE}\sigma} while_0 &
+  \displaystyle\frac{\sigma\in\varphi,\ \sigma\goto{C}\mu,\ \mu\goto{WHILE}\tau}{\sigma\ar{WHILE}\sigma} while_n
+  \\[3ex]
+  \text{ where } IF= if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}\text{, }
+  & WHILE= while\ (\varphi)\ do\ C
+  \end{array}$}
+  \caption{Big Step Semantics}
+  \label{tab:big-step}
+\end{table}
+
+Note that in rule $assign$, we have a formula $\sigma(x:=\sigma.e)$. 
+Here we overload the symbol for function application \mathl{.} so that it applies to \define{expressions} as well, but without specifying the set of expressions hence restricting our programming language. 
+An expression $e$ would be evaluated in a usual way, e.g. $x+y$ at state $\sigma$ would evaluate to $\sigma.x + \sigma.y$. 
+
+We also use symbols $\sigma(x:=v)$ to denote a state where the value of variable $x$ is $v$, and all other variables have the same values as in $\sigma$.
+In our big-step semantics, non-termination of $C$ is equivalent to the nonexistence of state $\tau$ such that $\sigma\goto{C}\tau$. 
+With the definition of big-step semantics, we can precisely express the soundness of our predicate transformers in the following section. 
 
 
 \section{Soundness}
+\todo{remove the $\bot$}
 \begin{theorem}{wp-sound}[Soundness of wp]~{\normalfont\cite{zhang22}} 
 \ \vspace{-1.5mm}
 \[
@@ -491,9 +541,14 @@ sp.C.G = \{ \tau\in\S \mid \exists \sigma\in\S.\, \sigma\goto{C}\tau: \  \sigma\
 
 
 \section{Properties of wp and wlp}
-wp and wlp are each other's conjugate: 
-\[wp.C.F = \neg wlp.C.\neg F\]
-
+\begin{theorem}{conjugate}
+  wp and wlp are each other's conjugate: 
+  \[\forall C\in\C:\ \forall F\in\P:\ wp.C.F = \neg wlp.C.\neg F\]
+\end{theorem}
+\begin{theorem}{wlp-true}
+  \[\forall C\in\P:\ wlp.C.true = true\]
+\end{theorem}
+\todo{finish here and add references. }
 % \[wp.C.false = false\]
 % \[wlp.C.true = true\]
 % \[wp.C.true = preconditions that lead to termination\]
