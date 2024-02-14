@@ -57,7 +57,7 @@ We can categorize the executions of the program in four ways:
 	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains all the red arrows\label{subfig:wlp-g-rr}]{
 		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-rr.eps}
 	}
-\caption{Case Distinction of Preconditions Weaker Than wlp (Part 1) }
+\caption{Case Distinction of Preconditions Weaker Than wlp}
 \label{fig:wlp-g-1}
 \end{figure}
 
@@ -78,7 +78,7 @@ We can categorize the executions of the program in four ways:
 	\subfloat[Precondition $G$ with $wlp.C.F\implies G$ and $G$ contains all the arrows\label{subfig:wlp-g-ggrr}]{
 		\includegraphics[width=0.45\textwidth]{image/wlp-g/wlp-g-ggrr.eps}
 	}
-\caption{Case Distinction of Preconditions Weaker Than wlp (Part 2) }
+\caption{Case Distinction of Preconditions Weaker Than wlp (Cont.) }
 \label{fig:wlp-g-2}
 \end{figure}
 If we were to weaken the precondition, it can happen in various ways as shown in \autoref{subfig:wlp-g-g}{\color{RoyalBlue}-9}. 
@@ -87,28 +87,27 @@ This behavior is exactly the behavior of wlp, if we were to regard the non-deter
 We thus first investigate this special case, before proceeding with $G$ in general. 
 
 \subsection{A Special Case} %: $G$ is wlp with Angelic Non-determinism
-Dual to the semantics of wp and wlp as shown in \thm{wp-sound} and \thm{wlp-sound}, we can deduce the semantics of wlp with angelic non-determinism (denoted by \define{wlp$_a$}): 
+Dual to the semantics of wp and wlp as shown in \thm{wp-sound} and \thm{wlp-sound}, we can deduce the semantics of wlp with angelic non-determinism (denoted by \define{wlp$_a$}) recalling the representation for non-termination mentioned in \autoref{sec:big-step}: 
 \begin{statement}{wlpa-sound}[Semantics of $wlp_a$]
 \ \vspace{-1.5mm}
 \[
 wlp_a.C.F = \{ \sigma\in\S \mid
-\sigma\goto{C}\bot \ \vee\ 
-\exists \tau. \sigma\goto{C}\tau:\  \tau\vDash F
+\neg(\exists \tau\in\S: \sigma\goto{C}\tau) \ \ \vee\ \ 
+(\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\vDash F)
  \}
 \]
-\label{thm:wlpa}
+% \label{thm:wlpa}
 \end{statement}
 
-\todo{modify proof}
 Luckily, we can find statements using wlp and sp that captures this specific $G$, hence giving us a way to express wlp$_a$ without having to define it: 
 \begin{lemma}{wlpa-g}[Angelic wlp implies G]
 \ \\ \vspace{-3mm}
 	\[\hspace{-2mm}
-	\text{ if } \\
-	wlp.C.F\implies G
-	\\\text{ and } \\ 
-	sp.C.\neg G \implies \neg F 
-	\\\text{ then } \\ 
+	\text{ if \ \ \ \ } 
+	(wlp.C.F\implies G)
+	\ \wedge\ 
+	(sp.C.\neg G \implies \neg F) 
+	\text{\ \ \ \  then\ \ \ \  } 
 	wlp_a.C.F \implies G
 	\] 
 	\label{lem:wlp-g}
@@ -116,41 +115,60 @@ Luckily, we can find statements using wlp and sp that captures this specific $G$
 The second prerequisite \mathl{sp.C.\neg G \implies \neg F } states that from $\neg G$ we are only allowed to reach $\neg F$, making sure that all green arrows as in \autoref{fig:wlp-g-1} are included in $G$. 
 
 % macros for referencing to lines in this chapter
-\newcommand{\lblth}[1]{\hypertarget{3.#1}{{\text{(#1)}}}}
+\newcommand{\lblth}[1]{\hypertarget{3.#1}{{\text{#1}}}}
 \newcommand{\refth}[1]{\hyperlink{3.#1}{{\text{Line (#1)}}}}
 \begin{proof}
+	The assumption expresses that for any state $\sigma\in\S$:
 \begin{align*} 
-	wlp.C.F\implies G &= \sigma\in wlp.C.F \implies \sigma\in G \\
-	& = \sigma\goto{C}\bot\vee \forall \tau.\sigma\goto{C}\tau:\tau\in F \implies \sigma\in G \\
-	&\hspace{0.45\textwidth}  \mid \thm{wlp-sound} \\
-	& = (\sigma\goto{C}\bot\Longrightarrow \sigma\in G)
-		\hspace{0.16\textwidth} \mid \lblth{a} \\
-	&\ \ \ \  \vee (\forall \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G) 
-		\hspace{0.017\textwidth} \mid \lblth{b} \\
+	wlp.C.F\implies G\  \Leftrightarrow&\ \sigma\in wlp.C.F \implies \sigma\in G \\
+	\Leftrightarrow&\ ( \forall \tau\in\S:\ \sigma\goto{C}\tau\implies  \tau\in F) \implies \sigma\in G \tag*{$\mid$ \thm{wlp-sound}} \\
+	\Leftrightarrow&\ (\forall \tau\in\S:\ \neg(\sigma\goto{C}\tau)\ \vee\ \tau\in F) \implies \sigma\in G \\
+	\Leftrightarrow&\ \neg(\exists\tau\in\S:(\sigma\goto{C}\tau)\ \wedge\ \neg(\tau\in F)) \implies \sigma\in G \tag{\lblth{a}} \\
+	% && \mid \lblth{a} \\
+	% &\ \ \ \  \vee (\forall \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G) 
+		% \hspace{0.017\textwidth} \mid \lblth{b} \\
 	%
-	sp.C.\neg G \Longrightarrow \neg F &= \tau\in sp.C.\neg G \implies \tau\in \neg F \\
-	&= \exists \sigma.\sigma\goto{C}\tau:\sigma\in\neg G \implies \tau\in\neg F 
-	\hspace{0.012\textwidth} \mid \thm{sp-sound}\\
-	&= \neg (\tau\in\neg F) \implies \neg ( \exists \sigma.\sigma\goto{C}\tau:\sigma\in\neg G ) \\
-	&= \tau\in F \implies \forall \sigma.\sigma\goto{C}\tau : \neg (\sigma\in\neg G)\\
-	&= \tau\in F \implies \forall \sigma.\sigma\goto{C}\tau : \sigma\in G 
-	\hspace{0.05\textwidth} \mid \lblth{c}\\
-	%
-	wlp_a.C.F \implies G &= \sigma\in wlp_a.C.F \implies \sigma\in G \\
-	&= \sigma\goto{C}\bot\vee \exists \tau.\sigma\goto{C}\tau:\tau\in F \implies \sigma\in G \\
-	&\hspace{0.45\textwidth} \mid \stm{wlpa-sound}\\
-	&= (\sigma\goto{C}\bot\Longrightarrow \sigma\in G )
-		\hspace{0.159\textwidth} \mid \lblth{d}\\
-	&\ \ \ \  \vee (\exists \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G)
-		\hspace{0.016\textwidth} \mid \lblth{e}\\
 \end{align*}
-Doing case distinction of the first assumption (\refth{a} and \refth{b}) gives us two options: if \refth{a} is true, then \refth{d} is obviously also true; 
-if merely \refth{b} is true, then we need to use \refth{c} as well. 
-This requires case distinction whether $F$ is empty. 
-
-If $F$ is empty, then the prerequisite of \refth{e} is trivially false, hence \refth{e} is true. 
-If $F$ is non-empty, discharging the prerequisite of \refth{e}, we can find a witness $t\in F$ such that $\sigma\goto{C}t$. 
-Because of \refth{c} we know that all initial states that lead to final state $t$ via program $C$ are in G, hence $\sigma\in G$ and we proved our goal. 
+Also, for any state $\tau\in\S$: 
+\begin{align*}
+	sp.C.\neg G \implies \neg F \Leftrightarrow&\ \tau\in sp.C.\neg G \implies \tau\in \neg F \\
+	\Leftrightarrow&\  (\exists \mu\in\S:\ \mu\goto{C}\tau\ \wedge\ \mu\in\neg G )\implies \tau\in\neg F \tag*{$\mid$ \thm{sp-sound}}\\
+	% &\hspace{0.45\textwidth} \mid \thm{sp-sound}\\
+	\Leftrightarrow&\  \neg (\tau\in\neg F) \implies \neg (\exists \mu\in\S:\ \mu\goto{C}\tau\ \wedge\ \mu\in\neg G ) \\
+	\Leftrightarrow&\  \tau\in F \implies \forall \mu\in\S:\ \neg (\mu\goto{C}\tau\ \wedge\ \mu\in\neg G)\\
+	\Leftrightarrow&\  \tau\in F \implies \forall \mu\in\S:\ \neg (\mu\goto{C}\tau)\ \vee\ \neg(\mu\in\neg G)\\
+	\Leftrightarrow&\  \tau\in F \implies \forall \mu\in\S:\ \neg (\mu\goto{C}\tau)\ \vee\ \mu\in G
+	\tag{\lblth{b}} \\
+	%
+\end{align*}
+Our goal is to prove that for any state $\sigma\in\S$:
+\begin{align*}
+	wlp_a.C.F \implies G \Leftrightarrow&\ \sigma\in wlp_a.C.F \implies \sigma\in G \\
+	\Leftrightarrow&\  \neg(\exists \tau\in\S: \sigma\goto{C}\tau) \ \vee\ 
+	(\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\in F)\\
+	&\ \ \ \ \implies \sigma\in G \tag*{$\mid$ \stm{wlpa-sound}}\\
+	% &\hspace{0.45\textwidth} \mid \stm{wlpa-sound}\\
+	\Leftrightarrow&\  (\neg(\exists \tau\in\S: \sigma\goto{C}\tau)\implies \sigma\in G ) \tag{\lblth{c}}\\
+	% && \mid \lblth{c}\\
+	&\ \wedge\ ((\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\in F)\implies\sigma\in G) \tag{\lblth{d}}\\
+	% && \mid \lblth{d}
+\end{align*}
+We can prove \lem{wlpa-g} by proving that \refth{a} implies \refth{c} and that \refth{b} implies \refth{d}.
+For any state $\sigma\in\S$, we first prove (a)$\implies$(c):
+\begin{align*}
+	% \text{(a)}\implies\text{(c)}:\text{ for any } \\
+	true 
+	\Leftrightarrow&\ (\exists\tau\in\S:(\sigma\goto{C}\tau)\ \wedge\ \neg(\tau\in F)) \implies (\exists\tau\in\S:\sigma\goto{C}\tau)\\ 
+	\Leftrightarrow&\ \neg(\exists\tau\in\S:\sigma\goto{C}\tau) \implies \neg(\exists\tau\in\S:(\sigma\goto{C}\tau)\ \wedge\ \neg(\tau\in F))  \\ 
+	\Rightarrow&\ \neg(\exists\tau\in\S:\sigma\goto{C}\tau) \implies \sigma\in G \tag*{$\mid$ \refth{a}}\\
+\end{align*}
+It is also valid that for any state $\sigma\in\S$, (b)$\implies$(d). 
+Assume there exists $\tau\in\S$ such that for some state $\sigma\in\S$, 
+$$\sigma\goto{C}\tau\ \wedge\  \tau\in F \text{ is valid. }$$
+Then we conclude from \refth{b} that 
+$$\forall \mu\in\S:\ \neg (\mu\goto{C}\tau)\ \vee\ \mu\in G$$
+Since $\sigma\in\S$, it follows that $\neg(\sigma\goto{C}\tau)\ \vee\ \sigma\in G$. 
+We already know that $\sigma\goto{C}\tau$, hence $\sigma\in G$ must be true, therefore proving \refth{d}. 
 \end{proof}
 
 
@@ -158,41 +176,51 @@ Because of \refth{c} we know that all initial states that lead to final state $t
 \ \\ \vspace{-3mm}
 	\[%\hspace{-5mm}
 	\text{ if \ \ \ \ } 
-	(P\Longrightarrow G) \implies \neg(sp.C.P \Longrightarrow \neg F)
+	(P{\implies} G) \implies \neg(sp.C.P {\implies} \neg F)
 	\text{\ \ \ \  then\ \ \ \  } 
-	G \Longrightarrow wlp_a.C.F
+	G {\implies} wlp_a.C.F
 	\] 
 \end{lemma}
 Here, the prerequisite states that we do not allow executions starting from $G$ that \imptt{only} finish in $\neg F$, making sure that $G$ does not include the red arrows as in \autoref{fig:wlp-g-1}.  
 
 \begin{proof}
+	The assumption expresses that for any state $\sigma\in\S$:
 \begin{align*} 
-	(P\Longrightarrow G) & \implies \neg(sp.C.P \Longrightarrow \neg F) \\ 
-	&= (\sigma\in P \Longrightarrow \sigma\in G) \implies \neg(\forall\tau.\tau\in sp.C.P:\tau\in\neg F) \\ 
-	&= (\sigma\in P \Longrightarrow \sigma\in G) \implies \exists\tau.\tau\in sp.C.P:\tau\in F \\ 
-	&= (\sigma\in P \Longrightarrow \sigma\in G) \implies \exists\tau.(\exists \sigma. \sigma\goto{C}\tau: \  \sigma\in P):\tau\in F 
-		\hspace{0.04\textwidth}\mid\lblth{f}\\ 
+	&\ P\implies G \implies \neg(sp.C.P \implies \neg F) \\ 
+	\Leftrightarrow&\ P\implies G \implies \neg(\forall\tau\in\S:\tau\in sp.C.P{\implies}\tau\in\neg F) \\ 
+	\Leftrightarrow&\ P\implies G \implies \exists\tau\in\S:\neg(\tau\in sp.C.P{\implies}\tau\in\neg F) \\ 
+	\Leftrightarrow&\ P\implies G \implies \exists\tau\in\S:\tau\in sp.C.P\ \wedge\ \neg(\tau\in\neg F) \\ 
+	\Leftrightarrow&\ P\implies G \implies \exists\tau\in\S:\tau\in sp.C.P\ \wedge\ \tau\in F \\ 
+	\Leftrightarrow&\ P\implies G \implies \exists\tau\in\S:(\exists \mu\in\S:\ \mu\goto{C}\tau\ \wedge\ \mu\in P)\ \wedge\ \tau\in F \tag*{$\mid$ \thm{sp-sound}}\\ 
+	\Leftrightarrow&\ \sigma\in P {\implies} \sigma\in G {\implies} \exists\tau\in\S:(\exists \mu\in\S:\ \mu\goto{C}\tau\ \wedge\ \mu\in P)\ \wedge\ \tau\in F \tag{\lblth{e}}\\ 
 	%
-	G\Longrightarrow & wlp_a.C.F \\ 
-	&= \sigma\in G\implies\sigma\in wlp_a.C.F\\
-	&=\sigma\in G\implies (\sigma\goto{C}\bot\vee \exists \tau.\sigma\goto{C}\tau:\tau\in F) 
-		\hspace{0.195\textwidth}\mid\lblth{g}\\
 \end{align*}
-Assume $\sigma\in G$, then we can construct set $P=\{\sigma\}$ such that the prerequisits in \refth{f} holds. 
-Now we can find witnesses $t$ and $s$ such that $s\goto{C}t$ and $s\in P$, $t\in F$. 
-
-Since $P$ is a singleton set, $s$ can only be $\sigma$. 
-Then we have found a witness $t$ such that $\sigma\goto{C}t$ and $t\in F$, satisfying the postrequisite of \refth{g}. 
+Our goal is to prove that for any state $\sigma\in\S$:
+\begin{align*}
+	&\ G\implies wlp_a.C.F \\ 
+	\Leftrightarrow&\  \sigma\in G\implies\sigma\in wlp_a.C.F\\
+	\Leftrightarrow&\ \sigma\in G\implies \neg(\exists \tau\in\S: \sigma\goto{C}\tau) \ \vee\ 
+	(\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\in F) \tag*{$\mid$ \stm{wlpa-sound}}\\
+\end{align*}
+For some state $\sigma\in\S$, assume $\sigma\in G$, then we can construct set $P=\{\sigma\}$ such that the prerequisites in \refth{e} holds. 
+Consequently, the postrequisite in holds. 
+Now we can find witnesses $\mu$ and $\tau$ such that
+$$
+\mu\goto{C}\tau\ \wedge\ \mu\in P\ \wedge\ \tau\in F 
+$$
+Since $P$ is a singleton set, $\mu$ can only be $\sigma$. 
+Then we have found a witness $\tau$ such that $\sigma\goto{C}\tau$ and $\tau\in F$, satisfying the postrequisite of our goal. 
 \end{proof}
 
 \begin{corollary}{g=wlp}[G equivalent to angelic wlp]
-	\ \\\vspace{-5mm}
-	\begin{align*}
-		&\text{ if } wlp.C.F\Longrightarrow G \text{ and } 
-		sp.C.\neg G \Longrightarrow \neg F \text{ and } 
-	(P\Longrightarrow G) \implies \neg(sp.C.P \Longrightarrow \neg F) \\
-		&\text{ then } G = wlp_a.C.F
-	\end{align*}	
+% \begin{align*}
+	\ \\
+	$\text{ if } \ wlp.C.F{\implies} G \ \wedge\ 
+	sp.C.\neg G {\implies} \neg F 
+	\ \text{ and } \ 
+	P{\implies} G \implies \neg(sp.C.P {\implies} \neg F) \\
+	\text{ then }\ G = wlp_a.C.F$
+% \end{align*}	
 \end{corollary}
 
 \subsection{The General Case}
