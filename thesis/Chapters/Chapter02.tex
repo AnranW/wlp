@@ -81,7 +81,8 @@ One of the most known methods is \define{Hoare logic}.
 
 In 1969, C.A.R. Hoare wrote \textit{An Axiomatic Basis for Computer Programming}~\cite{hoare69} to explore the logic of computer programs using axioms and inference rules to prove the properties of programs. 
 He introduced \imptt{sufficient} preconditions that  guarantee correct results but do not rule out non-termination. 
-A selection of the axioms and rules are shown in~\autoref{tab:hoare}.~\footnote{We omit the symbol $\vdash$ in front of a Hoare triple, which denotes ``valid/provable'', for better readability. }\footnote{Non-determinism was not considered in the original paper, so we treat the programs here as deterministic. 
+A selection of the axioms and rules are shown in~\autoref{tab:hoare}.~
+\footnote{Non-determinism was not considered in the original paper, so we treat the programs here as deterministic. 
 With deterministic programs, one initial state corresponds to one final state.
 In case of non-termination, there is simply no final state. }
 
@@ -100,9 +101,10 @@ In case of non-termination, there is simply no final state. }
       % \textbf{Rule of Condition}   &  $wp.C_1.(wp.C_2.F)$\\
       \hline\hline
     \end{tabular}
-    \caption{Inference Rules for Valid Hoare Triple}
+    \caption{Inference Rules for Valid Hoare Triple~\protect\footnotemark{}}
     \label{tab:hoare}
 \end{table}
+\footnotetext{We omit the symbol $\vdash$ in front of a Hoare triple, which denotes ``valid/provable'', for better readability. }
 
 Semantically, a Hoare triple {{\mathl{\hoarenm{G}{C}{F}}}} is said to be valid for (partial) correctness, if the execution of the program $C$ with an initial state satisfying the precondition $G$ leads to a final state that satisfies the postcondition $F$, provided that the program terminates. 
 The definitions in \autoref{tab:hoare} indeed correspond to this intended semantics. Formal soundness proofs can be found in Krzysztof R. Apt's survey~\cite{apt81} in 1981.
