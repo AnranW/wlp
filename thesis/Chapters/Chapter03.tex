@@ -5,10 +5,10 @@
 \chapter{A Proof System}\label{ch:system} % $\mathbb{ZNR}$
 %************************************************
 
-\section{Literature Review}
+% \section{Literature Review}
 
-Here is a description of all the triples. 
-\todo{Literature review section}
+% Here is a description of all the triples. 
+% \todo{Literature review section}
 
 
 
@@ -20,10 +20,10 @@ One thing we are certain about, though, is that a program with an original state
 \begin{align*}
 wlp.C.F\implies G & = \neg G \implies \neg wlp.C.F \\
 	& = \neg G \implies wp.C.\neg F 
-	\hspace{0.3\textwidth} | \ \todo{insert theorem: wlp and wp are conjugates} 
+	\hspace{0.3\textwidth} \tag*{\thm{conjugate}}
 \end{align*}
 In the upcoming sections, we first discuss various forms that the necessary liberal precondition can take and try to identify a $G$ that is most characteristic. 
-We proceed then to propose a proof system stemming from the necessary liberal precondition and show its usefulness using an example. \todo{replace with concrete example} 
+We proceed then to propose a proof system stemming from the necessary liberal precondition and show its usefulness using an example. 
 
 \section{A Precondition Weaker Than the Weakest Liberal Precondition}
 In \autoref{sec:wlp} we defined the weakest liberal precondition and state that it characterizes all the preconditions under whose control the program either \imptt{diverges} or \imptt{will} terminate in a state satisfying $F$. 
@@ -238,7 +238,6 @@ This corresponds to the semantics of the wp transformer as shown in \thm{wp-soun
 The question then naturally arises: why do we concern ourselves with $G$, if we can just prove our specifications using wp or Hoare triples? 
 To demonstrate the answer, we analyze the example written in \autoref{lst:pererson}. 
 
-\todo{consider listing numbering to follow figures?}
 \begin{lstlisting}[caption={Thread $A$ Hoping to Access Critical Section}, label={lst:pererson}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
 	... // leave non-critical section
 	turn := B; |\label{line:p-2}|
@@ -338,32 +337,28 @@ We simply follow the iteration to find the greatest fixed point of a function un
 	\end{enumerate}
 	Combine this proven hypothesis with \thm{gfp} and the definition of $wlp.WHILE.F$ in \autoref{tab:wp-wlp}, we can conclude that 
 	$$wlp.WHILE.\{critB\}=gfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(true) = \{critB\}$$
-
-	\todo{Question: is it better to omit the curly brackets in the proof? }
 \end{proof}
 
-We have proved that $\{critB\}$ is the weakest liberal precondition of the program in \autoref{lst:pererson} w.r.t. postcondition $\{critB\}$, meaning that 
-The above example in \autoref{lst:critB} demonstrates that once $\{critB\}$ 
-
-TO BE CONTINUED.
-
+We have proven that $\{critB\}$ is the weakest liberal precondition of the program in \autoref{lst:pererson} w.r.t. postcondition $\{critB\}$, meaning that once $\{critB\}$ is satisfied as a precondition, the program is doomed to either end up in deadlock, or not even terminate, as illustrated in \autoref{fig:critB}. 
+Hence, by asserting that $\{critB\}$ is not satisfied in the precondition, we can avoid that $A$ and $B$ are deadlocked. 
 \begin{figure}[ht]
 	\centering
 	\includesvg{image/critB.svg}
+	\caption{$wlp.C.F = critB$}
 	\label{fig:critB}
-	\caption{heading}
 \end{figure}
 
+However, $B$ may not be the only process or thread that wishes to enter the same critical section as $A$. 
+For example, a seasoned programmer with extra knowledge may guess that processes like $kerneltask$, $systemstats$ are some of them, and relax the precondition that we should avoid to 
+$$wlp.C.F = \{critB\}\implies \{critB \vee critKerneltask \vee critSystemstats\} = G$$
+as drawn in \autoref{fig:critMore}. 
 \begin{figure}[ht]
 	\centering
 	\includesvg{image/critMore.svg}
+	\caption{Relaxing the precondition with extra knowledge}
 	\label{fig:critMore}
-	\caption{heading}
 \end{figure}
-
-\newpage
-\section{A Proof System}
-
+This demonstrates the use of the triple $wlp.C.F{\implies} G$: with insufficient knowledge we have over the system, we first calculate the weakest liberal precondition of the erroneous postcondition that we know of, then relax this precondition by ``guessing'' similar erroneous postconditions with the extra knowledge from experts over the system. 
 
 
 

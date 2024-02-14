@@ -42,12 +42,6 @@ The notations and their meaning are listed in \autoref{tab:notation}.
         from initial state $\sigma$, an execution of program $c$ \\ 
         terminates at final state $\tau$ 
       \end{tabular}    \\  \hdashline[1pt/1pt] 
-
-      $\sigma\goto{c}\bot$  & 
-      \begin{tabular}{@{}l}     
-        from initial state $\sigma$, an execution of program $c$ \\ 
-        diverges
-      \end{tabular}    \\  \hdashline[1pt/1pt] 
       
       \begin{tabular}{@{}l}     
         $\exists x . P : F $\\ 
@@ -88,9 +82,10 @@ One of the most known methods is \define{Hoare logic}.
 In 1969, C.A.R. Hoare wrote \textit{An Axiomatic Basis for Computer Programming}~\cite{hoare69} to explore the logic of computer programs using axioms and inference rules to prove the properties of programs. 
 He introduced \imptt{sufficient} preconditions that  guarantee correct results but do not rule out non-termination. 
 A selection of the axioms and rules are shown in~\autoref{tab:hoare}.~\footnote{We omit the symbol $\vdash$ in front of a Hoare triple, which denotes ``valid/provable'', for better readability. }\footnote{Non-determinism was not considered in the original paper, so we treat the programs here as deterministic. 
-With deterministic programs, one initial state corresponds to one final state, and in case of non-termination we assign a final state $\bot$. }
+With deterministic programs, one initial state corresponds to one final state.
+In case of non-termination, there is simply no final state. }
 
-\todo{Think about whether to add liberally deterministic (Hesselink 1992, Programs, Recursion and Unbounded Choice). }
+% \todo{Think about whether to add liberally deterministic (Hesselink 1992, Programs, Recursion and Unbounded Choice). }
 
 \mathl{\{F[x/e]\}} is obtained by substituting occurrences of $x$ by $e$. 
 
@@ -550,14 +545,13 @@ sp.C.G = \{ \tau\in\S \mid \exists \sigma\in\S:\ \ \sigma\goto{C}\tau\ \wedge\ \
 \begin{theorem}{wlp-true}
   \[\forall C\in\P:\ wlp.C.true = true\]
 \end{theorem}
-\todo{finish here and add references. }
+\todo{add references. }
 % \[wp.C.false = false\]
 % \[wlp.C.true = true\]
 % \[wp.C.true = preconditions that lead to termination\]
 % \[wlp.C.false = preconditions that lead to non-termination\]
 
 
-\textbf{[TO BE CONTINUED]}
 
 
 %*****************************************
