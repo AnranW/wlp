@@ -1,2 +1,2 @@
 # Master Thesis: Necessary Liberal Preconditions
-Please find the pdf file [here](thesis/main-anran-ma.pdf).
+Please find the pdf file [here](thesis/aux/main-anran-ma.pdf).
