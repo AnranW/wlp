@@ -228,7 +228,7 @@ While having restrictions on $G$ yields interesting results, without the restric
 As shown in \autoref{fig:wlp-g-2}, $G$ can contain all possible initial states, which can be the starting points of black, green, red, or dashed arrows, representing executions terminating in states satisfying $F$, $F$ or $\neg F$, $\neg F$, or non-terminating, respectively. 
 As a result, we can not make much statements without adding extra restrictions to $G$. 
 However, we can see from \autoref{fig:wlp-g-2} that $\neg G$ does not contain any \imptt{black} or \imptt{dashed} arrows in all cases. 
-In other words, if program $C$ starts in any initial state satisfying $\neg G$, then 
+In other words, if program $C$ starts in any initial state satisfying $\neg G$, then either $G$ is empty, or
 \begin{itemize}
 	\item its executions terminate, and
 	\item there exists an execution that ends up in a final state that satisfies $\neg F$. 
@@ -283,7 +283,7 @@ Remember from \autoref{tab:wp-wlp} that the wlp for while-loops is defined with 
 \[
 	wlp.(\text{while }(\varphi)\ \{C'\}).F = gfp\ X.\ (\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X)
 \]
-We simply follow the iteration to find the greatest fixed point of a function until we see a pattern, then prove by natural induction that the solution we found is indeed the greatest fixed point. \todo{Define and refer to the iteration from top. }
+We simply follow the iteration to find the greatest fixed point of a function until we see a pattern, then prove by natural induction that the solution we found is indeed the greatest fixed point (see \thm{gfp}).
 
 \begin{lemma}{critB}
 	$wlp.WHILE.\{critB\} = \{critB\}$

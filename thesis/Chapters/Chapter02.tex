@@ -160,11 +160,11 @@ form of GCL that is similar to modern pseudo-code as shown in \autoref{tab:gcl}.
 \end{table}
 
 The \define{assignment, sequential composition, conditional choice, while-loop} commands conform to their usual meaning.
-The \define{non-deterministic choice} \mathl{\{C_1\}\square \{C_2\}} chooses from two programs randomly. 
+The \define{non-deterministic choice} \mathl{\{C_1\}\square \{C_2\}} chooses from two programs non-deterministically. 
 It is however not \define{probabilistic}, meaning we do not know the probabilistic distribution of the outcome of the choice. 
 
 When \mathl{skip} is executed, the program state does not change and the consecutive part is executed. 
-When \mathl{diverge} is executed, the program goes to a state symbolizing non-termination, and the execution stops. 
+When \mathl{diverge} is executed, the execution never stops and the program can not reach a final state. 
 
 In our representation of GCL, non-determinism is explicitly constructed via the infix operator \mathl{\square}, whereas in its original definition, non-determinism occurs when the guards within the \mathl{if} and \mathl{while} commands are not mutually exclusive~\cite{dijkstra90}. 
 Additionally, the \mathl{if} statement in Dijkstra's GCL is equivalent to divergence in case non of its guards are true, but in our version this can no longer happen because of the Law of Excluded Middle: the predicate $\varphi$ must be either true or false, so either the ``then'' branch or the ``else'' branch is activated.
@@ -256,7 +256,9 @@ Then by definition:
 The definition in \autoref{tab:wp-det}, however, uses the least fixed point of the characteristic function that is not obvious. 
 We understand the use of fixed point in two ways. 
 First, a precondition $G$ being a fixed point of the characteristic function $G= \Phi(G)=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.G)$ means that under control of $G$, termination is possible (left side of the disjunction) and repeated execution of $C'$ is possible(right side of the disjunction), since $G$ is invariant before and after the execution of $C'$. 
-Second, if we were to believe that the semantics of $WHILE$ should be equivalent to the semantics of $if(\varphi)\{C;WHILE\}else\{skip\}$, we can derive the need for fixed point: 
+Second, if we were to believe that the semantics of $WHILE$ should be equivalent to the semantics of $if(\varphi)\{C;WHILE\}\ else\ \{skip\}$
+\footnote{The program in the $else$-branch is \mathl{skip} instead \mathl{diverge}, because in case $\neg\varphi$ is true before the execution of $WHILE$, the program simply skips it and executes the next component. This corresponds to a \mathl{skip} in the $else$-branch of $IF$. }, 
+we can derive the need for fixed point: 
 \begin{align*} 
   wp.WHILE.F    & \seq wp.(\text{if }(\varphi)\{C;WHILE\}\text{ else }\{skip\}.F) \\
                 & \seq \varphi\wedge wp.(C;WHILE).F \vee \neg\varphi\wedge wp.skip.F\\ 
@@ -266,12 +268,11 @@ Second, if we were to believe that the semantics of $WHILE$ should be equivalent
 
 The question then arises: can we define wp with any fixed point? 
 The answer is no and we show it by verifying that the definition in \autoref{tab:wp-det} coincides with Dijkstra's definition at the beginning of this chapter.\footnote{In fact, Dijkstra and Scholten~\cite{dijkstra90} later also gave definitions for wp and wlp in an equivalent form of least and greatest fixed points, they called it "strongest" and "weakest solution". They also proved that it is necessary to use the extreme solutions. }
-We borrow a theorem from domain theory that yields a computation for least fixed points, provided they exist: 
-\begin{theorem}{lfp}
-$lfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(false)$
-\textbf{[Insert theorem]}%TODO
-\todo{add theorem}
+Thanks to domain theory, we have a heuristic to calculate the least fixed point of $\Phi$. 
+%we We borrow a theorem from domain theory that yields a computation for least fixed points, provided they exist: 
 
+\begin{theorem}{lfp}{\normalfont\cite{kaminski19}}
+$lfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(false)$
 \end{theorem}
 
 
@@ -420,10 +421,8 @@ A graphical representation can be found on \autoref{subfig:wlp-demonic}.
 As preluded earlier, greatest fixed points are used to define wlp for while-loops. 
 It is an easy choice, since wlp is semantically the \imptt{weakest} liberal precondition, and $wlp.WHILE.F$ should be a fixed point of its characteristic function, similar to \autoref{sec:define loops}. 
 
-\begin{theorem}{gfp}
+\begin{theorem}{gfp}{\normalfont\cite{kaminski19}}
   $gfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(true)$
-  \textbf{[Insert theorem]}%TODO
-  \todo{add theorem}
 \end{theorem}
 
 %done{Explain the use of gfp. Possibly relate to page 185 of Dijkstra and Scholten 1990 book. }
@@ -514,8 +513,9 @@ With the definition of big-step semantics, we can precisely express the soundnes
 \ \vspace{-1.5mm}
 \[
 wp.C.F = \{\sigma\in\S \mid  \exists \tau\in\S:\ \ \sigma\goto{C}\tau\ \wedge\ \tau\vDash F\}
-~\footnote{$\exists\tau\in\S:P$ is short for $\exists\tau.\tau\in\S:P$}
+~\protect\footnotemark
 \]
+\footnotetext{$\exists\tau\in\S:P$ is short for $\exists\tau.\tau\in\S:P$}
 \end{theorem}
 
 \begin{theorem}{wlp-sound}[Soundness of wlp]~{\normalfont\cite{dijkstra90}}
@@ -540,7 +540,7 @@ sp.C.G = \{ \tau\in\S \mid \exists \sigma\in\S:\ \ \sigma\goto{C}\tau\ \wedge\ \
 
 
 \section{Properties of wp and wlp}
-\begin{theorem}{conjugate}
+\begin{theorem}{conjugate}%~{\normalfont\cite{dijkstra76}}
   wp and wlp are each other's conjugate: 
   \[\forall C\in\C:\ \forall F\in\P:\ wp.C.F = \neg wlp.C.\neg F\]
 \end{theorem}

@@ -5,8 +5,27 @@
 %************************************************
 
 \section{Conclusions}
+In this thesis, I study the weakest liberal precondition transformer and its over-approximation: $G$ such that $wlp.C.F\implies G$. 
+I first discuss the definitions of while-loops in its original form~\cite{dijkstra75} and a variant using fixed points. 
+I establish an equivalence between the two forms of definitions, validating the prudence of the second version. 
+Subsequently, I investigate the $G$ in question. 
+Coincidentally, supplementing $G$ with extra restraints using the strongest postcondition transformer, $G$ coincides with the weakest liberal precondition transformer with angelic non-determinism: 
+$$(sp.C.\neg G {\implies} \neg F) \wedge
+(P{\implies} G \implies \neg(sp.C.P {\implies} \neg F) )
+\implies\ G = wlp_a.C.F$$
+
+However, without extra constraints, $G$ can be a precondition where all executions are possible. 
+The only certainty is that \hoare{\neg G}{C}{\neg F} is a valid Hoare Triple. 
+Regardless, $G$ still finds its usefulness while trying to identify preconditions that lead to erroneous final states, but without sufficient knowledge of all the undesired final states. 
+One first finds the weakest liberal precondition with respect to the known ``bad'' final states, then over-approximate the found precondition by ``guessing'' more possible unwanted final states. 
 
 \section{Future Work}
+This thesis is only concerned with binary predicates, i.e. a predicate that evaluates to either $true$ or $false$. 
+Albeit classic, it might be more interesting to examine the above results in a quantitative setting, where predicates evaluate to more than $true$ or $false$. 
+In a quantitative setting, the notion of angelic or demonic non-determinism might be too absolute. 
+Instead of regarding the non-determinism as completely in or against our favor, which are strong assumptions, what are the implications when the non-determinism resolves partially in or against our favor? 
+\todo{How about parallel composition? }
+
 
 
 %*****************************************
