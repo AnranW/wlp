@@ -9,7 +9,7 @@
 
 
 \section{Notations}\label{sec:notation}
-Before proceeding, we clarify the notations used in this thesis, which are not uncommon in materials of computer science and mathematics. 
+Before proceeding, I clarify the notations used in this thesis, which are not uncommon in materials of computer science and mathematics. 
 Readers are encouraged to skip this section and refer back to it if needed. 
 The notations and their meaning are listed in \autoref{tab:notation}. 
 
@@ -61,13 +61,13 @@ The notations and their meaning are listed in \autoref{tab:notation}.
     \label{tab:notation}
 \end{table}
 
-It is worth noting that we regard program states as total functions - we assume that we can assign some default values to variables in case they are undefined. 
-We also simplify matters by assuming that there is only one interpretation as a total function from predicates to truth values. 
+It is worth noting that I regard program states as total functions - I assume that we can assign some default values to variables in case they are undefined. 
+I also simplify matters by assuming that there is only one interpretation as a total function from predicates to truth values. 
 As a result, we can regard predicates as (total) functions from program states to truth values. 
-We also overload the symbols for predicates and use them to identify the sets they describe as shown in \hyperlink{2.*}{Line (*)}. 
+I also overload the symbols for predicates and use them to identify the sets they describe as shown in \hyperlink{2.*}{Line (*)}. 
 
-By default, we take \mathl{F(\sigma)} to mean the same as \mathl{F(\sigma)= true} for convenience's sake as shown in \hyperlink{2.**}{Lines (**)}. 
-We use the equation symbol \mathl{=} to denote equivalences, and the symbols \mathl{:=} for assignments and definitions. 
+By default, I take \mathl{F(\sigma)} to mean the same as \mathl{F(\sigma)= true} for convenience's sake as shown in \hyperlink{2.**}{Lines (**)}. 
+I use the equation symbol \mathl{=} to denote equivalences, and the symbols \mathl{:=} for assignments and definitions. 
 
 The operators in descending binding power: $\neg$, $\in$, $\wedge$, $\vee$, ${\implies}$, $Q\_.\_:\_$ where $Q$ is a quantifier: $Q\in\{\exists, \forall\}$. Implication binds to the left: $A{\implies} B{\implies} C$ is equivalent to $(A{\implies} B){\implies} C$.
 Now we can proceed to discuss proof rules and systems that are relevant for this thesis. 
@@ -82,7 +82,7 @@ One of the most known methods is \define{Hoare logic}.
 In 1969, C.A.R. Hoare wrote \textit{An Axiomatic Basis for Computer Programming}~\cite{hoare69} to explore the logic of computer programs using axioms and inference rules to prove the properties of programs. 
 He introduced \imptt{sufficient} preconditions that  guarantee correct results but do not rule out non-termination. 
 A selection of the axioms and rules are shown in~\autoref{tab:hoare}.~
-\footnote{Non-determinism was not considered in the original paper, so we treat the programs here as deterministic. 
+\footnote{Non-determinism was not considered in the original paper, so I treat the programs here as deterministic. 
 With deterministic programs, one initial state corresponds to one final state.
 In case of non-termination, there is simply no final state. }
 
@@ -104,7 +104,7 @@ In case of non-termination, there is simply no final state. }
     \caption{Inference Rules for Valid Hoare Triple~\protect\footnotemark{}}
     \label{tab:hoare}
 \end{table}
-\footnotetext{We omit the symbol $\vdash$ in front of a Hoare triple, which denotes ``valid/provable'', for better readability. }
+\footnotetext{I omit the symbol $\vdash$ in front of a Hoare triple, which denotes ``valid/provable'', for better readability. }
 
 Semantically, a Hoare triple {{\mathl{\hoarenm{G}{C}{F}}}} is said to be valid for (partial) correctness, if the execution of the program $C$ with an initial state satisfying the precondition $G$ leads to a final state that satisfies the postcondition $F$, provided that the program terminates. 
 The definitions in \autoref{tab:hoare} indeed correspond to this intended semantics. Formal soundness proofs can be found in Krzysztof R. Apt's survey~\cite{apt81} in 1981.
@@ -133,14 +133,14 @@ The dashed arrows denote non-terminating executions.
 
 
 A sensible advancement of Hoare logic would be to also prove termination, i.e. to eliminate the arrows from $G$ to the abyss.  
-Supplementing Hoare logic with a termination proof is done by Zohar Manna and Amir Pnueli in 1974~\cite{manna74}, where they introduced what we call a \define{loop variant}, a value that decreases with each iteration. The name is in contrast to \define{loop invariant}, concretely the $F$ in \textbf{Rule of Iteration} in \autoref{tab:hoare}, which is constant before and after the loop. 
+Supplementing Hoare logic with a termination proof is done by Zohar Manna and Amir Pnueli in 1974~\cite{manna74}, where they introduced what is called a \define{loop variant}, a value that decreases with each iteration. The name is in contrast to \define{loop invariant}, concretely the $F$ in \textbf{Rule of Iteration} in \autoref{tab:hoare}, which is constant before and after the loop. 
 
 Another advancement would be to find the \imptt{necessary and sufficient} preconditions that grant us the post-properties, i.e. to eliminate the arrows from $\neg G$ to $F$ in \autoref{fig:hoare}, which  is what Edsger W. Dijkstra accomplished with his \define{weakest precondition} transformer in 1975~\cite{dijkstra75}, among other things. 
 
 
 \section{Guarded Command Language}\label{sec:gcl}
-From now on we will use Dijkstra's (non-deterministic) \define{guarded command language (GCL)}~\cite{dijkstra75} to represent programs and to include non-determinism (starting from \autoref{sec:wp-nondet}).
-For better readability, we use an equivalent\footnote{Specifically, \mathl{if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}}  is equivalent to
+From now on I use Dijkstra's (non-deterministic) \define{guarded command language (GCL)}~\cite{dijkstra75} to represent programs and to include non-determinism (starting from \autoref{sec:wp-nondet}).
+For better readability, I use an equivalent\footnote{Specifically, \mathl{if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}}  is equivalent to
 \mathl{if\ \varphi \to C_1\ []\ \neg\varphi \to C_2\ fi} in Dijkstra's original style~\cite{dijkstra75}; \mathl{\{C_1\}\square \{C_2\}} is equivalent to \mathl{if\ true\to C_1\ []\ true\to C_2\ fi}.} 
 form of GCL that is similar to modern pseudo-code as shown in \autoref{tab:gcl}. 
 
@@ -174,7 +174,7 @@ Consequently, non-termination can only originate from either the \mathl{diverge}
 \section{Weakest Preconditions}\label{sec:wp}
 
 \subsection{The Deterministic Case}\label{sec:wp-det}
-To better relate Hoare triples and Dijkstra's weakest precondition transformer, we first focus on deterministic programs. 
+To better relate Hoare triples and Dijkstra's weakest precondition transformer, I first focus on deterministic programs. 
 The goal is to find the \imptt{necessary and sufficient} precondition such that the program is guaranteed to \imptt{terminate} in a state that satisfies the postcondition. 
 \autoref{fig:hoare-wp-det} shows it graphically alongside the figure for valid Hoare triples. 
 We can see that in \autoref{subfig:wp-det}, the arrows from $G$ to non-termination and from $\neg G$ to $F$ are absent. 
@@ -191,7 +191,7 @@ We can see that in \autoref{subfig:wp-det}, the arrows from $G$ to non-terminati
 \label{fig:hoare-wp-det}
 \end{figure}
 
-We define the \define{weakest precondition} transformer inductively over the program structure in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where wp is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function to $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here wp is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the type of wp. } as in \autoref{tab:wp-det}: 
+The definition of the \define{weakest precondition} transformer is inductively over the program structure in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where wp is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function to $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here wp is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the type of wp. } as in \autoref{tab:wp-det}: 
 
 \begin{table}[ht!]\centering
     \begin{tabular}{l;{1pt/1pt}l}
@@ -254,7 +254,7 @@ Then by definition:
 \end{equation}
 
 The definition in \autoref{tab:wp-det}, however, uses the least fixed point of the characteristic function that is not obvious. 
-We understand the use of fixed point in two ways. 
+I understand the use of fixed point in two ways. 
 First, a precondition $G$ being a fixed point of the characteristic function $G= \Phi(G)=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.G)$ means that under control of $G$, termination is possible (left side of the disjunction) and repeated execution of $C'$ is possible(right side of the disjunction), since $G$ is invariant before and after the execution of $C'$. 
 Second, if we were to believe that the semantics of $WHILE$ should be equivalent to the semantics of $if(\varphi)\{C;WHILE\}\ else\ \{skip\}$
 \footnote{The program in the $else$-branch is \mathl{skip} instead \mathl{diverge}, because in case $\neg\varphi$ is true before the execution of $WHILE$, the program simply skips it and executes the next component. This corresponds to a \mathl{skip} in the $else$-branch of $IF$. }, 
@@ -267,7 +267,7 @@ we can derive the need for fixed point:
 \end{align*}
 
 The question then arises: can we define wp with any fixed point? 
-The answer is no and we show it by verifying that the definition in \autoref{tab:wp-det} coincides with Dijkstra's definition at the beginning of this chapter.\footnote{In fact, Dijkstra and Scholten~\cite{dijkstra90} later also gave definitions for wp and wlp in an equivalent form of least and greatest fixed points, they called it "strongest" and "weakest solution". They also proved that it is necessary to use the extreme solutions. }
+The answer is no and I show it by verifying that the definition in \autoref{tab:wp-det} coincides with Dijkstra's definition at the beginning of this chapter.\footnote{In fact, Dijkstra and Scholten~\cite{dijkstra90} later also gave definitions for wp and wlp in an equivalent form of least and greatest fixed points, they called it "strongest" and "weakest solution". They also proved that it is necessary to use the extreme solutions. }
 Thanks to domain theory, we have a heuristic to calculate the least fixed point of $\Phi$. 
 %we We borrow a theorem from domain theory that yields a computation for least fixed points, provided they exist: 
 
@@ -309,6 +309,7 @@ It states that it is impossible for a program to terminate in a state satisfying
 
 \end{proof}
 
+\todo{Rewrite}
 Thus, by identifying the least fixed point, we find a $k$ that satisfies \autoref{eq:while}.
 The advantage of using the least fixed point to define wp is that there are heuristics to find it, whereas \autoref{eq:while} excels at giving intuitions for the preconditions that guarantee loop termination. 
 Essentially, they express the same predicate, i.e. the ``weakest'' precondition for while-loops which is unique. 
@@ -317,12 +318,12 @@ For the same reason, we will see that greatest fixed point is necessary to defin
 
 
 \subsection{The Non-deterministic Case: Angelic vs. Demonic}\label{sec:wp-nondet}
-Now we bring the non-deterministic choice back into the picture and add its wp to \autoref{tab:wp-wlp}. 
+Now I bring the non-deterministic choice back into the picture and add its wp to \autoref{tab:wp-wlp}. 
 Here we assume a setting with \define{angelic non-determinism}, where we assume that whenever non-determinism occurs, it will be resolved in our favor.
 This results in the weakest precondition for our non-deterministic choice being a disjunction of the wp for its subprograms. 
 We are hopeful that a precondition satisfying the wp of one of the subprograms can also lead to termination in our desired postcondition. 
 This is a design choice that is different from Dijkstra's~\cite{dijkstra75}, where the wp for non-deterministic choice is a conjunction, hinting at a demonic setting. 
-Both choices are justifiable, we choose to follow Zhang and Kaminski's work, favoring the resulting Galois connection between the weakest (liberal) precondition transformers and the strongest (liberal) postcondition transformers~\cite{zhang22}. 
+Both choices are justifiable, I choose to follow Zhang and Kaminski's work, favoring the resulting Galois connection between the weakest (liberal) precondition transformers and the strongest (liberal) postcondition transformers~\cite{zhang22}. 
 
 
 \begin{table}[ht!]\centering
@@ -415,7 +416,7 @@ The weakest precondition delivers a precondition so that the program terminates 
 The weakest liberal precondition, however, delivers a precondition so that the program either terminates satisfying the postcondition, or diverges. 
 The postcondition in the wlp setting is \imptt{guaranteed} upon termination, because we regard the non-deterministic choice as demonic, again favoring to establish a Galois connection~\cite{zhang22}. 
 
-We define the weakest liberal precondition transformer in \autoref{tab:wp-wlp}. 
+The definition of the weakest liberal precondition transformer is in \autoref{tab:wp-wlp}. 
 A graphical representation can be found on \autoref{subfig:wlp-demonic}. 
 
 As preluded earlier, greatest fixed points are used to define wlp for while-loops. 
@@ -470,8 +471,8 @@ For example, no state would satisfy $x=2$ after the execution of $x:=1$.
 
 
 \section{Big Step Semantics}\label{sec:big-step}
-To express the meaning of programs, we choose \define{big-step semantics} to describe executions of a program. 
-We take inspiration from Nipkow and Klein's book~\cite{nipkow2014} and define our big-step semantics in \autoref{tab:big-step}. 
+To express the meaning of programs, I choose \define{big-step semantics} to describe executions of a program. 
+Taking inspiration from Nipkow and Klein's book~\cite{nipkow2014} I define the big-step semantics in \autoref{tab:big-step}. 
 
 \newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
 \begin{table}[t]
@@ -500,10 +501,10 @@ We take inspiration from Nipkow and Klein's book~\cite{nipkow2014} and define ou
 \end{table}
 
 Note that in rule $assign$, we have a formula $\sigma(x:=\sigma.e)$. 
-Here we overload the symbol for function application \mathl{.} so that it applies to \define{expressions} as well, but without specifying the set of expressions hence restricting our programming language. 
+Here I overload the symbol for function application \mathl{.} so that it applies to \define{expressions} as well, but without specifying the set of expressions hence restricting our programming language. 
 An expression $e$ would be evaluated in a usual way, e.g. $x+y$ at state $\sigma$ would evaluate to $\sigma.x + \sigma.y$. 
 
-We also use symbols $\sigma(x:=v)$ to denote a state where the value of variable $x$ is $v$, and all other variables have the same values as in $\sigma$.
+I also use symbols $\sigma(x:=v)$ to denote a state where the value of variable $x$ is $v$, and all other variables have the same values as in $\sigma$.
 In our big-step semantics, non-termination of $C$ is equivalent to the nonexistence of state $\tau$ such that $\sigma\goto{C}\tau$. 
 With the definition of big-step semantics, we can precisely express the soundness of our predicate transformers in the following section. 
 

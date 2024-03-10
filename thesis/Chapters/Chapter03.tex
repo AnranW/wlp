@@ -12,7 +12,7 @@
 
 
 
-We are interested in studying the \define{necessary liberal precondition}, a weakening of the weakest liberal precondition: 
+I am interested in studying the \define{necessary liberal precondition}, a weakening of the weakest liberal precondition: 
 $$wlp.C.F\implies G$$
 The weaker $G$ can contain various preconditions: on the one hand, $G$ can be so general that it is satisfied by any program state; on the other hand, a $G$ that is barely weaker than $wlp.C.F$ is also not much different from the latter. 
 Alternatively, $G$ can also contain all kinds of preconditions that starting from it, any postcondition is reachable. 
@@ -22,12 +22,12 @@ wlp.C.F\implies G & = \neg G \implies \neg wlp.C.F \\
 	& = \neg G \implies wp.C.\neg F 
 	\hspace{0.3\textwidth} \tag*{\thm{conjugate}}
 \end{align*}
-In the upcoming sections, we first discuss various forms that the necessary liberal precondition can take and try to identify a $G$ that is most characteristic. 
-We proceed then to propose a proof system stemming from the necessary liberal precondition and show its usefulness using an example. 
+In the upcoming sections, I first discuss various forms that the necessary liberal precondition can take and try to identify a $G$ that is most characteristic. 
+I proceed then to propose a proof system stemming from the necessary liberal precondition and show its usefulness using an example. \todo{rewrite}
 
 \section{A Precondition Weaker Than the Weakest Liberal Precondition}
-In \autoref{sec:wlp} we defined the weakest liberal precondition and state that it characterizes all the preconditions under whose control the program either \imptt{diverges} or \imptt{will} terminate in a state satisfying $F$. 
-We are certain to use ``will'' instead of ``can'', because we view the non-determinism as demonic, so the behavior of wlp can be depicted by \autoref{subfig:wlpd}. 
+In \autoref{sec:wlp} I define the weakest liberal precondition and state that it characterizes all the preconditions under whose control the program either \imptt{diverges} or \imptt{will} terminate in a state satisfying $F$. 
+I am certain to use ``will'' instead of ``can'', the non-deterministic choice is viewed as demonic, so the behavior of wlp can be depicted by \autoref{subfig:wlpd}. 
 We can categorize the executions of the program in four ways: 
 \begin{enumerate}
 	\item the dashed arrow means non-terminating executions; 
@@ -84,7 +84,7 @@ We can categorize the executions of the program in four ways:
 If we were to weaken the precondition, it can happen in various ways as shown in \autoref{subfig:wlp-g-g}{\color{RoyalBlue}-9}. 
 However, $G$ spikes our interest when it takes the form as in \autoref{subfig:wlp-g-gg}, because under its control, the program always \imptt{can} reach a final state satisfying $F$ if it terminates, while with an initial state satisfying $\neg G$, the program is \imptt{will} terminate satisfying $\neg F$. 
 This behavior is exactly the behavior of wlp, if we were to regard the non-deterministic choice as angelic, as hinted by the similarities between \autoref{subfig:wlp-g-gg} and \autoref{subfig:wp-angelic}. 
-We thus first investigate this special case, before proceeding with $G$ in general. 
+I thus first investigate this special case, before proceeding with $G$ in general. 
 
 \subsection{A Special Case} %: $G$ is wlp with Angelic Non-determinism
 Dual to the semantics of wp and wlp as shown in \thm{wp-sound} and \thm{wlp-sound}, we can deduce the semantics of wlp with angelic non-determinism (denoted by \define{wlp$_a$}) recalling the representation for non-termination mentioned in \autoref{sec:big-step}: 
@@ -154,7 +154,7 @@ Our goal is to prove that for any state $\sigma\in\S$:
 	% && \mid \lblth{d}
 \end{align*}
 We can prove \lem{wlpa-g} by proving that \refth{a} implies \refth{c} and that \refth{b} implies \refth{d}.
-For any state $\sigma\in\S$, we first prove (a)$\implies$(c):
+For any state $\sigma\in\S$, I first prove (a)$\implies$(c):
 \begin{align*}
 	% \text{(a)}\implies\text{(c)}:\text{ for any } \\
 	true 
@@ -236,7 +236,7 @@ In other words, if program $C$ starts in any initial state satisfying $\neg G$, 
 
 This corresponds to the semantics of the wp transformer as shown in \thm{wp-sound}, hinting that \hoare{\neg G}{C}{\neg F} is a valid Hoare triple. 
 The question then naturally arises: why do we concern ourselves with $G$, if we can just prove our specifications using wp or Hoare triples? 
-To demonstrate the answer, we analyze the example written in \autoref{lst:pererson}. 
+To demonstrate the answer, I analyze the example written in \autoref{lst:pererson}. 
 
 \begin{lstlisting}[caption={Thread $A$ Hoping to Access Critical Section}, label={lst:pererson}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
 	... // leave non-critical section
@@ -262,7 +262,7 @@ $$F=\{\sigma\in\S\mid \sigma.critB=true\}$$
 after \moreref{line}{line:p-6} in \autoref{lst:pererson} is an undesirable postcondition.
 
 Filling in this $F$ after \moreref{line}{line:p-6} and calculating the weakest liberal precondition backwards according to \autoref{tab:wp-wlp}, we arrive at the conditions as shown in \autoref{lst:critB}. 
-For better readability, we shorten predicates like $F$ to $\{critB\}$.
+For better readability, I shorten predicates like $F$ to $\{critB\}$.
 
 \begin{lstlisting}[caption={Weakest Liberal Precondition w.r.t Postcondition $F=\{\sigma\in\S\mid \sigma.critB=true\}$ }, label={lst:critB}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
 	... // leave non-critical section
@@ -283,7 +283,7 @@ Remember from \autoref{tab:wp-wlp} that the wlp for while-loops is defined with 
 \[
 	wlp.(\text{while }(\varphi)\ \{C'\}).F = gfp\ X.\ (\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X)
 \]
-We simply follow the iteration to find the greatest fixed point of a function until we see a pattern, then prove by natural induction that the solution we found is indeed the greatest fixed point (see \thm{gfp}).
+We can simply follow the iteration to find the greatest fixed point of a function until we see a pattern, then prove by natural induction that the solution we found is indeed the greatest fixed point (see \thm{gfp}).
 
 \begin{lemma}{critB}
 	$wlp.WHILE.\{critB\} = \{critB\}$
@@ -339,7 +339,7 @@ We simply follow the iteration to find the greatest fixed point of a function un
 	$$wlp.WHILE.\{critB\}=gfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(true) = \{critB\}$$
 \end{proof}
 
-We have proven that $\{critB\}$ is the weakest liberal precondition of the program in \autoref{lst:pererson} w.r.t. postcondition $\{critB\}$, meaning that once $\{critB\}$ is satisfied as a precondition, the program is doomed to either end up in deadlock, or not even terminate, as illustrated in \autoref{fig:critB}. 
+I have proven that $\{critB\}$ is the weakest liberal precondition of the program in \autoref{lst:pererson} w.r.t. postcondition $\{critB\}$, meaning that once $\{critB\}$ is satisfied as a precondition, the program is doomed to either end up in deadlock, or not even terminate, as illustrated in \autoref{fig:critB}. 
 Hence, by asserting that $\{critB\}$ is not satisfied in the precondition, we can avoid that $A$ and $B$ are deadlocked. 
 \begin{figure}[ht]
 	\centering

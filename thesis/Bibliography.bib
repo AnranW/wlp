@@ -29,13 +29,6 @@ url="https://doi.org/10.1007/978-1-4612-3228-5_2"
   year={1975},
   publisher={ACM New York, NY, USA}
 }
-@book{dijkstra76,
-  title={A discipline of programming},
-  author={Dijkstra, Edsger W and Dijkstra, Edsger Wybe and Dijkstra, Edsger Wybe and Dijkstra, Edsger Wybe},
-  volume={613924118},
-  year={1976},
-  publisher={prentice-hall Englewood Cliffs}
-}
 @article{zhang22,
   title={Quantitative Strongest Post},
   author={Zhang, Linpeng and Kaminski, Benjamin},
@@ -125,4 +118,137 @@ numpages = {53}
   volume={12},
   pages={115--116},
   year={1981}
+}
+@InProceedings{myreen07,
+author="Myreen, Magnus O.
+and Gordon, Michael J. C.",
+editor="Grumberg, Orna
+and Huth, Michael",
+title="Hoare Logic for Realistically Modelled Machine Code",
+booktitle="Tools and Algorithms for the Construction and Analysis of Systems",
+year="2007",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="568--582",
+abstract="This paper presents a mechanised Hoare-style programming logic framework for assembly level programs. The framework has been designed to fit on top of operational semantics of realistically modelled machine code. Many ad hoc restrictions and features present in real machine-code are handled, including finite memory, data and code in the same memory space, the behavior of status registers and hazards of corrupting special purpose registers (e.g. the program counter, procedure return register and stack pointer). Despite accurately modeling such low level details, the approach yields concise specifications for machine-code programs without using common simplifying assumptions (like an unbounded state space). The framework is based on a flexible state representation in which functional and resource usage specifications are written in a style inspired by separation logic. The presented work has been formalised in higher-order logic, mechanised in the HOL4 system and is currently being used to verify ARM machine-code implementations of arithmetic and cryptographic operations.",
+isbn="978-3-540-71209-1"
+}
+@inproceedings{zhou19,
+author = {Zhou, Li and Yu, Nengkun and Ying, Mingsheng},
+title = {An applied quantum Hoare logic},
+year = {2019},
+isbn = {9781450367127},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3314221.3314584},
+doi = {10.1145/3314221.3314584},
+abstract = {We derive a variant of quantum Hoare logic (QHL), called applied quantum Hoare logic (aQHL for short), by: 1. restricting QHL to a special class of preconditions and postconditions, namely projections, which can significantly simplify verification of quantum programs and are much more convenient when used in debugging and testing; and 2. adding several rules for reasoning about robustness of quantum programs, i.e. error bounds of outputs. The effectiveness of aQHL is shown by its applications to verify two sophisticated quantum algorithms: HHL (Harrow-Hassidim-Lloyd) for solving systems of linear equations and qPCA (quantum Principal Component Analysis).},
+booktitle = {Proceedings of the 40th ACM SIGPLAN Conference on Programming Language Design and Implementation},
+pages = {1149–1162},
+numpages = {14},
+keywords = {robustness, projections, programming languages, Quantum computation, Hoare logic},
+location = {Phoenix, AZ, USA},
+series = {PLDI 2019}
+}
+@incollection{gordon2010ForwardHoare,
+  title = {Forward with {{Hoare}}},
+  booktitle = {Reflections on the {{Work}} of {{C}}.{{A}}.{{R}}. {{Hoare}}},
+  author = {Gordon, Mike and Collavizza, H{\'e}l{\`e}ne},
+  editor = {Roscoe, A.W. and Jones, Cliff B. and Wood, Kenneth R.},
+  year = {2010},
+  pages = {101--121},
+  publisher = {Springer London},
+  address = {London},
+  doi = {10.1007/978-1-84882-912-1_5},
+  urldate = {2024-03-10},
+  abstract = {Hoare's celebrated paper entitled ``An Axiomatic Basis for Computer Programming'' appeared in 1969, so the Hoare formula PfSgQ is now 40 years old! That paper introduced Hoare Logic, which is still the basis for program verification today, but is now mechanised inside sophisticated verification systems. We aim here to give an accessible introduction to methods for proving Hoare formulae based both on the forward computation of postconditions and on the backward computation of preconditions. Although precondition methods are better known, computing postconditions provides a verification framework that encompasses methods ranging from symbolic execution to full deductive proof of correctness.},
+  isbn = {978-1-84882-911-4 978-1-84882-912-1},
+  langid = {english},
+  file = {/Users/anranwang/Zotero/storage/NCKHZ596/Gordon and Collavizza - 2010 - Forward with Hoare.pdf}
+}
+@article{hooman1994extending,
+  title={Extending Hoare logic to real-time},
+  author={Hooman, Jozef},
+  journal={Formal Aspects of Computing},
+  volume={6},
+  pages={801--825},
+  year={1994},
+  publisher={Springer}
+}
+@inproceedings{kaminski2016weakest,
+  title={Weakest precondition reasoning for expected run--times of probabilistic programs},
+  author={Kaminski, Benjamin Lucien and Katoen, Joost-Pieter and Matheja, Christoph and Olmedo, Federico},
+  booktitle={Programming Languages and Systems: 25th European Symposium on Programming, ESOP 2016, Held as Part of the European Joint Conferences on Theory and Practice of Software, ETAPS 2016, Eindhoven, The Netherlands, April 2--8, 2016, Proceedings 25},
+  pages={364--389},
+  year={2016},
+  organization={Springer}
+}
+@inproceedings{liu22,
+author = {Liu, Junyi and Zhou, Li and Barthe, Gilles and Ying, Mingsheng},
+title = {Quantum Weakest Preconditions for Reasoning about Expected Runtimes of Quantum Programs},
+year = {2022},
+isbn = {9781450393515},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3531130.3533327},
+doi = {10.1145/3531130.3533327},
+abstract = {We study expected runtimes for quantum programs. Inspired by recent work on probabilistic programs, we first define expected runtime as a generalisation of quantum weakest precondition. Then, we show that the expected runtime of a quantum program can be represented as the expectation of an observable (in physics). A method for computing the expected runtimes of quantum programs in finite-dimensional state spaces is developed. Several examples are provided as applications of this method, including computing the expected runtime of quantum Bernoulli Factory – a quantum algorithm for generating random numbers. In particular, using our new method, an open problem of computing the expected runtime of quantum random walks introduced by Ambainis et al. (STOC 2001) is solved.},
+booktitle = {Proceedings of the 37th Annual ACM/IEEE Symposium on Logic in Computer Science},
+articleno = {4},
+numpages = {13},
+keywords = {termination, quantum weakest precondition, quantum random walk, physical observable, expected runtime, Quantum programming},
+location = {Haifa, Israel},
+series = {LICS '22}
+}
+@article{boreale20,
+title = {Complete algorithms for algebraic strongest postconditions and weakest preconditions in polynomial odes},
+journal = {Science of Computer Programming},
+volume = {193},
+pages = {102441},
+year = {2020},
+issn = {0167-6423},
+doi = {https://doi.org/10.1016/j.scico.2020.102441},
+url = {https://www.sciencedirect.com/science/article/pii/S0167642320300514},
+author = {Michele Boreale},
+keywords = {Ordinary differential equations, Postconditions, Preconditions, Invariants, Gröbner bases},
+abstract = {A system of polynomial ordinary differential equations (odes) is specified via a vector of multivariate polynomials, or vector field, F. A safety assertion ψ⟶[F]ϕ means that the trajectory of the system will lie in a subset ϕ (the postcondition) of the state-space, whenever the initial state belongs to a subset ψ (the precondition). We consider the case when ϕ and ψ are algebraic varieties, that is, zero sets of polynomials. In particular, polynomials specifying the postcondition can be seen as a system's conservation laws implied by ψ. Checking the validity of algebraic safety assertions is a fundamental problem in, for instance, hybrid systems. We consider a generalized version of this problem, and offer an algorithm that, given a user specified polynomial set P and an algebraic precondition ψ, finds the largest subset of polynomials in P implied by ψ (relativized strongest postcondition). Under certain assumptions on ϕ, this algorithm can also be used to find the largest algebraic invariant included in ϕ and the weakest algebraic precondition for ϕ. Applications to continuous semialgebraic systems are also considered. The effectiveness of the proposed algorithm is demonstrated on several case studies from the literature.}
+}
+@article{ohearn2020IncorrectnessLogic,
+  title = {Incorrectness Logic},
+  author = {O'Hearn, Peter W.},
+  year = {2020},
+  month = jan,
+  journal = {Proceedings of the ACM on Programming Languages},
+  volume = {4},
+  number = {POPL},
+  pages = {1--32},
+  issn = {2475-1421},
+  doi = {10.1145/3371078},
+  urldate = {2024-03-10},
+  abstract = {PETER W. O'HEARN, Facebook and University College London, UK 10 Program correctness and incorrectness are two sides of the same coin. As a programmer, even if you would like to have correctness, you might find yourself spending most of your time reasoning about incorrectness. This includes informal reasoning that people do while looking at or thinking about their code, as well as that supported by automated testing and static analysis tools. This paper describes a simple logic for program incorrectness which is, in a sense, the other side of the coin to Hoare's logic of correctness. CCS Concepts: {$\cdot$} Theory of computation {$\rightarrow$} Programming logic.},
+  langid = {english},
+  file = {/Users/anranwang/Zotero/storage/QFTM7737/O'Hearn - 2020 - Incorrectness logic.pdf}
+}
+@inproceedings{klein09,
+author = {Klein, Gerwin and Elphinstone, Kevin and Heiser, Gernot and Andronick, June and Cock, David and Derrin, Philip and Elkaduwe, Dhammika and Engelhardt, Kai and Kolanski, Rafal and Norrish, Michael and Sewell, Thomas and Tuch, Harvey and Winwood, Simon},
+title = {seL4: formal verification of an OS kernel},
+year = {2009},
+isbn = {9781605587523},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1629575.1629596},
+doi = {10.1145/1629575.1629596},
+abstract = {Complete formal verification is the only known way to guarantee that a system is free of programming errors.We present our experience in performing the formal, machine-checked verification of the seL4 microkernel from an abstract specification down to its C implementation. We assume correctness of compiler, assembly code, and hardware, and we used a unique design approach that fuses formal and operating systems techniques. To our knowledge, this is the first formal proof of functional correctness of a complete, general-purpose operating-system kernel. Functional correctness means here that the implementation always strictly follows our high-level abstract specification of kernel behaviour. This encompasses traditional design and implementation safety properties such as the kernel will never crash, and it will never perform an unsafe operation. It also proves much more: we can predict precisely how the kernel will behave in every possible situation.seL4, a third-generation microkernel of L4 provenance, comprises 8,700 lines of C code and 600 lines of assembler. Its performance is comparable to other high-performance L4 kernels.},
+booktitle = {Proceedings of the ACM SIGOPS 22nd Symposium on Operating Systems Principles},
+pages = {207–220},
+numpages = {14},
+keywords = {sel4, microkernel, l4, isabelle/hol},
+location = {Big Sky, Montana, USA},
+series = {SOSP '09}
+}
+@book{nipkow2002isabelle,
+  title={Isabelle/HOL: a proof assistant for higher-order logic},
+  author={Nipkow, Tobias and Wenzel, Markus and Paulson, Lawrence C},
+  year={2002},
+  publisher={Springer}
 }
