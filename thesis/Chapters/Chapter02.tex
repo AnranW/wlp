@@ -234,6 +234,7 @@ WHILE=while(\varphi)\{C'\}
 \\\text{ and } \\ 
 IF=  if\ (\varphi)\{C'\}\ else\ \{diverge\}. 
 \] 
+\todo{Add why diverge but not skip.}
 %\footnote{In our model, the if construct have only one guard $\varphi$, which if written in the original style would be $if \varphi \to C'$ }
 Rewriting Dijkstra's definition in a form conforming to our style, he defines 
 \[
@@ -250,21 +251,33 @@ As a result, $H_k(F)$ corresponds to the weakest precondition such that the prog
 
 Then by definition: 
 \begin{equation}
-  \hspace{2.5cm}wp.WHILE.F=(\exists k\geq 0: H_k(F)) \label{eq:while}
+  \hspace{2.5cm}
+  wp.WHILE.F=(\exists k\geq 0: H_k(F)) = \underset{k\geq 0}{\bigvee} H_k(F) \label{eq:while}
 \end{equation}
 
-The definition in \autoref{tab:wp-det}, however, uses the least fixed point of the characteristic function that is not obvious. 
-I understand the use of fixed point in two ways. 
-First, a precondition $G$ being a fixed point of the characteristic function $G= \Phi(G)=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.G)$ means that under control of $G$, termination is possible (left side of the disjunction) and repeated execution of $C'$ is possible(right side of the disjunction), since $G$ is invariant before and after the execution of $C'$. 
-Second, if we were to believe that the semantics of $WHILE$ should be equivalent to the semantics of $if(\varphi)\{C;WHILE\}\ else\ \{skip\}$
+The definition in \autoref{tab:wp-det}, however, uses the least fixed point of the characteristic function $\Phi(X)$. 
+We can understand the use of fixed point in two ways. 
+
+First, a precondition $G$ being a fixed point of the characteristic function implies that 
+\begin{equation}
+  \hspace{2.5cm}
+  G= \Phi(G)=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.G) \label{eq:fp}
+\end{equation}
+This means if $G$ is satisfied before the execution of $WHILE$, then termination is possible (left side of the disjunction) and repeated execution of $C'$ is possible (right side of the disjunction):
+For $WHILE$ to enter the loop to execute $C'$, $\phi$ must evaluate to $true$.
+Plugging it in \autoref{eq:fp} results in an equation $G=wp.C'.G$, which means that $G$ is invariant before and after the execution of $C'$. 
+In other words, after one execution of $C'$, $G$ stays satisfied, which makes a further execution of $C'$ possible.
+
+Second, if we were to believe that the semantics of $WHILE$ should be equivalent to the semantics of $if(\varphi)\{C';WHILE\}\ else\ \{skip\}$
 \footnote{The program in the $else$-branch is \mathl{skip} instead \mathl{diverge}, because in case $\neg\varphi$ is true before the execution of $WHILE$, the program simply skips it and executes the next component. This corresponds to a \mathl{skip} in the $else$-branch of $IF$. }, 
 we can derive the need for fixed point: 
 \begin{align*} 
-  wp.WHILE.F    & \seq wp.(\text{if }(\varphi)\{C;WHILE\}\text{ else }\{skip\}.F) \\
-                & \seq \varphi\wedge wp.(C;WHILE).F \vee \neg\varphi\wedge wp.skip.F\\ 
-                & \seq \varphi\wedge wp.C.(wp.WHILE.F) \vee \neg\varphi\wedge F\\ 
+  wp.WHILE.F    & \seq wp.(\text{if }(\varphi)\{C';WHILE\}\text{ else }\{skip\}).F \\
+                & \seq \varphi\wedge wp.(C';WHILE).F \ \vee \ \neg\varphi\wedge wp.skip.F\\ 
+                & \seq \varphi\wedge wp.C'.(wp.WHILE.F)\ \vee\ \neg\varphi\wedge F\\ 
                 & \seq \Phi(wp.WHILE.F)\\ 
 \end{align*}
+The result $wp.WHILE.F = \Phi(wp.WHILE.F)$ means that $wp.WHILE.F$ should be a fix point of function $\Phi$.
 
 The question then arises: can we define wp with any fixed point? 
 The answer is no and I show it by verifying that the definition in \autoref{tab:wp-det} coincides with Dijkstra's definition at the beginning of this chapter.\footnote{In fact, Dijkstra and Scholten~\cite{dijkstra90} later also gave definitions for wp and wlp in an equivalent form of least and greatest fixed points, they called it "strongest" and "weakest solution". They also proved that it is necessary to use the extreme solutions. }
@@ -297,8 +310,10 @@ It states that it is impossible for a program to terminate in a state satisfying
 \vspace{-0.25cm}\paragraph{Step case: } 
   \begin{align*} 
     H_{k+1}(F)     & = wp.IF.H_{k}(F) \vee H_0(F) \\
+                  & = wp.(if\ (\varphi)\{C'\}\ else\ \{diverge\}).H_{k}(F) \vee H_0(F) \\
+                  &\hspace{0.45\textwidth} | \ \text{unfold IF} \\
                   & = (\varphi\wedge wp.C'.H_{k}(F))\vee(\neg\varphi\wedge wp.diverge.H_{k}(F)) \vee H_0(F) \\ 
-                  &\hspace{0.45\textwidth} | \ \text{unfold IF; definition of wp} \\
+                  &\hspace{0.45\textwidth} | \ \text{definition of wp} \\
                   & = (\varphi\wedge wp.C'.H_{k}(F))\vee(\neg\varphi\wedge false) \vee H_0(F) \\
                   &\hspace{0.45\textwidth} | \ \text{definition of wp} \\
                   & = (\varphi\wedge wp.C'.\Phi^{k+1}(false)) \vee H_0(F)  \\
@@ -306,11 +321,12 @@ It states that it is impossible for a program to terminate in a state satisfying
                   & = (\varphi\wedge wp.C'.\Phi^{k+1}(false)) \vee (\neg\varphi\wedge F)  \\
                   & = \Phi^{k+2}(false)  \\
   \end{align*}
-
 \end{proof}
+Combining \thm{lfp} and \autoref{eq:while}, we can arrive at the conclusion that the definitions with the least fixed point and Dijkstra's definition are equivalent.
+Recall that $H_k(F)$ is the weakest precondition that the program terminates satisfying $F$ after \imptt{at most} $k$ iterations. 
+Add to the fact that $H_k(F)=$
 
 \todo{Rewrite}
-Thus, by identifying the least fixed point, we find a $k$ that satisfies \autoref{eq:while}.
 The advantage of using the least fixed point to define wp is that there are heuristics to find it, whereas \autoref{eq:while} excels at giving intuitions for the preconditions that guarantee loop termination. 
 Essentially, they express the same predicate, i.e. the ``weakest'' precondition for while-loops which is unique. 
 Consequently, it means that we can not use other fixed points to define $wp.WHILE$, which are weaker than the least fixed point. 
@@ -438,7 +454,7 @@ It is an easy choice, since wlp is semantically the \imptt{weakest} liberal prec
 
 \section{Strongest Postconditions}\label{sec:sp}
 Following the style to define wp and wlp, Zhang and Kaminski~\cite{zhang22} (re-)defined \define{strongest postconditions} that capture the characteristics of all reachable states after the execution. 
-In essence, $sp.C.G$ is a postcondition that is satisfied by \imptt{all} states that is \imptt{reachable} from $G$. 
+In essence, $sp.C.G$ is a postcondition that is satisfied by \imptt{all} states that are \imptt{reachable} from $G$. 
 The definition of the predicate transformer sp is shown in \autoref{tab:sp}. 
 
 \begin{table}[ht!]\centering
