@@ -6,7 +6,7 @@
 \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
 \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
 
-
+\paragraph{Motivation}
 In 1739, the Scottish philosopher David Hume questioned why we know that the sun will rise tomorrow, ``\textit{tho' 'tis plain we have no further assurance of these facts, than what experience affords us}''~\cite{hume1896}. 
 Hume's question about causality is daunting, yet most of us are not in crisis because we doubt if the sun rises tomorrow. 
 The reason is probably that we believe in physics, astrology, and the rules and formulas that assure us the universe works in a certain way, hence the sun rises tomorrow. 
@@ -15,7 +15,7 @@ It is exactly the rules and formulas this thesis attempts to investigate, in the
 Computer programs are ubiquitous in almost every aspect of human life. 
 We want them to solve our problem efficiently, and correctly. 
 Fortunately, brilliant scientists and engineers have taken the matter into their hands. 
-A recent example is seL4~\cite{klein09}, the first formally proven operating system kernel against overflows, memory leaks, nontermination, etc. using the interactive theorem prover Isabelle/HOL~\cite{nipkow2002isabelle}. 
+A recent example is seL4~\cite{klein09}, the first formally proven operating system kernel against overflows, memory leaks, non-termination, etc. using the interactive theorem prover Isabelle/HOL~\cite{nipkow2002isabelle}. 
 Its verification brings great potential to safety-critical fields like aircrafts and autonomous cars, the latter of which is to be in mass production in 2024.\footnote{\url{https://sel4.systems/news/2023\#nio-skyos}, accessed 10.03.2024. }
 
 Imagine soon being driven by an autonomous car carrying seL4. 
@@ -42,20 +42,56 @@ Not only did Hoare Logic receive numerous copious attention during the first dec
 Hoare triple is applied in low-level programming languages~\cite{myreen07}, quantum programs~\cite{zhou19}, distributed real-time systems~\cite{hooman1994extending}, and so on. 
 
 Likewise, Dijkstra's wp transformer also spawned various scientific work on probabilistic programs~\cite{kaminski2016weakest}, quantum programs~\cite{liu22}, continuous programs~\cite{boreale20}, and so much more.
-Especially interesting for this thesis is the work by O'Hearn in 2020 named \define{incorrectness logic}~\cite{ohearn2020IncorrectnessLogic}. 
+Especially inspiring for this thesis is the work by O'Hearn named \define{incorrectness logic}~\cite{ohearn2020IncorrectnessLogic}. 
 It studies an underapproximation (subset) of the \define{strongest postcondition transformer}~\cite{dijkstra90} (sp) by Dijkstra, focusing on reachability of final states to prove the existence of bugs. 
 He proposed the incorrectness triple starting from the implication 
 $$F\implies sp.C.G$$
-($F$ is an underapproximation of the strongest postcondition of precondition $G$ w.r.t. program $C$), whereas in this thesis, I attempt to study the implication 
+($F$ is an underapproximation of the strongest postcondition of precondition $G$ w.r.t. program $C$), whereas in this thesis, we attempt to study the implication 
 $$wlp.C.F\implies G$$ 
 ($G$ is an overapproximation of the strongest liberal precondition of postcondition $F$ w.r.t program $C$). 
-Despite limited experience and capability, I benefit from standing on the shoulders of giants and investigate the above implication. 
+Despite focusing on different transformers and relations, incorrectness logic gives great intuition on how to approach the overapproximation over wlp.
 
-I first introduce Hoare triple, the wp transformer, the wlp transformer, and the sp transformer using the \define{Guarded Command Language}~\cite{dijkstra75} to present programs in \autoref{ch:Preliminaries}. 
-I also explain their connections and differences. 
+\paragraph{Contribution}
+This thesis yields results both in pre- and postcondition transformers and the implication $wlp.C.F\implies G$. 
+The results are listed below in chronological order: 
+\begin{enumerate}
+    \item We proved that the definition of the weakest precondition transformer of while-programs by Dijkstra~\cite{dijkstra75} and the one using the least fixed point coincide, and gave intuition to explain the necessity of using the least fixed point instead of using any other fixed point. 
+    \item Following the previous result, we deduce that the greatest fixed point is necessary to define the weakest liberal precondition. 
+    \item We relate the pre- and postcondition transformers under angelic or demonic considerations over non-determinism using relations like termination, reachability, conjugation, implication, and equivalence. 
+    We then present the results as a graph like in \autoref{fig:intro-wp-sp-galois}.
+    \begin{figure}[!h]
+        \centering
+        \includesvg[width=.9\linewidth]{image/wp-sp-relation-h.svg}
+        \caption{Relating wp, wlp, sp, slp}
+        \label{fig:intro-wp-sp-galois}
+    \end{figure}
+    \item We discuss all possible scenarios of the overapproximation $wlp.C.F\implies G$, what we call the \define{necessary liberal preconditions}, concluding that without further restrictions, the overapproximate $G$ can contain any initial states. However, we show that the only certainty is that initial states satisfying $\neg G$ will lead to termination in states satisfying $\neg F$. Following this, we demonstrate the usefulness of this overapproximation with an example. 
+    \item We also provide a proof system that captures this overapproximation triple, and prove its soundness. 
+    \item We also notice a special group of preconditions, under whose control the execution is possible to terminate in both the desired postcondition and its opposite, like the green parts in \autoref{fig:intro-g}. 
+    \begin{figure}[!h]
+        \centering
+        \includegraphics[width=.6\linewidth]{image/wlp-g/wlp-g-gg.eps}
+        \caption{Necessarily Liberal Precondition $G$ That Additionally Has Green Dots}
+        \label{fig:intro-g}
+    \end{figure}
+    We capture these preconditions by approaching from top and bottom, namely finding scenarios that the necessary liberal precondition $G$ underapproximates these special preconditions, and finding scenarios where $G$ overapproximates them. In this way, we can establish an equivalence between $G$ and wlp added with the special preconditions, given constraints. This $G$ is exactly wlp with angelic non-determinism. 
+\end{enumerate}
 
-Then I proceed to \autoref{ch:system}, analyzing various cases of $wlp.C.F{\implies} G$, first focusing on a special case where $G$ is equivalent to wlp with angelic non-determinism, before proceeding to $G$ in general.
-Finally, I summarize our conclusions in \autoref{ch:conclusion} and propose possible future work. 
+
+\paragraph{Outline}
+After explaining our motivation in this chapter, we proceed to build the formal foundations of the formalism used in this thesis in \autoref{ch:Preliminaries}. 
+We first present a table of notations we adopt, then give a soft introduction of Hoare logic in \autoref{sec:hoare}, followed by Dijkstra's \define{Guarded Command Language}, which we use throughout the thesis. 
+Then we display the weakest precondition transformer in \autoref{sec:wp}, comparing it against Hoare logic, then give a detailed discussion about the use of fixed points while defining while loops. 
+Finally, we add the notion of non-determinism to the wp transformer, and discuss the difference between angelic and demonic non-determinism and explain our design choice. 
+
+Following this, we show the weakest liberal precondition transformer in \autoref{sec:wlp} and the strongest postcondition transformer in \autoref{sec:sp}. 
+Subsequently, we introduce a \define{big-step semantics} in \autoref{sec:big-step} to help us define the semantics of the aforementioned transformers in \autoref{sec:sound} and list some properties in \autoref{sec:prop}.
+
+In \autoref{ch:nlp}, we first relate wp, wlp, sp, slp together using various relations, then illustrate them in a graph in \autoref{sec:pre-post}. 
+This helps us distinguish the necessary liberal precondition with other implications that are researched, so that we can analyze the scenarios of our overapproximation in \autoref{sec:general}. 
+Then we provide an example to convey the usefulness of this overapproximation, and show its proof system as well as prove its soundness. 
+We then discover a special scenario that is of interest, and find restraints that qualifies this special scenario, then prove their correctness in \autoref{sec:special}. 
+Finally, we summarize our conclusions in \autoref{ch:conclusion} and propose possible future work. 
 
 
 

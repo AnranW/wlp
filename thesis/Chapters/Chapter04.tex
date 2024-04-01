@@ -5,10 +5,10 @@
 %************************************************
 
 \section{Conclusions}
-In this thesis, I study the weakest liberal precondition transformer and its over-approximation: $G$ such that $wlp.C.F\implies G$. 
-I first discuss the definitions of while-loops in its original form~\cite{dijkstra75} and a variant using fixed points. 
-I establish an equivalence between the two forms of definitions, validating the prudence of the second version. 
-Subsequently, I investigate the $G$ in question. 
+In this thesis, we study the weakest liberal precondition transformer and its over-approximation: $G$ such that $wlp.C.F\implies G$. 
+We first discuss the definitions of while-loops in its original form~\cite{dijkstra75} and a variant using fixed points. 
+We establish an equivalence between the two forms of definitions, validating the prudence of the second version. 
+Subsequently, we investigate the $G$ in question. 
 Coincidentally, supplementing $G$ with extra restraints using the strongest postcondition transformer, $G$ coincides with the weakest liberal precondition transformer with angelic non-determinism: 
 $$(sp.C.\neg G {\implies} \neg F) \wedge
 (P{\implies} G \implies \neg(sp.C.P {\implies} \neg F) )
@@ -16,17 +16,26 @@ $$(sp.C.\neg G {\implies} \neg F) \wedge
 
 However, without extra constraints, $G$ can be a precondition where all executions are possible. 
 The only certainty is that \hoare{\neg G}{C}{\neg F} is a valid Hoare Triple. 
-Regardless, $G$ still finds its usefulness while trying to identify preconditions that lead to erroneous final states, but without sufficient knowledge of all the undesired final states. 
-One first finds the weakest liberal precondition with respect to the known ``bad'' final states, then over-approximate the found precondition by ``guessing'' more possible unwanted final states. 
+Regardless, $G$ still finds its usefulness while trying to identify preconditions that lead to erroneous final states, when there are initial states that can both lead to errors and successes non-deterministically, or when we do not have sufficient knowledge of all the undesired final states. 
+To do so, one first finds the weakest liberal precondition with respect to the known ``bad'' final states, then over-approximate the found precondition by ``guessing'' more possible unwanted final states. 
+
+The main contribution of this thesis can be summed up in the following list: 
+\begin{enumerate}
+    \item We prove that the definitions of while-loops with or without the use of fixed points are equivalent, and gave intuition to the use of fixed points and the necessity of the use of the least fixed point and the greatest fixed point while defining wp and wlp transformers. 
+    \item We give a graphic overview of the relations between the predicate transformers with angelic or demonic non-determinism, which helps demonstrate the triples spawned by underapproximations and overapproximations of the predicate transformers. 
+    \item We conclude that the necessity liberal precondition in general, without further conditions, is possible to be satisfied by any type of initial states. However, the negation $\neg G$ forms a valid Hoare triple with the negation of the postcondition: \hoare{\neg G}{C}{\neg F}. 
+    \item We find that the necessary liberal preconditions are useful when faced with non-deterministic choices that can lead to both error and success, or in situations where we do not have information about all the erroneous final states. We propose a heuristic to use this triple, and provide a proof system that captures the overapproximation triple. 
+    \item The examples make us notice a special type of initial states, under whose control the execution can terminate in both final states that satisfy the desired postconditions, or final states that oppose them. 
+    
+    We capture this type of initial states by underapproximating and overapproximating them with the necessary liberal preconditions. Consequently, we find a way to approach $wlp_a$ without having to define it previously. 
+\end{enumerate}
+
 
 \section{Future Work}
-Despite taking inspiration from the incorrectness logic, the methods used in this thesis and the results obtained thereafter are admittedly immature.
-The intricate distinction between successful and erroneous final states was not mirrored in this thesis. %, but rather general hand-waving suggestions. 
-It would be valuable to study the subject of this thesis with a more sophisticated palette to develop more comprehensive proof rules. 
-
+We think it is interesting and possible to find rules with denotational semantics to capture the initial states that can lead both to the desired $F$ and its opposite $\neg F$, taking inspiration from incorrectness logic.  
 Additionally, this thesis is only concerned with binary predicates, i.e. a predicate that evaluates to either $true$ or $false$. 
 Albeit classic, it might be more interesting to examine the above results in a quantitative setting, where predicates evaluate to more than $true$ or $false$. 
-In a quantitative setting, the notion of angelic or demonic non-determinism might be extreme. 
+In a quantitative setting, the notion of angelic or demonic non-determinism might be too extreme. 
 Instead of regarding the non-determinism as completely in or against our favor, which are strong assumptions, what are the implications when the non-determinism resolves partially in or against our favor? 
 As the poet Qu Yuan said: 
 \CJK{UTF8}{gbsn}

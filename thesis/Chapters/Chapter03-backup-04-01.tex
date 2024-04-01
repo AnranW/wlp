@@ -2,7 +2,7 @@
 % so I can build in this tex file too. 
 %************************************************
 % \setcounter{theorem}{6}
-\chapter{Necessary Liberal Preconditions}\label{ch:nlp} % $\mathbb{ZNR}$
+\chapter{A Proof System}\label{ch:system} % $\mathbb{ZNR}$
 %************************************************
 
 % \section{Literature Review}
@@ -14,25 +14,18 @@
 
 We are interested in studying the \define{necessary liberal precondition}, a weakening of the weakest liberal precondition: 
 $$wlp.C.F\implies G$$
-We show our interest, by relating all the pre- and postcondition transformers, so we can distinguish the existing triples that are already well-researched graphically. 
+The weaker $G$ can contain various preconditions: on the one hand, $G$ can be so general that it is satisfied by any program state; on the other hand, a $G$ that is barely weaker than $wlp.C.F$ is also not much different from the latter. 
+Alternatively, $G$ can also contain all kinds of preconditions that starting from it, any postcondition is reachable. 
+One thing we are certain about, though, is that a program with an original state satisfying $\neg G$ will terminate, and the final state can satisfy $\neg F$: 
+\begin{align*}
+wlp.C.F\implies G & = \neg G \implies \neg wlp.C.F \\
+	& = \neg G \implies wp.C.\neg F 
+	\hspace{0.3\textwidth} \mid {\thm{conjugate}}
+\end{align*}
+In the upcoming sections, we first discuss various forms that the necessary liberal precondition can take and try to identify a $G$ that is most characteristic. 
+We proceed then to propose a proof system stemming from the necessary liberal precondition and show its usefulness using an example. \todo{rewrite}
 
-Luckily, we can find scenarios where the overapproximation can be useful, and demonstrate it with an example, before giving a proof system. 
-We conclude that this overapproximation can help us find more preconditions that can lead to failure, either by including states that lead to unidentified errors, or by including states that can lead to errors via non-terministic choice. 
-The latter method then leads to finding conditions that are able to capture these special states. 
-The side effect of this result is that we can now find the wlp transformer with angelic non-determinism using wlp with demonic non-determinism and sp.
-
-This chapter includes our most important results: 
-\begin{enumerate}
-	\item The predicate transformers are all related together nicely by relations like termination, reachability, conjunction, over- and under-approximation, and implication in both directions. 
-	\item Without any additional constraints, the necessary liberal preconditions can contain anything. The only thing we are sure of is that its negation guarantees termination in the negation of the desired postcondition. 
-	\item Necessary liberal preconditions find their usefulness in avoiding bugs. 
-	\item With necessary liberal precondition, we also can overapproximate and underapproximate wlp with angelic non-determinism ($wlp_a$). In the end, we can qualify $wlp_a$ using necessary liberal precondition and strongest postcondition transformers, without having to define $wlp_a$.  
-\end{enumerate}
-
-
-In the upcoming sections, we first give an overview of wp, wlp, sp, slp with both angelic and demonic non-determinism, then discuss the general semantics of the necessary liberal precondition. Finally, we focus on a characteristic scenario and show properties that captures it. 
-
-\section{Preconditions and Postconditions}\label{sec:pre-post}
+\section{Preconditions and Postconditions}
 \subsection{wp and Related}
 \begin{figure}[ht!]\centering
 	\subfloat[Weakest precondition (angelic non-determinism)\label{subfig:wpa}]{
@@ -144,41 +137,14 @@ The main difference is that the arrows pointing up are not labelled with termina
 Supplementing the Galois connection specified in \thm{thm:galois-wp} and \thm{thm:galois-wlp}, we arrive at \autoref{fig:wp-sp-relation}. 
 It is now obvious that we chose to resolve non-determinism exactly like the colored ones in \autoref{fig:wp-sp-relation}, so that we can conveniently connect the pre- and postcondition transformers. 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
-	\includesvg[width=\linewidth]{image/wp-sp-relation-h.svg}
+	\includesvg[width=.5\linewidth]{image/wp-sp-relation.svg}
 	\caption{Connecting wp-Family and sp-Family}
 	\label{fig:wp-sp-relation}
 \end{figure}
 
-The advantage of the design choice of wp and sp with angelic non-determinism as well as wlp and slp with demonic non-determinism shows itself now. 
-By chosing the formalism that are colored in \autoref{fig:wp-sp-relation}, all the under- and overapproximations over the predicate transformers are related well together, as we depicte in \autoref{fig:triples}.
-\begin{figure}[h]
-	\centering
-	\includesvg[width=\linewidth]{image/existing-triples.svg}
-	\caption{Connecting Overapproximations and Underapproximations}
-	\label{fig:triples}
-\end{figure}
-
-The implications noted in black correspond to total correctness $G\implies wp_a.C.F$~\cite{manna74} and total incorrectness $F\implies sp_a.C.G$~\cite{ohearn2020IncorrectnessLogic} triples, respectively. 
-The blue ones are the partial correctness triples $G\implies wlp_d.C.F$~\cite{hoare69} as well as $sp_a.C.G\implies F$ via Galois connection. 
-The red triples are the partial correctness triples $ F\implies slp_c.C.G$~\cite{zhang22} iff $wp_a.C.F\implies G$ that still require further investigation. 
-The orange triple on the left is the triple found by the necessary liberal precondition and the center of our interest in this thesis, whereas the orange triple on the right is still an unanswered question as far as our knowledge. 
-
-
-
-
-
-\section{The General Case}\label{sec:general}
-In our overapproximation, the weaker $G$ can contain various preconditions: on the one hand, $G$ can be so general that it is satisfied by any program state; on the other hand, a $G$ that is barely weaker than $wlp.C.F$ is also not much different from the latter. 
-Alternatively, $G$ can also contain all kinds of preconditions that starting from it, any postcondition is reachable. 
-One thing we are certain about, though, is that a program with an original state satisfying $\neg G$ will terminate, and the final state can satisfy $\neg F$: 
-\begin{align*}
-wlp.C.F\implies G & = \neg G \implies \neg wlp.C.F \\
-	& = \neg G \implies wp.C.\neg F 
-	\hspace{0.2\textwidth} \mid {\thm{conjugate}}
-\end{align*}
-
+\section{A Precondition Weaker Than the Weakest Liberal Precondition}
 In \autoref{sec:wlp} we define the weakest liberal precondition and state that it characterizes all the preconditions under whose control the program either \imptt{diverges} or \imptt{will} terminate in a state satisfying $F$. 
 We are certain to use ``will'' instead of ``can'', the non-deterministic choice is viewed as demonic, so the behavior of wlp can be depicted by \autoref{subfig:wlpd}. 
 We can categorize the executions of the program in four ways: 
@@ -235,212 +201,11 @@ We can categorize the executions of the program in four ways:
 \label{fig:wlp-g-2}
 \end{figure}
 If we were to weaken the precondition, it can happen in various ways as shown in \autoref{subfig:wlp-g-g}{\color{RoyalBlue}-9}. 
+However, $G$ spikes our interest when it takes the form as in \autoref{subfig:wlp-g-gg}, because under its control, the program always \imptt{can} reach a final state satisfying $F$ if it terminates, while with an initial state satisfying $\neg G$, the program is \imptt{will} terminate satisfying $\neg F$. 
+This behavior is exactly the behavior of wlp, if we were to regard the non-deterministic choice as angelic, as hinted by the similarities between \autoref{subfig:wlp-g-gg} and \autoref{subfig:wp-angelic}. 
+We thus first investigate this special case, before proceeding with $G$ in general. 
 
-% We thus first investigate this special case, before proceeding with $G$ in general. 
-
-% While having restrictions on $G$ yields interesting results, without the restrictions we can still find useful characteristics. 
-In general, when $wlp.C.F\implies G$, $G$ can contain all possible initial states, which can be the starting points of black, green, red, or dashed arrows, representing executions terminating in states satisfying $F$, $F$ or $\neg F$, $\neg F$, or non-terminating, respectively. 
-As a result, we can not make many statements without adding extra restrictions to $G$. 
-However, we can see from \autoref{fig:wlp-g-2} that $\neg G$ does not contain any \imptt{black} or \imptt{dashed} arrows in all cases. 
-In other words, if program $C$ starts in any initial state satisfying $\neg G$, then either $G$ is empty, or
-\begin{itemize}
-	\item its executions terminate, and
-	\item there exists an execution that ends up in a final state that satisfies $\neg F$. 
-\end{itemize}
-
-This corresponds to the semantics of the wp transformer as shown in \thm{wp-sound}, hinting that \hoare{\neg G}{C}{\neg F} is a valid Hoare triple. 
-The question then naturally arises: why do we concern ourselves with $G$, if we can just prove our specifications using wp or Hoare triples? 
-To demonstrate the answer, we analyze the example written in \autoref{lst:door}. 
-
-\begin{lstlisting}[caption={Door with Sensors Counting Number of People Present}, label={lst:door}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
-	... // starting device
-	n := n + 1 |$\square$| n := n - 1 |$\square$| diverge;|\label{line:tri-nondet}|
-	... // retirement  
-\end{lstlisting}
-
-In the author's student life, there was a door at university that she always finds interesting. 
-The door is located at a lecture hall, equipped with two sensors on the left and right sides of the door frame. 
-Each time a person walks in or out, the sensor registers and adds or decreases the number of people in the lecture hall, making a small tick sound. 
-It seems that this door serves the purpose of helping security guards keep an eye on the lecture rooms after closing time without having to be physically there. 
-
-But can the door really distinguish from a person entering or leaving the room? 
-And what if naughty students try to trick the door by using a backpack to pretend to exit the door multiple times? 
-What if one of the sensors break? 
-We can this simple scenario by putting the three parts in non-deterministic choice. 
-It can happen that a student enters the room hence increasing the count of the number of people present: $n:=n+1$; or a person exits and decreasing the number: $n:=n-1$. 
-Alternatively, the sensor can break because of old age and result in unforeseeable behavior, for example always detecting someone entering forever. 
-
-We know that there is definitely something wrong, in case the security sees on their device that the number of people in a lecture hall is negative. 
-If we want to know what caused it, we can calculate the weakest liberal precondition of the program snippet with regard to $F=\{\sigma\in\S\mid\sigma.n<0\}$ in \autoref{lst:door}. 
-We write $F=\{n<0\}$ in short: 
-\begin{lstlisting}[caption={Weakest Liberal Precondition w.r.t Postcondition $F=\{\sigma\in\S\mid\sigma.n<0\}$ }, label={lst:neg0}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
-	... // starting device
-	|\imptt{$\{n<-1\}$}|
-	|\imptt{$\{n<-1\}\ \wedge\ \{n<1\}\ \wedge\ true$}|
-	n := n + 1 |$\square$| n := n - 1 |$\square$| diverge;|\label{line:tri-nondet}|
-	|\imptt{\{$n<0$\}}|
-	... // retirement   
-\end{lstlisting}
-
-It seems like we should avoid starting the system in a state where $n$ is less than $-1$. 
-But it is enough? If we start the system in a state where $n=-1$, or even $n=0$, we can still reach an erroneous state where the value of $n$ is negative. 
-\autoref{fig:door}
-\begin{figure}[ht]
-	\centering
-	\includesvg[width=0.8\linewidth]{image/example-door.svg}
-	\caption{$wlp.C.F = \{n<-1\}$}
-	\label{fig:door}
-\end{figure}
-We can see that with wlp, it is not enough to identify all preconditions that can result in errors. 
-In other words, the green arrows in \autoref{fig:door} are not recognized. 
-But by overapproximating wlp to include preconditions like $\{n=-1\}$ and $\{n=-1\}$, we can also include all the green arrows in $G$. 
-
-This is, however, not the only thing that is missing. 
-Obviously, a lecture hall does not have unlimited capacity. 
-Once the system is showing a number higher than the maximum capacity, the security would also instantly know that something is wrong. 
-Also, there could be conditions like ``during holiday time, the lecture halls are unoccupied'' that an expert of the system (the security guards in this case) would know, but not in general. 
-So even by including all the green arrows via overapproximation, we are still missing some of the red arrows like in \autoref{fig:door-expert}, the hidden knowledge that seasoned users possess.   
-\begin{figure}[ht]
-	\centering
-	\includesvg[width=0.8\linewidth]{image/example-door-expert.svg}
-	\caption{$wlp.C.F \implies G$}
-	\label{fig:door-expert}
-\end{figure}
-
-This demonstrates overapproximating wlp is useful to include the green and red arrows in \autoref{fig:door-expert}, aka when: 
-\begin{itemize}
-	\item some preconditions \imptt{can but are not guaranteed} to lead to the erroneous final states non-deterministically; 
-	\item or the user only have insufficient knowledge of the system, but experts can deduce other erroneous final states that are unknown to the public. 
-\end{itemize}
-To utilize this overapproximation, we either identify the preconditions that result in the green arrows, which we will do in the next section, or we first calculate the weakest liberal precondition of the erroneous postcondition that we know of, then relax this precondition by ``guessing'' similar erroneous postconditions with the extra knowledge from experts over the system. 
-
-\subsection{Proof System}
-\newcommand{\nlp}[3]{\langle #1 \rangle\ #2\ \langle #3 \rangle}
-
-We provide the proof system in \autoref{tab:proof-system}. 
-The rules are mostly vanilla, except from the consequence rule: 
-$$\displaystyle\frac{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}{\nlp{G}{C}{F}} conseq$$
-It is the complete opposite direction from the consequence rule in Hoare logic that we referred to in \autoref{tab:hoare}. 
-Rewriting it in the same natural deduction style, we arrive at: 
-$$\displaystyle\frac{G{\implies} P,\ \hoarenm{P}{C}{Q},\ Q{\implies} F}{\hoarenm{G}{C}{F}}conseq_h$$
-This corresponds to our expectation, because we know that the overapproximation triple is exactly a Hoare triple (with respect to partial correctness) with negated pre- and postconditions:
-\begin{align*}
-	& \ wlp.C.F{\implies} G \\
-	\Leftrightarrow &\  \neg G {\implies} \neg wlp.C.F \\
-	\Leftrightarrow &\  \neg G \implies wp.C.\neg F 
-		\hspace{0.3\textwidth} \mid {\thm{conjugate}} \\
-	\Rightarrow &\  \hoarenm{\neg G}C{\neg F} 
-	\tag{*} 
-\end{align*}
-Note that the last line is only an implication in one direction, because we take the version of Hoare triple regarding partial correctness, meaning that termination is not guaranteed. 
-In other words, \hoare{\neg G}C{\neg F} can be a valid Hoare triple, but an initial state satisfying $\neg G$ does not necessary guarantee termination, hence $\neg G$ is not necessarily a subset of $wp.C.\neg F$. 
-If we were to take Hoare triple with additional rules to prove termination~\cite{manna74}, the implication would be in both directions. 
-
-From $consqe_h$ we can then deduce the rule $conseq$ assuming that the triple $\nlp\cdot\cdot\cdot$ is sound (which we will prove later in this section), i.e. $\nlp P C Q \implies (wlp.C.F{\implies} G)$ : 
-\begin{center}
-	\begin{prooftree}
-		\Hypo{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}
-		\infer1[soundness]{P{\implies} G,\ wlp.C.F{\implies} G,\ F{\implies} Q}
-		\infer1[(*)]{P{\implies} G,\ \hoarenm{\neg G}C{\neg F},\ F{\implies} Q}
-		\infer1[first-order logic]{\neg G{\implies} \neg P,\ \hoarenm {\neg P} C {\neg Q},\ \neg Q{\implies} \neg F}
-		\infer1[$conseq_h$]{\hoarenm {\neg G} C {\neg F}}
-	\end{prooftree}
-\end{center}
-
-\begin{table}[t]
-  \normalsize
-  \centering
-  \framebox{
-  $\begin{array}{@{}ccc@{}}
-  \displaystyle\frac{}{\nlp F {skip} F} skip &
-  \displaystyle\frac{}{\nlp {true} {diverge} F} div 
-  \\[3ex]
-  \displaystyle\frac{}{\nlp {F[x/e]} {x:=e} F} assign &
-  \displaystyle\frac{\nlp G {C_1} P,\ \nlp P {C_2} F}{\nlp G {C_1; C_2} F} seq &
-  \\[3ex]
-  \displaystyle\frac{\nlp {\varphi\wedge G} {C_1} F,\ \nlp {\neg\varphi\wedge G} {C_2} F}{\nlp{G}{IF}{F}} if &
-  \displaystyle\frac{\nlp {\varphi\wedge F} {C'} F}{\nlp F {WHILE} {\neg \varphi\wedge F}} while &
-  \\[3ex]
-  \displaystyle\frac{\nlp G {C_1} F,\ \nlp G {C_2} F}{\nlp G {C_1\square C_2} F} choice &
-  \displaystyle\frac{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}{\nlp{G}{C}{F}} conseq 
-  \\[3ex]
-  \text{ where } IF= if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}\text{, }
-  & WHILE= while\ (\varphi)\ do\ C.
-  \end{array}$}
-  \caption{The Proof System}
-  \label{tab:proof-system}
-\end{table}
-
-\begin{lemma}{sound-pf}[The proof system is sound]
-	\ \\
-	$$\nlp G C F\implies (wlp.C.F{\implies} G)$$
-\end{lemma}
-
-\begin{proof}
-	We prove by induction and case distinction over the lowest level of the proof tree. 
-	\paragraph{Cases $skip$, $div$, $assign$} Straightforward.
-	\paragraph{Case $seq$} 
-	Assume we proved the triple $\nlp G {C_1;C_2} F$ with the following proof tree: 
-	\begin{center}
-		\begin{prooftree}
-			\infer0{\cdots}
-			\infer1{\cdots\cdots}
-			\infer1{}
-			\Ellipsis{}{ }
-			\infer1{\nlp G {C_1} P,\ \nlp P {C_2} F}
-			\infer1[$seq$]{\nlp G {C_1;C_2} F}
-		\end{prooftree}
-	\end{center}
-	Then we have proven $M_1:=\nlp G {C_1} P $ and $M_2:=\nlp P {C_2} F $ as the premises of the last deduction, as well as $M_3:=\nlp G {C_1;C_2} F$ as the conclusion of the last deduction step.
-	We also have the induction hypotheses $$H_1:=\nlp G {C_1} P {\implies} (wlp.C_1.P{\implies} G)$$ 
-	$$H_2:=\nlp P {C_2} F {\implies} (wlp.C_2.F{\implies} P)$$
-	Our goal is to prove $\nlp G {C_1;C_2} F {\implies} (wlp.(C_1;C_2).F{\implies} G)$. 
-	By discharging $M_1$ in $H_1$, $M_2$ in $H_2$, and $M_3$ in the goal, we acquire premises $wlp.C_1.P{\implies} G$ and $wlp.C_2.F{\implies} P$ to prove goal $wlp.(C_1;C_2).F{\implies} G$. 
-	This is done by discharging of the definition of wlp with composition and the monotonicity of wlp: 
-	\begin{align*}
-		&\ wlp.(C_1;C_2).F = wlp.C_1.(wlp.C_2.F) 
-		\hspace{0.1\linewidth}\mid \text{definition of wlp} \\
-		\Rightarrow &\ wlp.C_1.P  
-		\hspace{0.433\linewidth}\mid \text{monotonicity of wlp}\\
-		\Rightarrow &\ G  
-		\hspace{0.527\linewidth}\mid \text{premise}
-	\end{align*}
-
-	\paragraph{Case $if$}
-	Unrolling the definition of $wlp.IF.F$ we get that 
-	$$wlp.IF.F = \varphi\wedge wlp.C_1.F\ \vee\ \neg\varphi\wedge wlp.C_2.F$$ 
-	Similar as before, by discharging induction hypotheses and premises, we can acquire the following conditions: 
-	$$wlp.C_1.F\implies\varphi\wedge G \text{ and }
-	 wlp.C_2.F\implies\neg\varphi\wedge G $$
-	From the first condition we get: 
-	$$\varphi\wedge wlp.C_1.F\implies wlp.C_1.F \implies \varphi\wedge G\implies G$$
-	and 
-	$$\neg\varphi\wedge wlp.C_2.F\implies wlp.C_2.F \implies \neg\varphi\wedge G\implies G$$
-	Hence $wlp.IF.F \implies G$. 
-	\paragraph{Case $while$}
-	\colorbox{red!30}{
-		how to write this rule so sound? 
-	}%TODO
-	\paragraph{Case $choice$} Similar to the case with $seq$, we can prove that $wlp.(C_1\square C_2).F \implies G$ from 
-	$$wlp.(C_1\square C_2).F = wlp.C_1.F \wedge wlp.C_2.F$$
-	and 
-	$$wlp.C_1.F \implies G\ \wedge\ wlp.C_2.F \implies G$$
-
-	\paragraph{Case $conseq$}
-	This case is also not different from before: from the induction hypotheses and premises we can derive $wlp.C.Q \implies P$. 
-	Together with $P\implies G$, $F\implies Q$ and the monotonicity of $wlp.C$ we conclude that 
-	$$wlp.C.F\implies wlp.C.Q \implies P \implies G$$
-\end{proof}
-
-\section{A Special Case}\label{sec:special} %: $G$ is wlp with Angelic Non-determinism
-As promised before, we will look into a way to identify the green arrows in \autoref{fig:door}, aka the executions that start from initial states but may end non-deterministically in $F$ or $\neg F$. 
-We can easily see that if we overapproximate wlp by adding all the green arrows, we end up with \autoref{subfig:wlp-g-gg}, which is exactly wlp with angelic non-determinism, as shown in \autoref{fig:wp-family} at the beginning of this chapter. 
-
-When $G$ corresponds to \autoref{subfig:wlp-g-gg}, we know that under its control, the program always \imptt{can} reach a final state satisfying $F$ if it terminates, while with an initial state satisfying $\neg G$, the program is \imptt{will} terminate satisfying $\neg F$
-% However, $G$ spikes our interest when it takes the form as in \autoref{subfig:wlp-g-gg}, because under its control, the program always \imptt{can} reach a final state satisfying $F$ if it terminates, while with an initial state satisfying $\neg G$, the program is \imptt{will} terminate satisfying $\neg F$. 
-% This behavior is exactly the behavior of wlp, if we were to regard the non-deterministic choice as angelic, as hinted by the similarities between \autoref{subfig:wlp-g-gg} and \autoref{subfig:wp-angelic}. 
-
-
+\subsection{A Special Case} %: $G$ is wlp with Angelic Non-determinism
 Dual to the semantics of wp and wlp as shown in \thm{wp-sound} and \thm{wlp-sound}, we can deduce the semantics of wlp with angelic non-determinism (denoted by \define{wlp$_a$}) recalling the representation for non-termination mentioned in \autoref{sec:big-step}: 
 \begin{statement}{wlpa-sound}[Semantics of $wlp_a$]
 \ \vspace{-1.5mm}
@@ -577,6 +342,260 @@ Then we have found a witness $\tau$ such that $\sigma\goto{C}\tau$ and $\tau\in 
 % \end{align*}	
 \end{corollary}
 
+\subsection{The General Case}
+While having restrictions on $G$ yields interesting results, without the restrictions we can still find useful characteristics. 
+As shown in \autoref{fig:wlp-g-2}, $G$ can contain all possible initial states, which can be the starting points of black, green, red, or dashed arrows, representing executions terminating in states satisfying $F$, $F$ or $\neg F$, $\neg F$, or non-terminating, respectively. 
+As a result, we can not make much statements without adding extra restrictions to $G$. 
+However, we can see from \autoref{fig:wlp-g-2} that $\neg G$ does not contain any \imptt{black} or \imptt{dashed} arrows in all cases. 
+In other words, if program $C$ starts in any initial state satisfying $\neg G$, then either $G$ is empty, or
+\begin{itemize}
+	\item its executions terminate, and
+	\item there exists an execution that ends up in a final state that satisfies $\neg F$. 
+\end{itemize}
+
+This corresponds to the semantics of the wp transformer as shown in \thm{wp-sound}, hinting that \hoare{\neg G}{C}{\neg F} is a valid Hoare triple. 
+The question then naturally arises: why do we concern ourselves with $G$, if we can just prove our specifications using wp or Hoare triples? 
+To demonstrate the answer, we analyze the example written in \autoref{lst:pererson}. 
+
+\begin{lstlisting}[caption={Thread $A$ Hoping to Access Critical Section}, label={lst:pererson}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
+	... // leave non-critical section
+	turn := B; |\label{line:p-2}|
+	while (turn != A) do 
+		turn := A |$\square$| turn := B |\label{line:p-4}|
+		// modeling the behavior of other threads
+	critA := true;|\label{line:p-6}|
+	... // enter critical section  
+\end{lstlisting}
+
+The pseudocode is modified from Peterson's mutual exclusion algorithm~\cite{peterson1981}, but we are now only concerned with one of possibly many threads.
+Our thread $A$ is trying to enter some critical section but only have limited knowledge as to what other threads might also want to access the same critical section: $A$ is only aware of thread $B$ that also wants to enter critical section. 
+
+To have a \imptt{fair} system, thread $A$ gives $B$ the turn after leaving non-critical section as written in \moreref{line}{line:p-2} of \autoref{lst:pererson}. 
+Otherwise, thread $A$ might never enter the while-loop and directly skip ahead to \moreref{line}{line:p-6} to enter the critical section, without giving other threads a chance. 
+\moreref{Line}{line:p-4} models the behavior of other threads in the system: while $A$ is waiting for its turn, thread $B$ might also have just left the non-critical section and gave the turn to $A$; or some other thread than $A$ or $B$ might have given the turn to $B$.~\footnote{We will see with the calculation for wlp of this while-loop that it makes no difference whether we include more non-deterministic choices like $turn := C\ \square\ turn := D\ \square\ \dots$.} 
+
+Mutual exclusion requires that no threads are simultaneously in the critical section. 
+In this case, a state we definitely want to avoid is where the values of $critA$ and $critB$ are both true. 
+In other words, the postcondition 
+$$F=\{\sigma\in\S\mid \sigma.critB=true\}$$ 
+after \moreref{line}{line:p-6} in \autoref{lst:pererson} is an undesirable postcondition.
+
+Filling in this $F$ after \moreref{line}{line:p-6} and calculating the weakest liberal precondition backwards according to \autoref{tab:wp-wlp}, we arrive at the conditions as shown in \autoref{lst:critB}. 
+For better readability, we shorten predicates like $F$ to $\{critB\}$.
+
+\begin{lstlisting}[caption={Weakest Liberal Precondition w.r.t Postcondition $F=\{\sigma\in\S\mid \sigma.critB=true\}$ }, label={lst:critB}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
+	... // leave non-critical section
+	|\imptt{\{critB\}}|
+	turn := B;
+	|\imptt{\{critB\}}\label{line:c-4}|
+	while (turn != A) do 
+		turn := A |$\square$| turn := B 
+		// modeling the behavior of other threads
+	|\imptt{\{critB\}}\label{line:c-8}|
+	critA := true;
+	|\imptt{\{critB\}}|
+	... // enter critical section  
+\end{lstlisting}
+
+The only non-obvious step in \autoref{lst:critB} is from \moreref{line}{line:c-8} to \moreref{line}{line:c-4}. 
+Remember from \autoref{tab:wp-wlp} that the wlp for while-loops is defined with the greatest fixed point operator: 
+\[
+	wlp.(\text{while }(\varphi)\ \{C'\}).F = gfp\ X.\ (\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X)
+\]
+We can simply follow the iteration to find the greatest fixed point of a function until we see a pattern, then prove by natural induction that the solution we found is indeed the greatest fixed point (see \thm{gfp}).
+
+\begin{lemma}{critB}
+	$wlp.WHILE.\{critB\} = \{critB\}$
+	where $WHILE := while\ (\varphi)\ do\ C'$, $\varphi := \{turn!=A\}$,\ \ and $C':=(turn:=A\ \square\ turn:=B)$. 
+\end{lemma}
+\begin{proof} 
+	\begin{align*}
+		\text{Let }\Phi(X) :=&\ \neg\varphi\wedge F\ \ \vee\ \ \varphi\wedge wlp.C'.X\\ 
+		=&\ \{turn=A\}\wedge \{critB\}\ \ \vee\ \ \{turn!=A\} \wedge wlp.C'.X\\
+		\text{Then }\Phi(true) =&\ \{turn=A\}\wedge \{critB\}\ \ \vee\ \ \{turn!=A\} \wedge wlp.C'.true \\ 
+		\overset{\thm{wlp-true}}{=}&\ \{turn=A\}\wedge \{critB\}\ \ \vee\ \ \{turn!=A\} \wedge true \\
+		% &\hspace{0.45\textwidth} | \ \thm{wlp-true} \\
+		=&\ \{turn != A\} \vee \{critB\} \\
+	\end{align*}
+	\begin{align*}
+		\text{Also, } wlp.C'.\Phi(True)=&\ wlp.(turn:=A\ \square\ turn:=B).\Phi(true)\\
+		\overset{\autoref{tab:wp-wlp}}{=}&\ wlp.(turn:=A).(\{turn != A\} \vee \{critB\}) \\
+		&\ \wedge wlp.(turn:=B).(\{turn != A\} \vee \{critB\})\\
+		\overset{\autoref{tab:wp-wlp}}{=}&\ (\{A!=A\}\vee\{critB\})\wedge\{B!=A\}\vee\{critB\}\\
+		=&\ \{critB\}\wedge true \\
+		=&\ \{critB\}
+	\end{align*}
+	\begin{align*}
+		\text{Hence, }\Phi^2(true) =&\ \{turn:=A\}\wedge \{critB\}\\
+		&\ \vee\ \ \{turn!=A\} \wedge wlp.C'.\Phi(true) \\
+		=&\ \{turn:=A\}\wedge \{critB\}\ \ \vee\ \ \{turn!=A\} \wedge \{critB\}\\
+		=&\ \{critB\} \wedge (\{turn:=A\} \vee \{turn!=A\})\\
+		=&\ \{critB\}\\
+		\text{And } wlp.C'.\Phi^2(True)=&\ wlp.(turn:=A\ \square\ turn:=B).\Phi^2(true)\\
+		\overset{\autoref{tab:wp-wlp}}{=}&\ wlp.(turn:=A).\{critB\} \\
+		&\ \wedge wlp.(turn:=B).\{critB\}\\
+		\overset{\autoref{tab:wp-wlp}}{=}&\ \{critB\}\wedge\{critB\}\\
+		=&\ \{critB\}\\
+		=&\ \Phi(true)\\
+	\end{align*}
+	\vspace{-15mm}
+	\begin{align*}
+		\text{Consequently, } \Phi^3(true) = \Phi^2(true) = \{critB\}
+	\end{align*}
+	From the above results we can form the hypothesis
+	$$\forall i\in\N\wedge i\geq 2: \Phi^i(true)=\{critB\}$$
+	and prove by natural induction: 
+	\begin{enumerate}
+		\item Base case: $\Phi^2(true) = \{critB\}$. \checkmark
+		\item Step case: ($IH$ stands for induction hypothesis $\Phi^i(true)=\{critB\}$)
+		\begin{align*}
+			\Phi^{i+1}(true) =&\ \{turn=A\}\wedge \{critB\}\ \ \vee\ \ \{turn!=A\} \wedge wlp.C'.\Phi^i(true) \\ 
+			\overset{IH}{=}&\ \{turn=A\}\wedge \{critB\}\ \ \vee\ \ \{turn!=A\} \wedge \{critB\} \\
+			=&\ \{critB\}\ \checkmark
+		\end{align*} 
+	\end{enumerate}
+	Combine this proven hypothesis with \thm{gfp} and the definition of $wlp.WHILE.F$ in \autoref{tab:wp-wlp}, we can conclude that 
+	$$wlp.WHILE.\{critB\}=gfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(true) = \{critB\}$$
+\end{proof}
+
+We have proven that $\{critB\}$ is the weakest liberal precondition of the program in \autoref{lst:pererson} w.r.t. postcondition $\{critB\}$, meaning that once $\{critB\}$ is satisfied as a precondition, the program is doomed to either end up in deadlock, or not even terminate, as illustrated in \autoref{fig:critB}. 
+Hence, by asserting that $\{critB\}$ is not satisfied in the precondition, we can avoid that $A$ and $B$ are deadlocked. 
+\begin{figure}[ht]
+	\centering
+	\includesvg{image/critB.svg}
+	\caption{$wlp.C.F = critB$}
+	\label{fig:critB}
+\end{figure}
+
+However, $B$ may not be the only process or thread that wishes to enter the same critical section as $A$. 
+For example, a seasoned programmer with extra knowledge may guess that processes like $kerneltask$, $systemstats$ are some of them, and relax the precondition that we should avoid to 
+$$wlp.C.F = \{critB\}\implies \{critB \vee critKerneltask \vee critSystemstats\} = G$$
+as drawn in \autoref{fig:critMore}. 
+\begin{figure}[ht]
+	\centering
+	\includesvg{image/critMore.svg}
+	\caption{Relaxing the precondition with extra knowledge}
+	\label{fig:critMore}
+\end{figure}
+This demonstrates the use of the triple $wlp.C.F{\implies} G$: with insufficient knowledge we have over the system, we first calculate the weakest liberal precondition of the erroneous postcondition that we know of, then relax this precondition by ``guessing'' similar erroneous postconditions with the extra knowledge from experts over the system. 
+
+\section{The Proof System}
+\newcommand{\nlp}[3]{\langle #1 \rangle\ #2\ \langle #3 \rangle}
+
+We provide the proof system in \autoref{tab:proof-system}. 
+The rules are mostly vanilla, except from the consequence rule: 
+$$\displaystyle\frac{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}{\nlp{G}{C}{F}} conseq$$
+It is the complete opposite direction from the consequence rule in Hoare logic that we referred to in \autoref{tab:hoare}. 
+Rewriting it in the same natural deduction style, we arrive at: 
+$$\displaystyle\frac{G{\implies} P,\ \hoarenm{P}{C}{Q},\ Q{\implies} F}{\hoarenm{G}{C}{F}}conseq_h$$
+This corresponds to our expectation, because we know that the overapproximation triple is exactly a Hoare triple (with respect to partial correctness) with negated pre- and postconditions:
+\begin{align*}
+	& \ wlp.C.F{\implies} G \\
+	\Leftrightarrow &\  \neg G {\implies} \neg wlp.C.F \\
+	\Leftrightarrow &\  \neg G \implies wp.C.\neg F 
+		\hspace{0.3\textwidth} \mid {\thm{conjugate}} \\
+	\Rightarrow &\  \hoarenm{\neg G}C{\neg F} 
+	\tag{*} 
+\end{align*}
+Note that the last line is only an implication in one direction, because we take the version of Hoare triple regarding partial correctness, meaning that termination is not guaranteed. 
+In other words, \hoare{\neg G}C{\neg F} can be a valid Hoare triple, but an initial state satisfying $\neg G$ does not necessary guarantee termination, hence $\neg G$ is not necessarily a subset of $wp.C.\neg F$. 
+If we were to take Hoare triple with additional rules to prove termination~\cite{manna74}, the implication would be in both directions. 
+
+From $consqe_h$ we can then deduce the rule $conseq$ assuming that the triple $\nlp\cdot\cdot\cdot$ is sound (which we will prove later in this section), i.e. $\nlp P C Q \implies (wlp.C.F{\implies} G)$ : 
+\begin{center}
+	\begin{prooftree}
+		\Hypo{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}
+		\infer1[soundness]{P{\implies} G,\ wlp.C.F{\implies} G,\ F{\implies} Q}
+		\infer1[(*)]{P{\implies} G,\ \hoarenm{\neg G}C{\neg F},\ F{\implies} Q}
+		\infer1[first-order logic]{\neg G{\implies} \neg P,\ \hoarenm {\neg P} C {\neg Q},\ \neg Q{\implies} \neg F}
+		\infer1[$conseq_h$]{\hoarenm {\neg G} C {\neg F}}
+	\end{prooftree}
+\end{center}
+
+\begin{table}[t]
+  \normalsize
+  \centering
+  \framebox{
+  $\begin{array}{@{}ccc@{}}
+  \displaystyle\frac{}{\nlp F {skip} F} skip &
+  \displaystyle\frac{}{\nlp {true} {diverge} F} div 
+  \\[3ex]
+  \displaystyle\frac{}{\nlp {F[x/e]} {x:=e} F} assign &
+  \displaystyle\frac{\nlp G {C_1} P,\ \nlp P {C_2} F}{\nlp G {C_1; C_2} F} seq &
+  \\[3ex]
+  \displaystyle\frac{\nlp {\varphi\wedge G} {C_1} F,\ \nlp {\neg\varphi\wedge G} {C_2} F}{\nlp{G}{IF}{F}} if &
+  \displaystyle\frac{\nlp {\varphi\wedge F} {C'} F}{\nlp F {WHILE} {\neg \varphi\wedge F}} while &
+  \\[3ex]
+  \displaystyle\frac{\nlp G {C_1} F,\ \nlp G {C_2} F}{\nlp G {C_1\square C_2} F} choice &
+  \displaystyle\frac{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}{\nlp{G}{C}{F}} conseq 
+  \\[3ex]
+  \text{ where } IF= if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}\text{, }
+  & WHILE= while\ (\varphi)\ do\ C.
+  \end{array}$}
+  \caption{The Proof System}
+  \label{tab:proof-system}
+\end{table}
+
+\begin{lemma}{sound-pf}[The proof system is sound]
+	\ \\
+	$$\nlp G C F\implies (wlp.C.F{\implies} G)$$
+\end{lemma}
+
+\begin{proof}
+	We prove by induction and case distinction over the lowest level of the proof tree. 
+	\paragraph{Cases $skip$, $div$, $assign$} Straightforward.
+	\paragraph{Case $seq$} 
+	Assume we proved the triple $\nlp G {C_1;C_2} F$ with the following proof tree: 
+	\begin{center}
+		\begin{prooftree}
+			\infer0{\cdots}
+			\infer1{\cdots\cdots}
+			\infer1{}
+			\Ellipsis{}{ }
+			\infer1{\nlp G {C_1} P,\ \nlp P {C_2} F}
+			\infer1[$seq$]{\nlp G {C_1;C_2} F}
+		\end{prooftree}
+	\end{center}
+	Then we have proven $M_1:=\nlp G {C_1} P $ and $M_2:=\nlp P {C_2} F $ as the premises of the last deduction, as well as $M_3:=\nlp G {C_1;C_2} F$ as the conclusion of the last deduction step.
+	We also have the induction hypotheses $$H_1:=\nlp G {C_1} P {\implies} (wlp.C_1.P{\implies} G)$$ 
+	$$H_2:=\nlp P {C_2} F {\implies} (wlp.C_2.F{\implies} P)$$
+	Our goal is to prove $\nlp G {C_1;C_2} F {\implies} (wlp.(C_1;C_2).F{\implies} G)$. 
+	By discharging $M_1$ in $H_1$, $M_2$ in $H_2$, and $M_3$ in the goal, we acquire premises $wlp.C_1.P{\implies} G$ and $wlp.C_2.F{\implies} P$ to prove goal $wlp.(C_1;C_2).F{\implies} G$. 
+	This is done by discharging of the definition of wlp with composition and the monotonicity of wlp: 
+	\begin{align*}
+		&\ wlp.(C_1;C_2).F = wlp.C_1.(wlp.C_2.F) 
+		\hspace{0.1\linewidth}\mid \text{definition of wlp} \\
+		\Rightarrow &\ wlp.C_1.P  
+		\hspace{0.433\linewidth}\mid \text{monotonicity of wlp}\\
+		\Rightarrow &\ G  
+		\hspace{0.527\linewidth}\mid \text{premise}
+	\end{align*}
+
+	\paragraph{Case $if$}
+	Unrolling the definition of $wlp.IF.F$ we get that 
+	$$wlp.IF.F = \varphi\wedge wlp.C_1.F\ \vee\ \neg\varphi\wedge wlp.C_2.F$$ 
+	Similar as before, by discharging induction hypotheses and premises, we can acquire the following conditions: 
+	$$wlp.C_1.F\implies\varphi\wedge G \text{ and }
+	 wlp.C_2.F\implies\neg\varphi\wedge G $$
+	From the first condition we get: 
+	$$\varphi\wedge wlp.C_1.F\implies wlp.C_1.F \implies \varphi\wedge G\implies G$$
+	and 
+	$$\neg\varphi\wedge wlp.C_2.F\implies wlp.C_2.F \implies \neg\varphi\wedge G\implies G$$
+	Hence $wlp.IF.F \implies G$. 
+	\paragraph{Case $while$}
+	\colorbox{red!30}{
+		how to write this rule so sound? 
+	}%TODO
+	\paragraph{Case $choice$} Similar to the case with $seq$, we can prove that $wlp.(C_1\square C_2).F \implies G$ from 
+	$$wlp.(C_1\square C_2).F = wlp.C_1.F \wedge wlp.C_2.F$$
+	and 
+	$$wlp.C_1.F \implies G\ \wedge\ wlp.C_2.F \implies G$$
+
+	\paragraph{Case $conseq$}
+	This case is also not different from before: from the induction hypotheses and premises we can derive $wlp.C.Q \implies P$. 
+	Together with $P\implies G$, $F\implies Q$ and the monotonicity of $wlp.C$ we conclude that 
+	$$wlp.C.F\implies wlp.C.Q \implies P \implies G$$
+\end{proof}
 %*****************************************
 %*****************************************
 %*****************************************
