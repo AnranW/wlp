@@ -141,6 +141,7 @@ The main difference is that the arrows pointing up are not labelled with termina
 	\label{fig:sp-family-relation}
 \end{figure}
 
+\section{Literature Review: All About Triples}\label{sec:literature} %TODO: talk more about it
 Supplementing the Galois connection specified in \thm{thm:galois-wp} and \thm{thm:galois-wlp}, we arrive at \autoref{fig:wp-sp-relation}. 
 It is now obvious that we chose to resolve non-determinism exactly like the colored ones in \autoref{fig:wp-sp-relation}, so that we can conveniently connect the pre- and postcondition transformers. 
 
@@ -160,7 +161,7 @@ By chosing the formalism that are colored in \autoref{fig:wp-sp-relation}, all t
 	\label{fig:triples}
 \end{figure}
 
-The implications noted in black correspond to total correctness $G\implies wp_a.C.F$~\cite{manna74} and total incorrectness $F\implies sp_a.C.G$~\cite{ohearn2020IncorrectnessLogic} triples, respectively. 
+The implications noted in black correspond to total correctness~\cite{manna74} $G\implies wp_a.C.F$ and total incorrectness $F\implies sp_a.C.G$~\cite{ohearn2020IncorrectnessLogic} triples, respectively. 
 The blue ones are the partial correctness triples $G\implies wlp_d.C.F$~\cite{hoare69} as well as $sp_a.C.G\implies F$ via Galois connection. 
 The red triples are the partial correctness triples $ F\implies slp_c.C.G$~\cite{zhang22} iff $wp_a.C.F\implies G$ that still require further investigation. 
 The orange triple on the left is the triple found by the necessary liberal precondition and the center of our interest in this thesis, whereas the orange triple on the right is still an unanswered question as far as our knowledge. 
