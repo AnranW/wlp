@@ -210,8 +210,10 @@ The definition of the \define{weakest precondition} transformer is inductively o
     \label{tab:wp-det}
 \end{table}
 
-\mathl{F[x/e]} is $F$ where every occurrence of $x$ is syntactically replaced by $e$. 
+A predicate $P$ is \define{weaker} than $Q$, if and only if $Q\implies P$ is valid, and $Q$ is then \define{stronger} than $P$. 
+In this case we also say that $P$ is an \define{overapproximation} of $Q$, and $Q$ is an \define{underapproximation} of $P$. 
 
+\mathl{F[x/e]} is $F$ where every occurrence of $x$ is syntactically replaced by $e$. 
 \mathl{lfp\ X. f} is the least fixed point of function $f$ with variable $X$. 
 
 Let {$$\Phi(X):=(\neg\varphi\wedge F)\vee(\varphi\wedge wp.C'.X)$$} be the characteristic function, then wp for while-loop can be defined as: 
@@ -568,25 +570,25 @@ Either $diverge$ is executed during the execution of $C$, in which a special sta
 With the definition of big-step semantics, we can precisely express the soundness of our predicate transformers in the following section. 
 
 
-\section{Soundness}\label{sec:sound}
-\begin{theorem}{wp-sound}[Soundness of wp]~{\normalfont\cite{zhang22}} 
-\ \vspace{-1.5mm}
-\[
-wp.C.F = \{\sigma\in\S \mid  \exists \tau\in\S:\ \ \sigma\goto{C}\tau\ \wedge\ \tau\vDash F\}
-~\protect\footnotemark
-\]
-\footnotetext{$\exists\tau\in\S:P$ is short for $\exists\tau.\tau\in\S:P$}
-\end{theorem}
+\section{Soundness}\label{sec:sound} 
+% \begin{theorem}{wp-sound}[Soundness of wp]~{\normalfont\cite{zhang22}} 
+% \ \vspace{-1.5mm}
+% \[WRONG
+% wp.C.F = \{\sigma\in\S \mid  \exists \tau\in\S:\ \ \sigma\goto{C}\tau\ \wedge\ \tau\vDash F\}
+% ~\protect\footnotemark
+% \]
+% \end{theorem}
 
-\begin{theorem}{wlp-sound}[Soundness of wlp]~{\normalfont\cite{dijkstra90}}
-\ \vspace{-1.5mm}
+\begin{theorem}{wlp-sound}[Soundness of wlp] $wlp.C.F$ contains exactly initial states under whose control the execution of $C$ either never terminates or terminates satisfiying "F"~{\normalfont\cite{dijkstra90}}
+\ \vspace{-1.5mm} 
 \[
-wlp.C.F = \{ \sigma\in\S \mid
+WRONG!!! wlp.C.F = \{ \sigma\in\S \mid
 % \sigma\goto{C}\bot \ \vee\ 
 % (\nexists \tau\in\S:\sigma\goto{C}\tau)\ \vee\  this is unnecesssary. 
 \forall \tau\in\S:\ \ \sigma\goto{C}\tau\implies  \tau\vDash F
- \}
+ \} %TODO
 \]
+\footnotetext{$\exists\tau\in\S:P$ is short for $\exists\tau.\tau\in\S:P$}
 % \label{thm:wlp}
 \end{theorem}
 
@@ -600,6 +602,7 @@ sp.C.G = \{ \tau\in\S \mid \exists \sigma\in\S:\ \ \sigma\goto{C}\tau\ \wedge\ \
 
 
 \section{Properties of wp and wlp}\label{sec:prop}
+We also include some properties of predicate transformers in this section that we will need later in our proofs. 
 \begin{theorem}{conjugate}[Conjugates]
   wp and wlp are each other's conjugates~{\normalfont\cite{zhang22}}:
   \[\forall C\in\C:\ \forall F\in\P:\ wp.C.F = \neg wlp.C.\neg F\]

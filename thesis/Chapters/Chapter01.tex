@@ -34,8 +34,11 @@ But with Hoare triples in their original form, we know the program is correct, b
 This is called \define{partial correctness}. 
 
 To prove a program totally correct, Dijkstra presented the \define{weakest precondition transformer}~\cite{dijkstra75} (wp): starting with a postcondition, it works backwards and calculates what the weakest precondition is that guarantees both correctness and termination. 
+A predicate $P$ is considered to be \define{weaker} than $Q$, if $Q\implies P$ is valid. 
+Conversely, $Q$ is \define{stronger} than $P$. 
 In Hoare triples, the precondition is a \imptt{sufficient} condition for the program to be correct in that the final state will satisfy the desired postcondition, while with wp we obtain a \imptt{necessary and sufficient} precondition. 
 Relaxing the commitment for termination, Dijkstra also proposed the \define{weakest liberal precondition transformer}~\cite{dijkstra90} (wlp) which delivers preconditions so that the program either terminates correctly or never terminates, proving partial correctness. 
+The name contains the word \define{liberal}, in the sense that the wlp transformer takes a more ``liberal'' view on non-termination, that divergence or execution forever is considered as acceptable in this case. 
 
 Since then, a plethora of research projects blossomed and yielded fruitful results. 
 Not only did Hoare Logic receive numerous copious attention during the first decade of its proposal~\cite{apt81}, it has become the basis for program verification now~\cite{gordon2010ForwardHoare}. 
@@ -46,35 +49,35 @@ Especially inspiring for this thesis is the work by O'Hearn named \define{incorr
 It studies an underapproximation (subset) of the \define{strongest postcondition transformer}~\cite{dijkstra90} (sp) by Dijkstra, focusing on reachability of final states to prove the existence of bugs. 
 He proposed the incorrectness triple starting from the implication 
 $$F\implies sp.C.G$$
-($F$ is an underapproximation of the strongest postcondition of precondition $G$ w.r.t. program $C$), whereas in this thesis, we attempt to study the implication 
+Here, $F$ is an underapproximation of the strongest postcondition of precondition $G$ w.r.t. program $C$, whereas in this thesis, we attempt to study the implication 
 $$wlp.C.F\implies G$$ 
-($G$ is an overapproximation of the strongest liberal precondition of postcondition $F$ w.r.t program $C$). 
+where $G$ is an overapproximation of the strongest liberal precondition of postcondition $F$ w.r.t program $C$. 
 Despite focusing on different transformers and relations, incorrectness logic gives great intuition on how to approach the overapproximation over wlp.
 
 \paragraph{Contribution}
 This thesis yields results both in pre- and postcondition transformers and the implication $wlp.C.F\implies G$. 
 The results are listed below in chronological order: 
 \begin{enumerate}
-    \item We proved that the definition of the weakest precondition transformer of while-programs by Dijkstra~\cite{dijkstra75} and the one using the least fixed point coincide, and gave intuition to explain the necessity of using the least fixed point instead of using any other fixed point. 
+    \item We prove that the definition of the weakest precondition transformer of while-programs by Dijkstra~\cite{dijkstra75} and the one using the least fixed point coincide, and gave intuition to explain the necessity of using the least fixed point instead of using any other fixed point. 
     \item Following the previous result, we deduce that the greatest fixed point is necessary to define the weakest liberal precondition. 
     \item We relate the pre- and postcondition transformers under angelic or demonic considerations over non-determinism using relations like termination, reachability, conjugation, implication, and equivalence. 
-    We then present the results as a graph like in \autoref{fig:intro-wp-sp-galois}.
-    \begin{figure}[!h]
-        \centering
-        \includesvg[width=.9\linewidth]{image/wp-sp-relation-h.svg}
-        \caption{Relating wp, wlp, sp, slp}
-        \label{fig:intro-wp-sp-galois}
-    \end{figure}
+    We then present the results as a graph in \autoref{fig:wp-sp-relation}.
+    % \begin{figure}[!h]
+    %     \centering
+    %     \includesvg[width=.9\linewidth]{image/wp-sp-relation-h.svg}
+    %     \caption{Relating wp, wlp, sp, slp}
+    %     \label{fig:intro-wp-sp-galois}
+    % \end{figure}
     \item We discuss all possible scenarios of the overapproximation $wlp.C.F\implies G$, what we call the \define{necessary liberal preconditions}, concluding that without further restrictions, the overapproximate $G$ can contain any initial states. However, we show that the only certainty is that initial states satisfying $\neg G$ will lead to termination in states satisfying $\neg F$. Following this, we demonstrate the usefulness of this overapproximation with an example. 
     \item We also provide a proof system that captures this overapproximation triple, and prove its soundness. 
-    \item We also notice a special group of preconditions, under whose control the execution is possible to terminate in both the desired postcondition and its opposite, like the green parts in \autoref{fig:intro-g}. 
-    \begin{figure}[!h]
+    \item We also notice a special group of initial states, starting from which the execution is possible to terminate satisfying both the desired postcondition and its opposite, like the green parts in \autoref{fig:intro-g}. 
+    \begin{figure}[t]
         \centering
         \includegraphics[width=.6\linewidth]{image/wlp-g/wlp-g-gg.eps}
         \caption{Necessarily Liberal Precondition $G$ That Additionally Has Green Dots}
         \label{fig:intro-g}
     \end{figure}
-    We capture these preconditions by approaching from top and bottom, namely finding scenarios that the necessary liberal precondition $G$ underapproximates these special preconditions, and finding scenarios where $G$ overapproximates them. In this way, we can establish an equivalence between $G$ and wlp added with the special preconditions, given constraints. This $G$ is exactly wlp with angelic non-determinism. 
+    We capture these preconditions by approaching from top and bottom, namely finding scenarios in which the necessary liberal precondition $G$ underapproximates these special preconditions, and finding scenarios where $G$ overapproximates them. In this way, we can establish an equivalence between $G$ and wlp added with the special preconditions, given constraints. This $G$ is exactly wlp with angelic non-determinism. 
 \end{enumerate}
 
 
