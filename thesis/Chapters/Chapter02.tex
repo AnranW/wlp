@@ -390,12 +390,12 @@ Both choices are justifiable, we choose to follow Zhang and Kaminski's work, fav
       $skip$&   $F$ &   $F$   \\ \hdashline[1pt/1pt]
       $diverge$&  $false$&  $true$\\ \hdashline[1pt/1pt]
       $x:= e $&  $F[x/e]$&  $F[x/e]$\\\hdashline[1pt/1pt]
-      $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$&  $wp.C_1.(wp.C_2.F)$\\\hdashline[1pt/1pt]
+      $C_1;C_2$&  $wp.C_1.(wp.C_2.F)$&  $wlp.C_1.(wlp.C_2.F)$\\\hdashline[1pt/1pt]
 
       {\color{Maroon}$\{C_1\}\square \{C_2\}$} & {\color{Maroon}$wp.C_1.F\vee wp.C_2.F$} & {\color{Maroon}$wlp.C_1.F\wedge wlp.C_2.F$}\\\hdashline[1pt/1pt]
 
-      $if\ (\varphi)\ \{C_1\} $ &  $(\varphi\wedge wp.C_1.F)$ &  $(\varphi\wedge wp.C_1.F)$\\
-      $\ \ \ \ \ \ \ \  else\ \{C_2\} $&  $\ \ \ \ \ \ \ \ \vee(\neg\varphi\wedge wp.C_2.F)$ &  $\ \ \ \ \ \ \ \ \vee(\neg\varphi\wedge wp.C_2.F)$\\\hdashline[1pt/1pt]
+      $if\ (\varphi)\ \{C_1\} $ &  $(\varphi\wedge wp.C_1.F)$ &  $(\varphi\wedge wlp.C_1.F)$\\
+      $\ \ \ \ \ \ \ \  else\ \{C_2\} $&  $\ \ \ \ \ \ \ \ \vee(\neg\varphi\wedge wp.C_2.F)$ &  $\ \ \ \ \ \ \ \ \vee(\neg\varphi\wedge wlp.C_2.F)$\\\hdashline[1pt/1pt]
 
       {\color{Maroon}$while\ (\varphi)\ \{C'\}$} &  $lfp\ X.\ (\neg\varphi\wedge F)$ & {\color{Maroon} $gfp\ X.\ (\neg\varphi\wedge F)$}\\
        &  $\ \ \ \ \ \ \ \ \vee(\varphi\wedge wp.C'.X)$ & {\color{Maroon} $\ \ \ \ \ \ \ \ \vee(\varphi\wedge wlp.C'.X)$}\\

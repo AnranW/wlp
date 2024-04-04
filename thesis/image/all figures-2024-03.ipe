@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.28">
-<info created="D:20230506130932" modified="D:20240402144412"/>
+<info created="D:20230506130932" modified="D:20240404102407"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -1044,7 +1044,7 @@ h
 <layer name="wlpa"/>
 <layer name="wlpd"/>
 <layer name="flip-wp-wlp"/>
-<view layers="flip-wp-wlp" active="flip-wp-wlp"/>
+<view layers="wlpa" active="flip-wp-wlp"/>
 <path layer="alpha" matrix="1 0 0 1 -96 32" stroke="black" pen="heavier">
 128 736 m
 128 624 l
@@ -2385,7 +2385,6 @@ h
 308 708 l
 </path>
 <use matrix="1 0 0 1 -32 12" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
-<use matrix="1 0 0 1 -32 -12" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
 <path matrix="1 0 0 1 -32 0" stroke="black" pen="heavier" arrow="normal/normal">
 192 716 m
 252 732
@@ -2408,16 +2407,6 @@ h
 304 700 c
 </path>
 <use matrix="1 0 0 1 -32 -8" name="mark/disk(sx)" pos="192 700" size="normal" stroke="black"/>
-<path matrix="1 0 0 1 -40 0" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
-200 636 m
-208 624
-216 636
-228 624
-240 636
-244 620
-256 632
-264 620 c
-</path>
 <path matrix="1 0 0 1 -32 0" stroke="black" pen="heavier">
 128 736 m
 128 624 l
@@ -2452,7 +2441,6 @@ h
 308 708 l
 </path>
 <use matrix="1 0 0 1 -32 12" name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
-<use matrix="1 0 0 1 -32 -12" name="mark/disk(sx)" pos="192 648" size="normal" stroke="black"/>
 <path matrix="1 0 0 1 -32 0" stroke="black" pen="heavier" arrow="normal/normal">
 192 716 m
 252 732
@@ -2490,16 +2478,6 @@ h
 </path>
 <use matrix="1 0 0 1 -32 -8" name="mark/disk(sx)" pos="192 700" size="normal" stroke="seagreen"/>
 <text matrix="1 0 0 1 24 -116" transformations="translations" pos="156 716" stroke="black" type="label" width="38.855" height="8.174" depth="2.32" valign="baseline" size="large" style="math">wp.C.F</text>
-<path matrix="1 0 0 1 -40 0" stroke="black" dash="dashed" pen="heavier" arrow="normal/normal">
-200 636 m
-208 624
-216 636
-228 624
-240 636
-244 620
-256 632
-264 620 c
-</path>
 <path matrix="1 0 0 1 76 -28" stroke="black" fill="lightgreen" pen="heavier" opacity="50%" stroke-opacity="opaque">
 100 708 m
 100 764 l
@@ -8378,5 +8356,6 @@ h
 14.4222 0 0 14.4222 80 352 e
 </path>
 <text transformations="translations" pos="84 352" stroke="red" type="label" width="7.78" height="6.808" depth="0" valign="baseline" style="math">P</text>
+<text matrix="1 0 0 1 24 -124" transformations="translations" pos="40 424" stroke="black" type="minipage" width="232" height="12.891" depth="7.92" valign="top">Does not work: relating $wlp_d.C.F\Longrightarrow G$  and $G\Longrightarrow  sp.C.F$</text>
 </page>
 </ipe>
