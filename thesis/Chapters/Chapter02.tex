@@ -280,7 +280,7 @@ Plugging it in \autoref{eq:fp} results in an equation $G=wp.C'.G$, which means t
 In other words, after one execution of $C'$, $G$ stays satisfied, which makes a further execution of $C'$ possible.
 In short, \textbf{\textit{all fixed points of function $\Phi$ can potentially lead to non-termination}}. 
 
-Secondly, it is standard practice to require the semantics of $WHILE$ to be equivalent to the semantics of $if(\varphi)\{C';WHILE\}\ else\ \{skip\}$
+Secondly, we know that the semantics of $WHILE$ is equivalent to the semantics of $if(\varphi)\{C';WHILE\}\ else\ \{skip\}$~\cite{lukkien1994OperationalSemanticsGeneralized}. 
 Note that here the $else$-branch is defined with $skip$ instead of $diverge$ like the previous paragraph, because in case $\neg\varphi$ is true before the execution of $WHILE$, the program simply skips it and executes the next component. 
 This corresponds to a \imptt{skip} in the $else$-branch of $IF$. 
 We can then derive the need for fixed points: 
@@ -528,7 +528,9 @@ For example, no state would satisfy $x=2$ after the execution of $x:=1$.
 
 
 \section{Big Step Semantics}\label{sec:big-step}
-To express the meaning of programs, we choose \define{big-step semantics} to describe executions of a program. 
+To express the meaning of GCL programs, we first attempt to use \define{big-step semantics} to describe executions of a program. 
+This later proved infeasible for our purpose, because of the absence of inference rules for non-termination, which we still show with an example. 
+Still, big-step semantics generates simple proofs, so we still show it for GCL programs and hope that it can prove useful for future endeavors.
 Taking inspiration from Nipkow and Klein's book~\cite{nipkow2014} we define the big-step semantics in \autoref{tab:big-step}. 
 
 \newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
@@ -553,7 +555,7 @@ Taking inspiration from Nipkow and Klein's book~\cite{nipkow2014} we define the 
   \displaystyle\frac{\bot\notin\S}{\sigma\ar{diverge}\bot} diverge &
   \\[3ex]
   \text{ where } IF{=} if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}\text{, }
-  & WHILE{=} while\ (\varphi)\ do\ C\text{, and } \sigma,\tau,\mu\in\S.
+  & WHILE{=} while\ (\varphi)\ do\ \{C\}\text{, and } \sigma,\tau,\mu\in\S.
   \end{array}$}
   \caption{Big Step Semantics}
   \label{tab:big-step}
@@ -563,11 +565,39 @@ Note that in rule $assign$, we have a formula $\sigma(x:=\sigma.e)$.
 Here we overload the symbol for function application ``.'' so that it applies to \define{expressions} as well, but without specifying the set of expressions hence restricting our programming language. 
 An expression $e$ would be evaluated in a usual way, e.g. $x+y$ at state $\sigma$ would evaluate to $\sigma.x + \sigma.y$. 
 
-we also use symbols $\sigma(x:=v)$ to denote a state where the value of variable $x$ is $v$, and all other variables have the same values as in $\sigma$.
-In our big-step semantics, non-termination of $C$ with initial state $\sigma$ is denoted by the nonexistence of state $\tau\in\S$ such that $\sigma\goto{C}\tau$. 
-Either $diverge$ is executed during the execution of $C$, in which a special state $\bot\notin\S$ is reached, or the execution of $C$ never ends, for example $C=while(true)do skip$.
+We also use symbols $\sigma(x:=v)$ to denote a state where the value of variable $x$ is $v$, and all other variables have the same values as in $\sigma$.
+In our big-step semantics, divergence is defined to lead to state $\bot$ that is not a part of $\S$. 
+
+To denote non-termination, a simple approach is to consider it as equivalent to the non-existence of a state $\tau\in\S$ that $\sigma\ar{C}\tau$. 
+This covers the case of divergence, since the only inference rule for $diverge$ goes to a state that is not in $\S$. 
+However, we can not express the non-termination of programs such as $while\ (true)\ do\ \{skip\}$, since $\sigma\ar{skip}\sigma$ is always true for any $\sigma$. 
+In fact, there is no rule in \autoref{tab:big-step} with which we can express while-loops where the guard is simply $true$. 
+
+We can also consider modifying the notion for non-termination as the non-existence of a state $\tau\in\S$ \imptt{and $\tau\neq\sigma$} that $\sigma\ar{C}\tau$. 
+However, we still can not capture programs with non-terminating executions, such as 
+$x:=x-1\ \square\ diverge$
+% $$WHILE := while\ (x>0)\ do\ \{if\ (x>1)\ \{x:=x-1\}\ else\ \{diverge\} \}$$
+% Let \imptt{$\sigma.x=2$}, aka $\sigma$ is a state where $x$ evaluates to $2$, and \imptt{$\mu.x=1$}, then we can infer the following result: 
+% \begin{center}
+%   \colorbox{ForestGreen!5}{
+%   \begin{prooftree}
+%     \hypo{\sigma\in\{x>1\}} 
+%     \infer0[$assign$]{\sigma\ar{x:=x-1}\mu}
+%     \hypo{\mu\notin\{x>1\}}
+%     \infer1[$while_0$]{\mu\ar{WHILE}\mu}
+%     \infer3[$while_n$]{\sigma\ar{WHILE}\mu}
+%   \end{prooftree}}
+% \end{center}
+
+In conclusion, this version of big-step semantics proves inadequate to reason with non-terminating executions. 
+Granted, one can bypass this problem~\cite{leroy2009CoinductiveBigstepOperational, nakata2009TraceBasedCoinductiveOperational} or turn to small-step semantics~\cite{nakata2009TraceBasedCoinductiveOperational}, we choose another type of semantics that is more suitable for our purpose. 
+
+% non-termination of $C$ with initial state $\sigma$ is denoted by the non-existence of state $\tau\in\S$ and $\tau\neq\sigma$ such that $\sigma\goto{C}\tau$. 
+% Either $diverge$ is executed during the execution of $C$, in which a special state $\bot\notin\S$ is reached, or the execution of $C$ never ends, for example $C=while(true)do skip$.
 %TODO: this is not correct, rewrite! 
-With the definition of big-step semantics, we can precisely express the soundness of our predicate transformers in the following section. 
+% With the definition of big-step semantics, we can precisely express the soundness of our predicate transformers in the following section. 
+
+\section{Collection Semantics}\label{sec:collection}
 
 
 \section{Soundness}\label{sec:sound} 
