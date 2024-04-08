@@ -7,3 +7,7 @@ Postconditions
 sp
 Postcondition
 postconditions
+overapproximation
+overapproximates
+overapproximating
+Hoare

@@ -163,8 +163,8 @@ This means that an overapproximation of the strongest postcondition $$sp.C.G\imp
 Manna and Pnueli~\cite{manna74} supplimented Hoare triple with rules to prove termination, making the extended proof system valid for total correctness: 
 \begin{center}
 	\begin{prooftree}
-		\Hypo{$\hoare{P\wedge\phi\wedge v\in\N\wedge v=n}{\ C\ }{P\wedge\phi\wedge v\in\N\wedge v<n}$}
-		\infer1{$\hoare {P\wedge v\in\N} {\ while\ (\varphi)\ do\ C\ } {\neg\varphi\wedge P\wedge t\in\N}$}
+		\Hypo{$\hoare{P\wedge\varphi\wedge v\in\N\wedge v=n\ \ }{C}{\ \ P\wedge\phi\wedge v\in\N\wedge v<n}$}
+		\infer1{$\hoare {P\wedge v\in\N\ \ } {while\ (\varphi)\ do\ C} {\ \ \neg\varphi\wedge P\wedge t\in\N}$}
 	\end{prooftree}
 \end{center}
 $P$ is the so-called \define{invariant}, a condition that stays unchanged before and after the program execution. 

@@ -219,10 +219,34 @@ Here comes an example similar as the ones described by Cousot to overapproximate
 \newcommand{\nlp}[3]{\langle #1 \rangle\ #2\ \langle #3 \rangle}
 We call the overapproximation of wlp \define{necessary liberal precondition}, ``necessary'' because it is required to ensure avoidance of erroneous final states, and ``liberal'', because it is satisfied by all initial states that can potentially lead to non-termination, just like wlp. 
 We provide a proof system in \autoref{tab:proof-system}. 
-The rules are mostly vanilla, except from the consequence rule: 
+We use $\nlp G C F$ to denote that $G$ is a valid necessarily liberal precondition for program $C$ given postcondition $F$. 
+
+The rules are mostly unsurprising. 
+Remember that we would like to construct rules to prove that a precondition is the necessary liberal precondition, it should overapproximate the weakest liberal precondition, i.e. a triple $\nlp G C F$ should satisfy: 
+$$wlp.C.F \implies G$$
+Consequently, we have the $diverge$ axiom: because $wlp.diverge.F=true$, and $true$ is the only condition that overapproximates it, so the necessary liberal precondition is $true$.  
+
+Consequently, we have the $skip$ axiom: because $wlp.skip.F = F$, then $F$ overapproximates it. 
+Alternatively, we can construct the rule in such way: 
+\begin{center}
+	\begin{prooftree}
+		\Hypo{F{\implies} G}
+		\infer1[$skip_{alt}$]{\nlp {G} {skip} { F}}
+	\end{prooftree}
+\end{center}
+But this rule can be derived using the $skip$ rule and the $conseq$ in \autoref{tab:proof-system}, so we choose the simpler $skip$ rule. 
+The same principle applies to the $assign$, $seq$, $if$, and the $choice$ rule: we keep the rules simple by not discussing overapproximation directly, but let the $conseq$ rule be concerned with relaxation. 
+
+The consequence rule says that we are allowed to weaken the precondition and strengthen the postcondition: 
 $$\displaystyle\frac{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}{\nlp{G}{C}{F}} conseq$$
-It is the complete opposite direction from the consequence rule in Hoare logic that we referred to in \autoref{tab:hoare}. 
-Rewriting it in the same natural deduction style, we arrive at: 
+Intuitively, if a precondition $P$ already overapproximates the weakest liberal precondition, then by overapproximating it with $G$, the result is still an overapproximation of wlp: 
+$$wlp.C.F\implies P \implies G$$
+Conversely, we can strengthen the postcondition from $Q$ to $F$, because $wlp.C$ is monotonic (\autoref{thm:wlp-mono}), then given $ F\implies Q $ we can derive: 
+$$wlp.C.F\implies wlp.C.Q\implies G$$ 
+Hence, $G$ is still an overapproximation of the stronger $wlp.C.F$. 
+
+Note that the $conseq$ rule is the complete opposite direction from the ``Rules of Consequence'' in Hoare logic that we referred to in \autoref{tab:hoare}. 
+Writing the consequence rule of Hoare logic in the same natural deduction style, we arrive at the following rule labeled with $conseq_h$: 
 $$\displaystyle\frac{G{\implies} P,\ \hoarenm{P}{C}{Q},\ Q{\implies} F}{\hoarenm{G}{C}{F}}conseq_h$$
 This corresponds to our expectation, because we know that the overapproximation triple is exactly a Hoare triple (with respect to partial correctness) with negated pre- and postconditions:
 \begin{align*}
@@ -230,21 +254,29 @@ This corresponds to our expectation, because we know that the overapproximation 
 	\Leftrightarrow &\  \neg G {\implies} \neg wlp.C.F \\
 	\Leftrightarrow &\  \neg G \implies wp.C.\neg F 
 		\hspace{0.3\textwidth} \mid {\thm{conjugate}} \\
-	\Rightarrow &\  \hoarenm{\neg G}C{\neg F} 
+	\Leftrightarrow &\  \hoarenm{\neg G}C{\neg F} 
 	\tag{*} 
 \end{align*}
-Note that the last line is only an implication in one direction, because we take the version of Hoare triple regarding partial correctness, meaning that termination is not guaranteed. 
-In other words, \hoare{\neg G}C{\neg F} can be a valid Hoare triple, but an initial state satisfying $\neg G$ does not necessary guarantee termination, hence $\neg G$ is not necessarily a subset of $wp.C.\neg F$. 
-If we were to take Hoare triple with additional rules to prove termination~\cite{manna74}, the implication would be in both directions. 
-
-From $consqe_h$ we can then deduce the rule $conseq$ assuming that the triple $\nlp\cdot\cdot\cdot$ is sound (which we will prove later in this section), i.e. $\nlp P C Q \implies (wlp.C.F{\implies} G)$ : 
+Note that the last line is an implication in both directions, because we take the version of Hoare triple regarding total correctness, i.e. supplementing the rule to prove termination of while loops~\cite{manna74}: 
+\begin{center}
+	\begin{prooftree}
+		\Hypo{$\hoare{P\wedge\varphi\wedge v\in\N\wedge v=n\ \ }{C}{\ \ P\wedge\phi\wedge v\in\N\wedge v<n}$}
+		\infer1[$while_h$]{$\hoare {P\wedge v\in\N\ \ } {while\ (\varphi)\ do\ C} {\ \ \neg\varphi\wedge P\wedge t\in\N}$}
+	\end{prooftree}
+\end{center}
+% In other words, \hoare{\neg G}C{\neg F} can be a valid Hoare triple with respect to partial correctness, but an initial state satisfying $\neg G$ does not necessarily guarantee termination, hence $\neg G$ is not necessarily a subset of $wp.C.\neg F$. 
+% If we were to take Hoare triple with additional rules to prove termination~\cite{manna74}, the implication at line (*) would be in both directions. 
+This is necessary to give intuition of the consequence rule in our proof system.
+Assuming that the triple $\nlp\cdot\cdot\cdot$ is sound (which we will prove later in this section), i.e. $\nlp P C Q \implies (wlp.C.F{\implies} G)$, we can derive the $conseq$ rule from $consqe_h$  : 
 \begin{center}
 	\begin{prooftree}
 		\Hypo{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}
-		\infer1[soundness]{P{\implies} G,\ wlp.C.F{\implies} G,\ F{\implies} Q}
-		\infer1[(*)]{P{\implies} G,\ \hoarenm{\neg G}C{\neg F},\ F{\implies} Q}
+		\infer1[soundness]{P{\implies} G,\ wlp.C.Q{\implies} P,\ F{\implies} Q}
+		\infer1[(*)]{P{\implies} G,\ \hoarenm{\neg P}C{\neg Q},\ F{\implies} Q}
 		\infer1[first-order logic]{\neg G{\implies} \neg P,\ \hoarenm {\neg P} C {\neg Q},\ \neg Q{\implies} \neg F}
 		\infer1[$conseq_h$]{\hoarenm {\neg G} C {\neg F}}
+		\infer1[(*)]{wlp.C.F\implies G}
+		\infer1[(soundness)]{\nlp{G}{C}{F}}
 	\end{prooftree}
 \end{center}
 
@@ -277,6 +309,29 @@ From $consqe_h$ we can then deduce the rule $conseq$ assuming that the triple $\
   \caption{The Proof System}
   \label{tab:proof-system}
 \end{table}
+
+It is however not trivial to construct the while rule. 
+Assume we would like to find some $G$ to overapproximate $wlp.WHILE.F$, unfolding according to the definition in \autoref{tab:wp-wlp}: 
+\begin{align*}
+	wlp.WHILE.F &= gfp\ X. \Phi(X)\\  
+	&= gfp\ X.\ (\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X) 
+\end{align*}
+Since $G$ overapproximates $wlp.WHILE.F$, the greatest fixed point of $\Phi$, then $G$ must also overapproximate any fixed point of $\Phi$: 
+For any fixed point $P$ of $\Phi$, it is valid that $P\implies gfp\ \Phi$, add the fact that $gfp\ \Phi\implies G$, we can conclude that $P\implies G$. 
+In other words, the weakest liberal precondition $G$ must overapproximate all fixed points of $\Phi$: 
+\begin{align*}
+	&\forall P. P=\Phi(P): P\overset{!}{\implies} G\\  
+	\Leftrightarrow \ &\forall P. P=(\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X): P\overset{!}{\implies} G\\  
+	&= gfp\ X.\ (\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X) 
+\end{align*}
+
+
+
+
+
+
+
+
 
 \begin{lemma}{sound-pf}[The proof system is sound]
 	\ \\
