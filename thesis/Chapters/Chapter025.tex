@@ -200,7 +200,7 @@ As mentioned in the previous section, the slp transformer lacks attention, start
 As far as our knowledge, the underapproximation triple of slp 
 $$F\implies slp.C.G$$ 
 still needs proper investigation. 
-Luckily, the Galois connection relates it to the overapproximation triple of wp: 
+However, the Galois connection relates it to the overapproximation triple of wp: 
 $$wp.C.F\implies G$$
 Cousot et al.~\cite{cousot13} studied an implication similar to this triple to help lighten the burden of providing specifications in design by contract programming schemes. 
 They call it the ``necessary preconditions'', in the sense that these preconditions can not guarantee correctness, but once violated, definitely lead to erroneous final states. 
@@ -216,9 +216,13 @@ The only certainty is that $G$ is the necessary condition, in the sense that onc
 We will study this triple further in the upcoming sections. 
 
 \paragraph{Remaining Triple}
-The remaining triple denoted with label ``what'' still awaits investigation, as far as we know: 
+The remaining triple denoted with label ``what?'' still awaits investigation as far as we know: 
 $$slp.C.G\implies F$$
-It is hopeful though, once one establishes a sound definition for slp, then depending on the choice how to resolve non-determinism, one finds a connection between $slp$ and $sp$, either by conjugation or reachability. 
+We think that one approach is to first establish a sound definition for slp, then find connection between $slp$ and $sp$, either by conjugation or reachability depending on the choice how to resolve non-determinism. 
+From here, one can start investigating this triple following similar methods for other triples. 
+
+With this overview of triples studied in literature, we know that the triple $wlp.C.F\implies G$ is still an open question, and not automatically solved by a Galois connection to another implication. 
+As a result, we investigate the overapproximation we call the necessary liberal precondition following methods used with other triples by first discussing the possible scenarios of this overapproximation, then look into examples to shed light on the meaning of this implication. 
 
 
 % The implications noted in black correspond to total correctness~\cite{manna74} $G\implies wp_a.C.F$ and total incorrectness $F\implies sp_a.C.G$~\cite{ohearn2020IncorrectnessLogic} triples, respectively. 
