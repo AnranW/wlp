@@ -33,6 +33,109 @@ This chapter includes our most important results:
 In the upcoming sections, we first relate together wp, wlp, sp, and slp with both angelic and demonic non-determinism, so we can distinguish the necessary liberal precondition from the existing triples that are already well-studied. 
 In this chapter, we first discuss the general semantics of the necessary liberal precondition, then focus on a characteristic scenario and show properties that captures it. 
 
+\section{Negative Result: Underapproximate sp to Overapproximate wlp}\label{sec:negative}
+Remember in \autoref{sec:literature}, we mentioned that there is an equivalence relation between the underapproximation of wlp and overapproximation of sp via Galois connection: 
+\begin{align}
+	G\implies wlp.C.F\text{ iff }sp.C.G\implies F \tag{*}
+\end{align}
+One might wonder, can we also establish some similar relation between the overapproximation of wlp and underapproximation of sp:  
+\begin{align}
+	wlp.C.F \implies G\ \  \rlap{\(\quad?\)}\longleftrightarrow \ \ F\implies sp.C.G \tag{**}
+\end{align}
+This would imply that we merely need to study the underapproximation of $sp$ to result in the overapproximation of $wlp$, the former of which is studied as the total incorrectness triple~\cite{ohearn2020IncorrectnessLogic}. 
+
+The answer is no. 
+Without additional constraints, we can not directly establish any implication relations between $wlp.C.F\implies G$ and $F\implies sp.C.G$. 
+
+Remember from \autoref{ch:appr} that $wlp.C.F$ describes all initial states that can potentially lead to non-termination, and $sp.C.G$ is satisfied only by final states that are reachable. 
+Termination and reachability are two different aspects of program execution. 
+If we denote explicitly the states that can lead to non-termination with blue squares, and states that are unreachable with orange circles, then we can see on the left half of \autoref{fig:wlp-sp-nonterm-reach} that $F$ can also be satisfied with unreachable states, and from the right half that $G$ can also be satisfied by states leading to non-termination.
+In general, without further constraints, $F$ in \autoref{fig:wlp-sp-nonterm-reach} is decorated with \imptt{some} of the orange circles, and $G$ is decorated with \imptt{some} of the blue squares. 
+
+\begin{figure}[ht]
+	\centering
+	\includesvg[width=\linewidth]{image/wlp-sp-nonterm-reach.svg}
+	\caption{Non-terminating and unreachable States}
+	\label{fig:wlp-sp-nonterm-reach}
+\end{figure}
+
+As an example, consider the program 
+$$C=if\ (x=2)\ then\ \{x:=x+2\}\ else\ \{x:=x+1\}$$
+and a postcondition $F=\{x>2\}$.
+We can deduce the weakest liberal precondition: 
+\begin{align*}
+	wlp.C.F &= \{x=2\}\wedge (wlp.x:=x+2).F\ \vee\ \{x\neq 2\} \wedge wlp.(x:=x+1).F\\
+	&\Leftrightarrow\{x=2\}\wedge \{x>0\}\  \vee \ \{x\neq 2\}\wedge\{x>1\}\\
+	&\Leftrightarrow\{x=2\} \vee \{x>2\}\\ 
+	&\Leftrightarrow \{x\geq 2\}
+\end{align*}
+As a result, as long as the program $C$ starts in an initial state satisfying $x\geq 2$, it will terminate in a state satisfying $F=\{x>2\}$. 
+However, a state where $x$ evaluates to $3$ would satisfy $F$, but it is never reachable: assume the else-branch was discharged, then $x$ must evaluate to $2$ initially, so else-branch would not be discharged; otherwise assume the if-branch was discharged, then $x$ mush initially evaluate to $1$, but then the if-branch would not be discharged. 
+Hence, any state where $x$ evaluates to $3$ is unreachable, but still satisfies the desired postcondition $F$. 
+Such states are denoted as orange circles in \autoref{fig:wlp-sp-nonterm-reach}. 
+Similarly, $sp.C.F$ can also be satisfied by initial states that can lead to non-termination.
+
+Attempting to establish a relation for line (**), we first start from the left side. 
+Assume preconditions $G$ satisfies $wlp.C.F\implies G$, we can end up in a situation like \autoref{fig:wlp-g-sp-g}. 
+
+\begin{figure}[ht]
+	\centering
+	\includesvg[width=\linewidth]{image/wlp-g-sp-g.svg}
+	\caption{$sp.C.G$ where $G$ Is Overapproximation of $wlp.C.F$}
+	\label{fig:wlp-g-sp-g}
+\end{figure}
+
+\newcommand{\nimplies}{\rlap{\(\quad\not\)}\implies} %symbol for not implies
+We see on the left side of \autoref{fig:wlp-sp-nonterm-reach} that $G$ ``includes'' all the blue squares, and $F$ only some of the orange circles. 
+Now what do we know about $sp.C.G$? 
+We see on the right side of \autoref{fig:wlp-sp-nonterm-reach}, $sp.C.G$ is only satisfied by reachable states, i.e. none of the orange circles. 
+This means that in general, without further constraints, we at least have that $F\nimplies sp.C.G$, since $F$ may be satisfied by unreachable states, but $sp.C.G$ is only satisfied by reachable states. 
+
+Can we then have a relation like $sp.C.G\implies F$? 
+The answer is no. Assume we have both $wlp.C.F\implies G$, and $sp.C.G\implies F$, then with the Galois connection mentioned in line (*), we can conclude that $G\implies wlp.C.F$, which means that $G\Leftrightarrow wlp.C.F$, $G$ must be \imptt{exactly} the weakest liberal precondition of $F$. 
+Since we can only assume that $G$ overapproximates wlp, we can not draw the conclusion that $sp.C.G\implies F$. 
+As a result, from $wlp.C.F\implies G$ we can neither conclude $sp.C.G\implies F$ nor $F\implies sp.C.G$. 
+
+Analogously, assume $F\implies sp.C.G$, what can we state about $wlp.C.F$?
+\begin{figure}[ht]
+	\centering
+	\includesvg[width=\linewidth]{image/f-sp-wlp-f.svg}
+	\caption{$wlp.C.F$ where $F$ Is Underapproximation of $sp.C.G$}
+	\label{fig:f-sp-wlp-f}
+\end{figure}
+From the left side of \autoref{fig:f-sp-wlp-f}, we can read that $F$ does not ``include'' orange circles, i.e. $F$ is only satisfied by reachable states. 
+What do we know then about the relation between $wlp.C.F$ and $G$? 
+We see from \autoref{fig:f-sp-wlp-f}, $wlp.C.F$ ``includes'' all the blue squares, but $G$ only some of them. 
+Consequently, we can not conclude that $wlp.C.F\implies G$. 
+Also, we can not conclude that $G\implies wlp.C.F$, because this would require $sp.C.G\implies F$. 
+Together with the assumption $F\implies sp.C.G$, this means that $F$ must be \imptt{exactly} the strongest postcondition of program $C$ w.r.t. precondition $G$, also a luxury we can not assume. 
+
+Summarizing the two conclusions above together, we can say that in general, without further constraints: 
+\begin{itemize}
+	\item From $wlp.C.F\implies G$, we can neither conclude $F\implies sp.C.G$ nor $sp.C.G\implies F$;
+	\item Analogously, from $F\implies sp.C.G$ we can neither conclude $wlp.C.F\implies G$ nor $G\implies wlp.C.F$. 
+\end{itemize}
+This tells us that we can \imptt{not} overapproximate wlp by underapproximating sp, at least not directly. 
+
+
+
+% However, only having information about $F\implies sp.C.G$ like the right side of \autoref{fig:wlp-sp-nonterm-reach} tells us nothing about the distribution of blue squares: in general, $G$ might only ``include'' part of the blue squares. 
+% Hence, we can not establish a relation 
+
+% At the same time, let $G=\{x\geq 2\}$ then 
+% \begin{align*}
+% 	&sp.C.G \\
+% 	&= sp.(x:=x+2).(\{x=2\}\wedge\{x\geq 2\})\ \vee\ sp.(x:=x+1).(\{x\neq 2\}\wedge\{x\geq 2\})\\
+% 	&= sp.(x:=x+2).\{x=2\}\ \vee\ sp.(x:=x+1).\{x> 2\}\\
+% 	&= \exists a.x=(x+2)[x/a]\wedge \{x=2\}[x/a]\  \vee \ \exists a.x=(x+1)[x/a]\wedge \{x>2\}[x/a]\\
+% 	&\Leftrightarrow \exists a.x=a+2\wedge \{a=2\}\  \vee \ \exists a.x=a+1\wedge \{a>2\}\\
+% 	&\Leftrightarrow\{x=4\} \vee \{x>3\}\\
+% 	&\Leftrightarrow \{x\geq 4\}
+% \end{align*}
+
+% In other words, $sp.C.G$ is only satisfied by reachable final states, not by any final state where $x$ evaluates to $3$. 
+% Consequently, any postcondition $F'$ such that $F'\implies sp.C.G$ must not be satisfied by any state $\tau$ where $\tau.x=3$. 
+% But all such states $\tau$ automatically satisfy $F=\{x>2\}$ , but any state $G'$ where $wlp.C.F\implies G'$ must be satisfied by all states where 
 
 
 
