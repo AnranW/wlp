@@ -3,13 +3,13 @@
 %************************************************
 % \setcounter{theorem}{6}
 \chapter{Preconditions, Postconditions, and Their Approximations}\label{ch:appr} % $\mathbb{ZNR}$
-In this chapter, we give an overview of precondition and postcondition transformers, establishing relation between all of them using termination, conjugation, reachability, and Galois connection. 
-This reveals that the triple, necessary liberal precondition, that we investigate in this thesis is still an open question in the sense that it is not yet well-researched to our knowledge, and that its semantic is not automatically clear by a relation to another triple. 
+In this chapter, we give an overview of precondition and postcondition transformers presented in the previous chapter, establishing relations between all of them using termination, conjugation, reachability, and Galois connections. 
+This reveals that the necessary liberal precondition triple that we investigate in this thesis is still an open question in the sense that it is not yet well-researched to our knowledge, and that it is not automatically related to another triple by the aforementioned relations. 
 Furthermore, the methods mentioned in this chapter used to study other triples prove helpful while investigating necessary liberal preconditions.   
 
 % \section{Preconditions and Postconditions}\label{sec:pre-post}
 \section{Precondition Transformers}
-\begin{figure}[ht!]\centering
+\begin{figure}[t]\centering
 	\subfloat[Weakest precondition (angelic non-determinism)\label{subfig:wpa}]{
 		\includesvg[width=0.4\textwidth]{image/wpa.svg}}
 	\hfill
@@ -26,38 +26,39 @@ Furthermore, the methods mentioned in this chapter used to study other triples p
 \end{figure}
 
 \autoref{fig:wp-family} shows the impact of the interpretation of non-determinism on the semantics of the wp and wlp transformers. 
-The subscripts $_a$ and $_d$ correspond to angelic and demonic, respectively. 
+The subscripts $_a$ and $_d$ correspond to angelic and demonic resolution of non-determinism mentioned in \autoref{sec:wp-nondet}, respectively. 
+The notion of angelic and demonic is reflected by the placement of green dots and arrows in \autoref{fig:wp-family}.
 
 In general, the rectangles denote the set of all states $\S$. 
 $C$ is the program that we are investigating, all the arrows are executions of program $C$. 
 When a rectangle is divided by a line into multiple parts, it means that the states are categorized into different types. 
 For example, the section  labelled with $wlp.C.F$ denotes all the states that satisfy $wlp.C.F$. 
-The dashed arrow starting from inside a rectangle, ending outside any triangle denotes executions that do not terminate. 
-The arrows that share a same starting point denote different executions starting from the same initial state, and those that share an ending point denote executions that end in the same final state. 
+The dashed arrow starting from inside a rectangle, ending outside any rectangle denotes executions that do not terminate. 
+The arrows that share the same starting point denote different executions starting from the same initial state, and those that share an ending point denote executions that end in the same final state. 
 
 With angelic non-determinism, we consider the non-deterministic choice to resolve in our favor, which means that if one of the possible paths from this non-deterministic choice can lead to the desired postcondition, we regard the precondition as a valid precondition. 
 Graphically, the green arrows in \autoref{subfig:wpa} and \autoref{subfig:wlpa} are included in the weakest (liberal) precondition when we regard the non-determinism as angelic. 
 Formally, the decision to look at the non-deterministic choice as angelic is reflected by the use of disjoints in its definition, for example, 
-$$wp.C.(\{C_1\}\square \{C_2\}) = wp.C_1.F\vee wp.C_2.F$$ in \autoref{tab:wp-wlp}.
+$$wp.C.(\{C_1\}\square \{C_2\}) = wp.C_1.F\vee wp.C_2.F$$ for a postcondition $F$ in \autoref{tab:wp-wlp}.
 
-On the other hand, if the non-deterministic choice is regarded as demonic, we are pessimistic over the result of the non-deterministic choice: we think it will not resolve in our favor, hence we are only confident to include a condition into the valid precondition set, if all possible paths end satisfying our desired postcondition upon termination. 
-Graphically, the green arrows are not included in $wp$ and $wlp$ in \autoref{subfig:wpd} and \autoref{subfig:wlpd}. 
+On the other hand, if the non-deterministic choice is resolved as demonic, we are pessimistic over the result of the non-deterministic choice: we assume it will not resolve to our favor, hence we are only confident to include a condition into the valid precondition set if all possible paths end in a final state satisfying our desired postcondition upon termination. 
+Graphically, the green arrows are not included in $wp_d$ and $wlp_D$ in \autoref{subfig:wpd} and \autoref{subfig:wlpd}. 
 The definition is then using conjuncts instead of disjuncts, like 
-$$wlp.C.(\{C_1\}\square \{C_2\}) = wlp.C_1.F\wedge wlp.C_2.F$$  in \autoref{tab:wp-wlp}.
+$$wlp.C.(\{C_1\}\square \{C_2\}) = wlp.C_1.F\wedge wlp.C_2.F$$ for a postcondition $F$ in \autoref{tab:wp-wlp}.
 
 The choice is somewhat artificial, depending on what properties the author wishes for their transformers.
 For example, Dijkstra and Scholten choose demonic non-determinism for wp and wlp transformers, acquiring a property by definition~\cite{dijkstra90}: 
 $$wp_d.C.F = wlp_d.C.F \wedge wp_d.C.true $$
-meaning that by finding the weakest liberal precondition and proving termination, one conveniently finds the weakest precondition of the same program and postcondition. 
+This means that by finding the weakest liberal precondition and proving termination, one conveniently finds the weakest precondition of the same program and postcondition. 
 Graphically, one needs only to re-place the dashed arrows indicating non-termination to get from \autoref{subfig:wpa} to \autoref{subfig:wlpa} and vice versa, or from  \autoref{subfig:wpd} to \autoref{subfig:wlpd} and vice versa. 
 
 This is especially useful when trying to underapproximate the weakest precondition, %TODO: add reference?
 or in other words, finding valid Hoare Triple, considering that \hoare{G}{C}{F} is a valid Hoare Triple (with regard to total correctness, meaning that we supplement the original axioms~\cite{hoare69} with rules to prove termination~\cite{manna74}) if and only if $G\implies wp.C.F$.
 % The rule also applies if one chooses both angelic 
 
-Conversely, if one were to choose different views on non-determinism with wp and wlp transformers, we end up with a different property that wp and wlp are each other's \define{conjugates}~\cite{dijkstra76,zhang22}: 
+Conversely, if one were to choose different views on non-determinism with wp and wlp transformers, for example angelic resolution for wp and demonic resolution for wlp, we end up with a different property that wp and wlp are each other's \define{conjugates}~\cite{dijkstra76,zhang22}: 
 $$ wp_a.C.F = \neg wlp_d.C.\neg F $$ 
-this indicates a duality between $wp_a$ and $wlp_d$ in the sense that by defining one transformer, we can arrive at the other by negation. 
+This indicates a duality between $wp_a$ and $wlp_d$ in the sense that by defining one transformer, we can arrive at the other by negation. 
 Graphically, we can ``flip'' \autoref{subfig:wpd} to arrive at \autoref{subfig:wlpa} and vice versa, or ``flip'' \autoref{subfig:wpa} to arrive at \autoref{subfig:wlpd} and vice versa, like in \autoref{fig:flip-wp-wlp}. 
 \begin{figure}[ht]
 	\centering
@@ -75,7 +76,7 @@ The choice whether to resolve the non-determinism angelically or demonically for
 	\label{fig:wp-family-relation}
 \end{figure}
 
-In this thesis, we prefer wp with angelic non-determinism and wlp with demonic non-determinism, because this choice gifts us Galois connection between the precondition transformers and the postcondition transformers~\cite{zhang22}, which we will illustrate in the next section: 
+In this thesis, we prefer wp with angelic non-determinism and wlp with demonic non-determinism, because this choice gifts us Galois connection between the precondition transformers and the postcondition transformers~\cite{zhang22}, which we will illustrate in \autoref{sec:literature}: 
 \begin{theorem}{thm:galois-wp}[Galois connection between wp and slp]
 	$$wp_a.C.F \implies G \text{ if and only if }F\implies slp_d.C.G$$
 \end{theorem}

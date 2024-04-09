@@ -377,6 +377,9 @@ Hence, by definition, $wlp.WHILE.F = gfp\ \Phi$.
 \subsection{The Non-deterministic Case: Angelic vs. Demonic}\label{sec:wp-nondet}
 Now we bring the non-deterministic choice back into the picture and add its wp to \autoref{tab:wp-wlp}. 
 Here we assume a setting with \define{angelic non-determinism}, where we assume that whenever non-determinism occurs, it will be resolved in our favor.
+This means we are optimistic that the non-determinism is likely to resolve to our favor, meaning that we consider an initial state \imptt{can} lead the program execution to terminate in a final state satisfying $F$, we consider it a valid initial state to satisfy the weakest (liberal) precondition. 
+Conversely, if we consider the non-deterministic choice to be demonic, then we require that all executions from an initial state \imptt{must} satisfy $F$ for this state to be included in the set of states described by the weakest (liberal) precondition. 
+
 This results in the weakest precondition for our non-deterministic choice being a disjunction of the wp for its subprograms. 
 We are hopeful that a precondition satisfying the wp of one of the subprograms can also lead to termination in our desired postcondition. 
 This is a design choice that is different from Dijkstra's~\cite{dijkstra75}, where the wp for non-deterministic choice is a conjunction, hinting at a demonic setting. 
