@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.28">
-<info created="D:20230506130932" modified="D:20240409152951"/>
+<info created="D:20230506130932" modified="D:20240411103436"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -7814,7 +7814,8 @@ h
 <layer name="wlp,sp"/>
 <layer name="wlp-g"/>
 <layer name="f-sp"/>
-<view layers="wlp-g f-sp" active="f-sp"/>
+<layer name="playground"/>
+<view layers="playground" active="playground"/>
 <path layer="alpha" matrix="1 0 0 1 -96 32" stroke="black" pen="heavier">
 128 736 m
 128 624 l
@@ -9255,5 +9256,52 @@ h
 <use matrix="1 0 0 1 4 32" name="mark/circle(sx)" pos="500 464" size="normal" stroke="orange"/>
 <use matrix="1 0 0 1 0 32" name="mark/circle(sx)" pos="512 464" size="normal" stroke="orange"/>
 <use matrix="1 0 0 1 0 32" name="mark/circle(sx)" pos="508 472" size="normal" stroke="orange"/>
+<path layer="playground" matrix="1 0 0 1 -64 -16" stroke="black" pen="heavier">
+128 736 m
+128 624 l
+208 624 l
+208 736 l
+h
+</path>
+<text matrix="1 0 0 1 -68 -48" transformations="translations" pos="160 776" stroke="black" type="label" width="10.145" height="9.803" depth="0" valign="baseline" size="Large" style="math">\Sigma</text>
+<path matrix="1 0 0 1 -64 -16" stroke="black" pen="heavier">
+128 688 m
+148 688
+160 672
+176 688
+188 672
+208 672
+208 672 c
+</path>
+<text matrix="1 0 0 1 -64 -28" transformations="translations" pos="156 716" stroke="black" type="label" width="7.833" height="6.808" depth="0" valign="baseline" style="math">G</text>
+<text matrix="1 0 0 1 -68 -80" transformations="translations" pos="156 716" stroke="black" type="label" width="14.475" height="6.808" depth="0" valign="baseline" style="math">\neg G</text>
+<path matrix="1 0 0 1 -256 160" stroke="blue" dash="dashed" pen="heavier" arrow="normal/normal">
+356 556 m
+372 548
+372 568
+388 556
+392 576
+412 560
+412 592 c
+</path>
+<path matrix="1 0 0 1 -256 160" stroke="blue" dash="dashed" pen="heavier" arrow="normal/normal">
+360 452 m
+368 440
+376 452
+388 440
+396 448
+404 436
+416 448
+420 424 c
+</path>
+<use matrix="1 0 0 1 -256 160" name="mark/box(sx)" pos="356 556" size="normal" stroke="blue"/>
+<use matrix="1 0 0 1 -256 160" name="mark/box(sx)" pos="340 540" size="normal" stroke="blue"/>
+<use matrix="1 0 0 1 -256 160" name="mark/box(sx)" pos="352 516" size="normal" stroke="blue"/>
+<use matrix="1 0 0 1 -256 160" name="mark/box(sx)" pos="376 520" size="normal" stroke="blue"/>
+<use matrix="1 0 0 1 -256 160" name="mark/box(sx)" pos="328 492" size="normal" stroke="blue"/>
+<use matrix="1 0 0 1 -256 160" name="mark/box(sx)" pos="332 464" size="normal" stroke="blue"/>
+<use matrix="1 0 0 1 -256 160" name="mark/box(sx)" pos="360 464" size="normal" stroke="blue"/>
+<use matrix="1 0 0 1 -256 160" name="mark/box(sx)" pos="360 452" size="normal" stroke="blue"/>
+<use matrix="1 0 0 1 -256 160" name="mark/box(sx)" pos="368 492" size="normal" stroke="blue"/>
 </page>
 </ipe>

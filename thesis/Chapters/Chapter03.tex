@@ -33,7 +33,7 @@ This chapter includes our most important results:
 In the upcoming sections, we first relate together wp, wlp, sp, and slp with both angelic and demonic non-determinism, so we can distinguish the necessary liberal precondition from the existing triples that are already well-studied. 
 In this chapter, we first discuss the general semantics of the necessary liberal precondition, then focus on a characteristic scenario and show properties that captures it. 
 
-\section{Negative Result: Relating Overapproximation of wlp with sp}\label{sec:negative}
+\section{Relating Overapproximation of wlp with sp}\label{sec:negative}
 Remember in \autoref{sec:literature}, we mentioned that there is an equivalence relation between the underapproximation of wlp and overapproximation of sp via Galois connection: 
 \begin{align}
 	G\implies wlp.C.F\text{ iff }sp.C.G\implies F \tag{*}
@@ -400,8 +400,8 @@ Assuming that the triple $\nlp\cdot\cdot\cdot$ is sound (which we will prove lat
 % \displaystyle\frac{\forall P\in\P.\ \nlp {\varphi\wedge P} {C'} {\varphi}}{\nlp {\varphi\vee F} {WHILE} {F}} while &
 \\[3ex]
 %   \displaystyle\frac{P\implies\neg\varphi}{\nlp {P\wedge F} {WHILE} {F}} while_0 &
-  \displaystyle\frac{\nlp {P} {C'} {\varphi\vee P}}{\nlp {P} {WHILE} {\varphi\vee P}} while &
-  \displaystyle\frac{\nlp {P} {C'} {F}}{\nlp {P\vee F} {WHILE} {F}} while &
+  \displaystyle\frac{\nlp {P} {C'} {\varphi\vee P}}{\nlp {P} {WHILE} {\varphi\vee P}} while_1 &
+  \displaystyle\frac{\nlp {P} {C'} {F}}{\nlp {P\vee F} {WHILE} {F}} while_2 &
   \\[3ex]
   \displaystyle\frac{\nlp G {C_1} F,\ \nlp G {C_2} F}{\nlp G {C_1\square C_2} F} choice &
   \displaystyle\frac{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}{\nlp{G}{C}{F}} conseq 
@@ -484,7 +484,7 @@ In other words, the weakest liberal precondition $G$ must overapproximate all fi
 	Hence $wlp.IF.F \implies G$. 
 	\paragraph{Case $while$}
 	\colorbox{red!30}{
-		how to write this rule so sound? 
+		how to support taking these rules instead of others? 
 	}%TODO
 	\paragraph{Case $choice$} Similar to the case with $seq$, we can prove that $wlp.(C_1\square C_2).F \implies G$ from 
 	$$wlp.(C_1\square C_2).F = wlp.C_1.F \wedge wlp.C_2.F$$
@@ -496,6 +496,15 @@ In other words, the weakest liberal precondition $G$ must overapproximate all fi
 	Together with $P\implies G$, $F\implies Q$ and the monotonicity of $wlp.C$ we conclude that 
 	$$wlp.C.F\implies wlp.C.Q \implies P \implies G$$
 \end{proof}
+
+\begin{lemma}{incomplete-pf}[The proof system is incomplete]
+	here 
+\end{lemma}
+
+\begin{proof}
+	here 
+\end{proof}
+
 
 \section{A Special Case}\label{sec:special} %: $G$ is wlp with Angelic Non-determinism
 As promised before, we will look into a way to identify the green arrows in \autoref{fig:door}, aka the executions that start from initial states but may end non-deterministically in $F$ or $\neg F$. 
