@@ -673,6 +673,118 @@ With this corollary, we can identify all initial states that lead to executions 
 By setting the necessary liberal precondition $G$ to be equal to $wlp_a.C.F$, we make sure that $G$ is satisfied by all such states. 
 If we think $F$ to be the specification for erroneous termination, then his means that $G$ is concerned with \imptt{all} problematic initial states, and it is necessary to avoid $G$ to steer clear of those errors. 
 
+\section{From Necessary Precondition to Necessary Liberal precondition}\label{sec:np-nlp}
+To reason about correctness, it is sometimes helpful to first reason about partial correctness, then supplement with termination proof to reach total correctness. 
+For example, when Hoare triple was first proposed~\cite{hoare69}, it is in form of the sufficient precondition that guarantees partial correctness: 
+$$\hoarenm{H}C F\ \Leftrightarrow\  H{\implies} wlp.C.F$$
+Then Manna and Pnueli~\cite{manna74} provided a termination proof for while-loops in Hoare triple, so that the extended Hoare Triple is a sufficient precondition that guarantees total correctness: 
+$$\hoarenm{H'}C F\ \Leftrightarrow\ H'{\implies} wp.C.F$$
+Explicitly, to arrive at $H\implies wp.C.F$, we can first investigate $H\implies wlp.C.F$, then supplement it with a termination proof.
+
+It stands to reason that while attempting to reason about the necessary liberal precondition, we can take a similar approach but from the opposite direction: starting from necessary precondition $wp.C.F \implies G$, supplementing it with a termination or non-termination proof, we try to reach the necessary liberal precondition $wlp.C.F\implies G$. 
+% In other words, from $wp.C.F\implies G$, how we reach $wlp.C.F\implies G$? 
+
+\newcommand{\wpp}{wp_d^+}
+First, we attempt to find a necessary precondition $G$ where $ wp.C.F\implies G$. 
+For this reason, we propose an overapproximation of wp, denoted by $\wpp$ in \autoref{tab:wp+}. 
+
+\begin{table}[ht!]\centering
+	\begin{tabular}{l;{1pt/1pt}l;{1pt/1pt}l;{1pt/1pt}l}
+		\hline\hline
+		\textbf{C}&\textbf{wp$_d$.C.F} & \textbf{wp$_d^+$.C.F} & \textbf{wlp$_d$.C.F}   \\ \hline
+		$skip$& &   $F$ &     \\ \hdashline[1pt/1pt]
+		$diverge$& $false$ &  $false$&  $true$\\ \hdashline[1pt/1pt]
+		$x:= e $& &  $F[x/e]$& \\\hdashline[1pt/1pt]
+		$C_1;C_2$&  & $\wpp.C_1.(\wpp.C_2.F)$ & \\\hdashline[1pt/1pt]
+
+		$\{C_1\}\square \{C_2\}$ &  &$\wpp.C_1.F\wedge \wpp.C_2.F$& \\\hdashline[1pt/1pt]
+
+		$if\ (\varphi)\ \{C_1\} $ &  &$(\varphi\wedge \wpp.C_1.F)$ &  \\
+		$\ \ \ \ \ \ \ \  else\ \{C_2\} $ &    & $\ \ \ \ \ \ \ \ \vee(\neg\varphi\wedge \wpp.C_2.F)$ &   \\\hdashline[1pt/1pt]
+
+		$while\ (\varphi)\ \{C'\}$ &  $lfp\ X.\ (\neg\varphi\wedge F)$ & {\color{Maroon} $fp\ X.\ (\neg\varphi\wedge F)$} & $gfp\ X.\ (\neg\varphi\wedge F)$\\
+		&  $\ \ \ \ \vee(\varphi\wedge wp_d.C'.X)$ & {\color{Maroon} $\ \ \ \  \vee(\varphi\wedge \wpp.C'.X)$} & $ \ \ \ \ \vee(\varphi\wedge wlp_d.C'.X)$\\
+		\hline\hline
+		\end{tabular}
+    \caption{$\wpp$, An Overapproximation of wp}
+    \label{tab:wp+}
+\end{table}
+
+We can see from \autoref{tab:wp+} that the only difference $\wpp$ is defined very close to $wp_d$ and $wlp_d$, aside from the different resolution for non-determinism and treatment for non-termination, the most significant difference is the definition for while-loops: with $\wpp$, we look for a fixed point of the characteristic function, instead of the least fixed point with wp and the greatest fixed point with wlp. 
+The computation of \imptt{some} fixed point is simpler than the computation of the least or the greatest fixed points. 
+% From \thm{lfp} and \thm{gfp}, we see that the computation of the least or the greatest fixed points boils down to finding the supremum of all $\Phi^n(false)$ or the infimum of $\Phi^n(true)$, for all $n\in\N$. 
+There is a repertoire of fixed point combinators, with which we can calculate a fixed point of the given function~\cite{cardone2006history}. 
+% For example, the fixed point combinator of Turing: 
+% Let $A.x.f:=f.(x.x.f)$ and $\Theta := A.A$, then 
+% $\Theta = $
+The choice of which fixed point to take is left to the user. 
+This also tells us that $\wpp$ represents rather a class of precondition transformers, depending on the choice of the fixed point, one chooses one of the precondition transformers in $\wpp$. 
+We can see from \autoref{tab:wp+} that wp$_d^+$ overapproximates wp$_d$, and underapproximates wlp$_d$:
+\begin{lemma}{wp-wpp}
+	\[\forall C\in\C. \forall F\in\S: wp_d.C.F\implies \wpp.C.F\]
+\end{lemma}
+\begin{proof}
+	By structural induction. 
+\end{proof}
+\begin{lemma}{wpp-wlp}
+	\[\forall C\in\C. \forall F\in\S: \wpp.C.F\implies wlp_d.C.F\]
+\end{lemma}
+\begin{proof}
+	By structural induction. 
+\end{proof}
+The semantics of $\wpp$ is captured in \autoref{fig:wpp}. 
+The area marked in dark yellow is wp$_d$, the areas with dark and medium yellow mark wp$_d^+$, and all three yellow areas together represent wlp$_d$. 
+Remember from \thm{conjugate} that $wlp_d.C$ and $wp_a.C$ are each other's conjugates, i.e. $wp_a.C.F = wlp_d.C.\neg F$, hence we can label the rest of the left rectangle with $wp_a.C.\neg F$. 
+
+
+\begin{figure}[ht]
+	\centering
+	\includesvg[width=.7\linewidth]{image/wpp.svg}
+	\caption{Graphical Illustration of wp$_d^+$}
+	\label{fig:wpp}
+\end{figure}
+
+Remember that our goal is to overapproximate $wlp_d$, i.e. to find $G$ such that $wlp.C.F\implies G$.
+Speaking in terms of \autoref{fig:wpp}, it corresponds to finding an area larger than all three yellow areas, i.e. to find $G$ where $wlp_d.C.F\implies G$, which is then equivalent to $\neg G \implies wp_a.C.\neg F$, as we see from \autoref{fig:wpp}. 
+This yields an alternative method to finding the necessary liberal precondition, given program $C$ and postcondition $F$:
+\begin{enumerate}
+	\item Calculate $\wpp.C.F$, where the discovery of any fixed point should be easier than the discovery of the least and the greatest one. 
+	\item Negate the result: $P:=\neg \wpp.C.F $.
+	\item Find $Q\implies P$ such that $C$ \imptt{always} terminates starting from any initial states satisfying $Q$.  
+	\item The negation of $Q$ is then the necessary liberal precondition of program $C$ with respect to postcondition $F$.
+\end{enumerate}
+
+One might wonder, what is the difference between this method and directly underapproximating wp$_a$, i.e. proving the validity of a Hoare triple? 
+The main difference is that we are not concerned with the postcondition anymore. 
+With this method, wp$_d^+$ is responsible for reasoning about the final states, and we are only concerned with termination proofs. 
+By proving that \imptt{all} executions terminate, we identify the green area in \autoref{fig:wpp-term}, which is strictly an underapproximation of wp$_a$, provided that the orange arrows in \autoref{fig:wpp-term} do exist, and that the negation of the green area is an overapproximation of wlp$_d$. 
+
+\begin{figure}[ht]
+	\centering
+	\includesvg[width=.7\linewidth]{image/wpp-term.svg}
+	\caption{Overapproximating wlp$_d$ Using wp$_d^+$}
+	\label{fig:wpp-term}
+\end{figure}
+
+Unfortunately, proving termination is not trivial. 
+In fact, given a program $C$, and a condition $P$, finding a $Q$ where $Q\implies P$, such that the execution of $C$ starting in an initial state satisfying $Q$ is in its essence the \define{halting problem}, which is undecidable. 
+At this point, we can not provide an algorithm to always find such $Q$. 
+
+However, the use of wp$_d^+$ still helps us separate the reasoning about final states and termination: wp$_d^+$ lets us rule out executions not ending in a state satisfying $F$ with less computational complexity, and we have freedom to choose a termination proof without having to be concerned with final states. 
+
+An interesting observation of wp$_d^+$ presents itself: remember from \autoref{fig:triples} that partial correctness is indicated by $G\implies wlp_d.C.F$, and partial incorrectness by $wp_a.C.F\implies G$. 
+We know from \lem{wpp-wlp} that $$\wpp.C.F\implies wlp_d.C.F$$ taking its contrapositive, we get $\neg wlp_d.C.F\implies \neg \wpp.C.F$. 
+From \thm{conjugate} we know that $wp_a.C.F = \neg wlp_d.C.\neg F$, hence $$\neg wp_a.C.\neg F\implies \neg \wpp.C.F$$
+This tells us that wp$_d^+$ is valid for partial correctness, and $\neg$wp$_d^+$ is valid for partial incorrectness. 
+This is not surprising, since partial correctness and incorrectness are each other's contrapositives, it still gives us a notion to represent the class of predicate transformers that are the ``cut'' between partial correctness and incorrectness triples, as shown in \autoref{fig:wpp-relation}. 
+\begin{figure}[ht]
+	\centering
+	\includesvg[width=.4\linewidth]{image/wpp-relation.svg}
+	\caption{The Class of wp$_d^+$ Is the Cut Between Partial Correctness and Incorrectness}
+	\label{fig:wpp-relation}
+\end{figure}
+
+\medskip
 To summarize this chapter, we started with the description of relations that connect the predicate transformers together, to introduce the necessary liberal precondition. 
 Then we discovered that $G$ can be an indicator of ``bad'' precondition that is necessary to avoid, to successfully terminate. 
 We can do it in two ways: 

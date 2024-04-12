@@ -575,14 +575,30 @@ An expression $e$ would be evaluated in a usual way, e.g. $x+y$ at state $\sigma
 We also use symbols $\sigma(x:=v)$ to denote a state where the value of variable $x$ is $v$, and all other variables have the same values as in $\sigma$.
 In our big-step semantics, divergence is defined to lead to state $\bot$ that is not a part of $\S$. 
 
-To denote non-termination, a simple approach is to consider it as equivalent to the non-existence of a state $\tau\in\S$ that $\sigma\ar{C}\tau$. 
+Let $\sigma\in\S$ be a non-trivial state, where non-trivial means that $\sigma\vDash true$ is valid. 
+To denote non-termination of a program $C$ with initial state $\sigma$, a simple approach is to consider it as equivalent to the non-existence of a state $\tau\in\S$ that $\sigma\ar{C}\tau$. 
 This covers the case of divergence, since the only inference rule for $diverge$ goes to a state that is not in $\S$. 
-However, we can not express the non-termination of programs such as $while\ (true)\ do\ \{skip\}$, since $\sigma\ar{skip}\sigma$ is always true for any $\sigma$. 
-In fact, there is no rule in \autoref{tab:big-step} with which we can express while-loops where the guard is simply $true$. 
+However, we can not express the non-termination of programs such as 
+$$D:=\ (x:=y\ \square\ while\ (true)\ do\ \{x:=z\})$$
+First, there is no rule to prove the while-loop on the right hand of the choice. 
+Since $\sigma\notin true$ is the same as with our notation, $\sigma\notin \{\sigma\in\S\mid \sigma\vDash true\}$ can not be valid, since we are looking at a non-trivial $\sigma$. 
+Consequently, we can not use the $while_0$ rule, hence the last premise of $while_n$ rule will never be fulfilled for this while-loop. 
+As a result, we can only prove that 
+\begin{center}
+  \begin{prooftree}
+    \infer0[$assign$]{\sigma\ar{x:=y}\sigma(x:=\sigma.y)} 
+    \infer1[$choice_1$]{\sigma\ar{x:=y\square while\ (true)\ do\ \{x:=z\}}\sigma(x:=\sigma.y)} 
+  \end{prooftree}
+\end{center}
+As a result, there is $\tau\in\S$ such that $\sigma\ar{D}\tau$, and we can not express the non-termination of $D$ with the non-existence of $\tau$ such that $\sigma\ar{D}\tau$, as we proposed. 
+In other words, we can not distinguish $D$ from $x:=y$ in this big-stem semantics without reasoning about the structure or length of the proof tree. 
+% In fact, there is no rule in \autoref{tab:big-step} with which we can express while-loops where the guard is simply $true$. 
 
-We can also consider modifying the notion for non-termination as the non-existence of a state $\tau\in\S$ \imptt{and $\tau\neq\sigma$} that $\sigma\ar{C}\tau$. 
-However, we still can not capture programs with non-terminating executions, such as 
-$x:=x-1\ \square\ diverge$
+% Since $\neg\exists\tau\in\S:\sigma\ar{C}\tau$ for non-termination is not sufficient, a natural next step is to consider strengthening this requirement, such as modifying the notion of non-termination to: 
+% $$\neg\exists\tau\in\S \imptt{\ \wedge\ \tau\neq\sigma\ }: \sigma\ar{C}\tau$$ 
+
+% However, we still can not capture programs with non-terminating executions, such as 
+% $x:=x-1\ \square\ diverge$
 % $$WHILE := while\ (x>0)\ do\ \{if\ (x>1)\ \{x:=x-1\}\ else\ \{diverge\} \}$$
 % Let \imptt{$\sigma.x=2$}, aka $\sigma$ is a state where $x$ evaluates to $2$, and \imptt{$\mu.x=1$}, then we can infer the following result: 
 % \begin{center}
@@ -596,8 +612,8 @@ $x:=x-1\ \square\ diverge$
 %   \end{prooftree}}
 % \end{center}
 
-In conclusion, this version of big-step semantics proves inadequate to reason with non-terminating executions. 
-Granted, one can bypass this problem~\cite{leroy2009CoinductiveBigstepOperational, nakata2009TraceBasedCoinductiveOperational} or turn to small-step semantics~\cite{nakata2009TraceBasedCoinductiveOperational} and use paths to distinguish between executions, but these methods are not simplistic for our purpose, and we choose another type of semantics-collecting semantics-that is more suitable. 
+In conclusion, this version of big-step semantics proves inadequate to reason with some non-terminating executions. 
+Granted, one can bypass this problem~\cite{leroy2009CoinductiveBigstepOperational, nakata2009TraceBasedCoinductiveOperational} or turn to small-step semantics~\cite{nakata2009TraceBasedCoinductiveOperational} and use paths to distinguish between executions, but these methods are not simplistic for our purpose, and we choose another type of semantics that is more suitable, namely the collecting semantics. 
 
 % non-termination of $C$ with initial state $\sigma$ is denoted by the non-existence of state $\tau\in\S$ and $\tau\neq\sigma$ such that $\sigma\goto{C}\tau$. 
 % Either $diverge$ is executed during the execution of $C$, in which a special state $\bot\notin\S$ is reached, or the execution of $C$ never ends, for example $C=while(true)do skip$.
@@ -628,7 +644,7 @@ The circle $\circ$ is composition as usual: $(\sem{C_2}\circ\sem{C_1})S = \sem{C
     $C_1;C_2$&  $(\sem{C_2}\circ\sem{C_1})S$\\\hdashline[1pt/1pt]
     $\{C_1\}\square \{C_2\}$ & $\sem{C_1}S\cup\sem{C_2}S$ \\ \hdashline[1pt/1pt]
     $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\} $ &  $(\sem{C_1}\circ\sem{\varphi})S\cup(\sem{C_2}\circ\sem{\neg\varphi})S$\\ \hdashline[1pt/1pt]
-    $while\ (\varphi)\ \{C'\}$&  $\sem{\neg\varphi} (lfp\ X.\ S\cup (\sem{C'}\circ\sem{\varphi}X)$\\
+    $while\ (\varphi)\ \{C'\}$&  $\sem{\neg\varphi} (lfp\ X.\ S\cup (\sem{C'}\circ\sem{\varphi})X)$\\
   \hline\hline
   \end{tabular}
   \caption{Collecting Semantics for GCL~\cite{zhang22-full}}
@@ -636,6 +652,10 @@ The circle $\circ$ is composition as usual: $(\sem{C_2}\circ\sem{C_1})S = \sem{C
 \end{table}
 
 Originally, the collecting semantics for $diverge$ and $skip$ was not explicitly given, but since $\sem{\cdot}\cdot$ ``collects'' reachable final states, $\sem{skip}S$ should return $S$, and $\sem{diverge}S$ should be the empty set for any $S$.
+
+We see the difference between this collecting semantics and the big-step semantics for GCL \autoref{sec:big-step} by looking at the same program $D$: 
+
+
 
 Remember from \autoref{sec:notation} that a predicate is a function that maps program states to truth values, and it can be written in a set form: $F=\{\sigma\in\S\mid F(\sigma)\}$. 
 This gives us two interesting insights: 
@@ -668,7 +688,7 @@ We can rewrite \thm{wp-sound} as\footnote{$\exists\tau\in\S:P$ is short for $\ex
 \[wp.C.F.\sigma = \exists \tau\in\sem{C}\{\sigma\}: F.\tau \]
 Recall from \autoref{sec:notation} that predicate $F$ also defines a set $\{\sigma\in\S\mid F.\sigma\}$, then we can rewrite the equation above as: 
 \begin{corollary}{wp-sound}[Soundness of wp]
-  \[wp.C.F = \{\sigma\in\S\mid\exists\tau\in\sem{C}\sigma:F.\tau\}\]
+  \[wp.C.F = \{\sigma\in\S\mid\exists\tau\in\sem{C}\{\sigma\}:F.\tau\}\]
 \end{corollary}
 
 \begin{theorem}{wlp-sound}[Soundness of wlp]~{\normalfont\cite{zhang22, dijkstra90}}
@@ -759,7 +779,7 @@ In conclusion, we choose the collecting semantics to describe the soundness prop
 Concluding the first part, we proceed in the second part to further study the focus of this thesis. 
 We call it the \define{necessary liberal precondition}. 
 \imptt{Necessary}, because its violation will lead to violation of the given postcondition, the definition of a necessary condition in logical terms. 
-\imptt{Liberal}, because we take an liberal view on non-termination. We accept initial states that can lead to non-termination as satisfying our precondition. 
+\imptt{Liberal}, because we take a liberal view on non-termination. We accept initial states that can lead to non-termination as satisfying our precondition. 
 \imptt{Precondition}, well, obviously. 
 
 
