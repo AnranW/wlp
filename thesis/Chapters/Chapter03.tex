@@ -687,23 +687,25 @@ It stands to reason that while attempting to reason about the necessary liberal 
 \newcommand{\wpp}{wp_d^+}
 First, we attempt to find a necessary precondition $G$ where $ wp.C.F\implies G$. 
 For this reason, we propose an overapproximation of wp, denoted by $\wpp$ in \autoref{tab:wp+}. 
+For reference, we also include the definitions of wp$_d$ and wlp$_d$, and we leave the cells empty to indicate that the definition is analogous to that of wp$_d^+$. 
 
 \begin{table}[ht!]\centering
 	\begin{tabular}{l;{1pt/1pt}l;{1pt/1pt}l;{1pt/1pt}l}
 		\hline\hline
 		\textbf{C}&\textbf{wp$_d$.C.F} & \textbf{wp$_d^+$.C.F} & \textbf{wlp$_d$.C.F}   \\ \hline
-		$skip$& &   $F$ &     \\ \hdashline[1pt/1pt]
+		$skip$& &  $F$ &     \\ \hdashline[1pt/1pt]
 		$diverge$& $false$ &  $false$&  $true$\\ \hdashline[1pt/1pt]
 		$x:= e $& &  $F[x/e]$& \\\hdashline[1pt/1pt]
 		$C_1;C_2$&  & $\wpp.C_1.(\wpp.C_2.F)$ & \\\hdashline[1pt/1pt]
 
-		$\{C_1\}\square \{C_2\}$ &  &$\wpp.C_1.F\wedge \wpp.C_2.F$& \\\hdashline[1pt/1pt]
+		$\{C_1\}\square \{C_2\}$ &  &$\wpp.C_1.F$& \\
+		&  &$\ \wedge \wpp.C_2.F$& \\\hdashline[1pt/1pt]
 
 		$if\ (\varphi)\ \{C_1\} $ &  &$(\varphi\wedge \wpp.C_1.F)$ &  \\
-		$\ \ \ \ \ \ \ \  else\ \{C_2\} $ &    & $\ \ \ \ \ \ \ \ \vee(\neg\varphi\wedge \wpp.C_2.F)$ &   \\\hdashline[1pt/1pt]
+		$\ \ \ \  else\ \{C_2\} $ &    & $\ \vee(\neg\varphi\wedge \wpp.C_2.F)$ &   \\\hdashline[1pt/1pt]
 
-		$while\ (\varphi)\ \{C'\}$ &  $lfp\ X.\ (\neg\varphi\wedge F)$ & {\color{Maroon} $fp\ X.\ (\neg\varphi\wedge F)$} & $gfp\ X.\ (\neg\varphi\wedge F)$\\
-		&  $\ \ \ \ \vee(\varphi\wedge wp_d.C'.X)$ & {\color{Maroon} $\ \ \ \  \vee(\varphi\wedge \wpp.C'.X)$} & $ \ \ \ \ \vee(\varphi\wedge wlp_d.C'.X)$\\
+		$while\ (\varphi)$ &  $lfp\ X.\ (\neg\varphi\wedge F)$ & {\color{Maroon} $fp\ X.\ (\neg\varphi\wedge F)$} & $gfp\ X.\ (\neg\varphi\wedge F)$\\
+		\ \ \ \ \{C'\}&  $\ \vee(\varphi\wedge wp_d.C'.X)$ & {\color{Maroon} $\ \vee(\varphi\wedge \wpp.C'.X)$} & $ \  \vee(\varphi\wedge wlp_d.C'.X)$\\
 		\hline\hline
 		\end{tabular}
     \caption{$\wpp$, An Overapproximation of wp}
