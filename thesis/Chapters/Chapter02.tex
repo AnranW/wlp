@@ -452,7 +452,29 @@ A condition under whose control the required postcondition is \imptt{reachable b
 \label{fig:wp-wlp-together}
 \end{figure}
 
+Note that wp with angelic resolution of non-determinism can be satisfied with initial states from which the execution of $C$ may either diverge or terminate satisfying $F$, as shown with the gray arrows in \autoref{subfig:wpa-extended}. 
+Similar statements can be said about the negation of wlp with demonic resolution of non-determinism. 
+However, to make the graphs clear, we omit drawing the gray arrows, because we recon that the essence of the predicate transformers are already captured using graphs similar to \autoref{fig:wp-wlp-together}. 
+For completeness' sake, we show all the gray arrows in \autoref{fig:wp-wlp-extended}, but for the remainder of this thesis, we keep the graphs compact. 
 
+\begin{figure}[ht]\centering
+  \subfloat[wp (angelic non-determinism) \label{subfig:wpa-extended}]{
+    \includesvg[width=0.45\linewidth]{image/wpa-extended.svg}
+  }
+  \hfill
+  \subfloat[wp (demonic non-determinism) \label{subfig:wpa-extended}]{
+    \includesvg[width=0.45\linewidth]{image/wpd-extended.svg}
+  }
+  \hfill\subfloat[wlp (angelic non-determinism) \label{subfig:wpa-extended}]{
+    \includesvg[width=0.45\linewidth]{image/wlpa-extended.svg}
+  }
+  \hfill\subfloat[wlp (demonic non-determinism) \label{subfig:wpa-extended}]{
+    \includesvg[width=0.45\linewidth]{image/wlpd-extended.svg}
+  }
+  \caption{Weakest (Liberal) Precondition Transformers with More Detail}
+  \label{fig:wp-wlp-extended}
+\end{figure}
+  
 
 % To justify this definition for the non-deterministic choice, we must first clarify the intended semantics of the wp-transformer. 
 
@@ -622,6 +644,7 @@ Granted, one can bypass this problem~\cite{leroy2009CoinductiveBigstepOperationa
 
 \newcommand{\sem}[1]{\llbracket #1 \rrbracket}
 \newcommand{\power}[1]{\mathcal{P}(#1)}
+\newcommand{\semb}[2]{\llbracket #1 \rrbracket \{#2\}}
 
 \section{Collecting Semantics}\label{sec:collecting}
 Zhang and Kaminski assign meaning to GCL programs with a collecting semantics~\cite{zhang22-full}. 
@@ -669,7 +692,38 @@ Second, a filtering is a set intersection. Rewriting the filtering, we get $\sem
 
 % \stepcounter{footnote} % for correct footnote numbering
 
-With collecting semantics, we can define the soundness of the predicate transformers. 
+With collecting semantics, we can define the soundness of the predicate transformers.
+
+\newpage
+\begin{lemma}{coll-mono} The collecting semantics is monotonic for all programs $C$ and predicates $P$ and $Q$: 
+\[P{\implies} Q \implies \sem{C}P\implies \sem C Q\]  
+\end{lemma}
+\begin{proof}
+  By structural induction on program $C$. 
+  The only not straightforward case is the case with while. 
+  Let $C:=while\ (\varphi)\ \{C'\}$. 
+  Let $L$ denote the weakest fixed point of the function $$f_S(X) =S\cup (\sem{C'}\circ\sem{\varphi})X$$
+  Assume $P\implies Q$, then $\sem{C}P = \sem{\neg \varphi}(P\cup(\sem{C'}\circ\sem{\varphi})L)$. 
+  Remember that a filtering is a set intersection, and we reload the symbols for predicates to also indicate the set of states that satisfy the predicates, then we can we can rewrite $\sem{C}P$ as $\neg \varphi\cap(P\cup(\sem{C'}\circ\sem{\varphi})L)$. 
+\end{proof}
+
+\begin{theorem}{big-coll} Big-step semantics and collecting semantics are equivalent
+\[\forall C\in\C, \sigma,\tau\in\S : \sigma\ar{C}\tau\ \  \text{ iff } \ \ \tau\in\semb{C}\sigma\]  
+\end{theorem}
+\renewcommand{\iff}{\Leftrightarrow}
+\begin{proof}
+  By structural induction on program $C$. 
+  \paragraph{Cases $skip$, $diverge$, $assign$} Straightforward. 
+  \paragraph{Case $C_1;C_2$} We see from \autoref{tab:big-step} that $\sigma\ar{C_1;C_2}\tau$ must have been proven with the $seq$ rule. 
+  Hence, we have induction hypothesis 
+  \[H_1:=\sigma\ar{C_1}\mu \iff \mu\in\semb{C_1}\sigma\] 
+  \[H_2:=\mu\ar{C_2}\tau \iff \tau\in\semb{C_2}\mu\]
+  Discharging the premises in the $seq$ rule, we conclude that $\mu\in\semb{C_1}\sigma$ and $\tau\in\semb{C_2}\mu$. 
+  As a result, we have that 
+  \begin{align*}
+    (\sem{C_1}\circ\sem{C_2})\{\sigma\} = \sem{C_1}(\sem{C_2}\{\sigma\})
+  \end{align*}
+\end{proof}
 
 \section{Soundness}\label{sec:sound} 
 Remember that a predicate is a function from program states to truth values (see \autoref{sec:notation}). 
@@ -780,7 +834,7 @@ Concluding the first part, we proceed in the second part to further study the fo
 We call it the \define{necessary liberal precondition}. 
 \imptt{Necessary}, because its violation will lead to violation of the given postcondition, the definition of a necessary condition in logical terms. 
 \imptt{Liberal}, because we take a liberal view on non-termination. We accept initial states that can lead to non-termination as satisfying our precondition. 
-\imptt{Precondition}, well, obviously. 
+\imptt{Precondition}, because we are concerned with the conditions before the execution of a program. 
 
 
 %*****************************************

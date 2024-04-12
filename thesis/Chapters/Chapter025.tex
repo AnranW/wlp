@@ -46,6 +46,9 @@ Graphically, the green arrows are not included in $wp_d$ and $wlp_D$ in \autoref
 The definition is then using conjuncts instead of disjuncts, like 
 $$wlp.C.(\{C_1\}\square \{C_2\}) = wlp.C_1.F\wedge wlp.C_2.F$$ for a postcondition $F$ in \autoref{tab:wp-wlp}.
 
+Note that we keep the figures in \autoref{fig:wp-family} clear and compact but still keep the essence of the predicate transformers. 
+A more detailed version can be found in \autoref{fig:wp-wlp-extended}.  
+
 The choice is somewhat artificial, depending on what properties the author wishes for their transformers.
 For example, Dijkstra and Scholten choose demonic non-determinism for wp and wlp transformers, acquiring a property by definition~\cite{dijkstra90}: 
 $$wp_d.C.F = wlp_d.C.F \wedge wp_d.C.true $$

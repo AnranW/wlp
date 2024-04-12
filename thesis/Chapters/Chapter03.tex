@@ -314,8 +314,8 @@ This demonstrates overapproximating wlp is useful to include the green and red a
 To utilize this overapproximation, we either identify the preconditions that result in the green arrows, which we will do in the next section, or we first calculate the weakest liberal precondition of the erroneous postcondition that we know of, then relax this precondition by ``guessing'' similar erroneous postconditions with the extra knowledge from experts over the system. 
 
 \subsection{Example: To Exclude Bugs}
-Here comes an example similar as the ones described by Cousot to overapproximate wp. 
 %TODO
+The necessary liberal precondition can also be regarded as a method to rule out bugs
 
 
 \subsection{Proof System}\label{sec:system}
@@ -363,7 +363,7 @@ This corresponds to our expectation, because we know that the overapproximation 
 Note that the last line is an implication in both directions, because we take the version of Hoare triple regarding total correctness, i.e. supplementing the rule to prove termination of while loops~\cite{manna74}: 
 \begin{center}
 	\begin{prooftree}
-		\Hypo{$\hoare{P\wedge\varphi\wedge v\in\N\wedge v=n\ \ }{C}{\ \ P\wedge\phi\wedge v\in\N\wedge v<n}$}
+		\Hypo{$\hoare{P\wedge\varphi\wedge v\in\N\wedge v=n\ \ }{C}{\ \ P\wedge v\in\N\wedge v<n}$}
 		\infer1[$while_h$]{$\hoare {P\wedge v\in\N\ \ } {while\ (\varphi)\ do\ C} {\ \ \neg\varphi\wedge P\wedge t\in\N}$}
 	\end{prooftree}
 \end{center}
@@ -400,8 +400,8 @@ Assuming that the triple $\nlp\cdot\cdot\cdot$ is sound (which we will prove lat
 % \displaystyle\frac{\forall P\in\P.\ \nlp {\varphi\wedge P} {C'} {\varphi}}{\nlp {\varphi\vee F} {WHILE} {F}} while &
 \\[3ex]
 %   \displaystyle\frac{P\implies\neg\varphi}{\nlp {P\wedge F} {WHILE} {F}} while_0 &
-  \displaystyle\frac{\nlp {P} {C'} {\varphi\vee P}}{\nlp {P} {WHILE} {\varphi\vee P}} while_1 &
-  \displaystyle\frac{\nlp {P} {C'} {F}}{\nlp {P\vee F} {WHILE} {F}} while_2 &
+  \displaystyle\frac{\nlp {P} {C} {\varphi\vee P}}{\nlp {P} {WHILE} {\varphi\vee P}} while &
+%   \displaystyle\frac{\nlp {P} {C} {F}}{\nlp {P\vee F} {WHILE} {F}} while_2 &
   \\[3ex]
   \displaystyle\frac{\nlp G {C_1} F,\ \nlp G {C_2} F}{\nlp G {C_1\square C_2} F} choice &
   \displaystyle\frac{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}{\nlp{G}{C}{F}} conseq 
