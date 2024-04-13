@@ -166,8 +166,8 @@ Starting from one initial state, the execution of the program can take various f
 We categorize the executions of the program in four ways: 
 \begin{enumerate}
 	\item the dashed arrow means non-terminating executions; 
-	\item the black arrows are executions starting from an initial state satisfying $wlp.C.F$ and only terminating in final states satisfying $F$; 
-	\item the green arrows are the executions starting from an initial state satisfying $\neg wlp.C.F$ but can terminate in states either satisfying $F$ or satisfying $\neg F$;
+	\item the black arrows are executions starting from an initial state satisfying $wlp.C.F$ and if they terminate, then only terminating in final states satisfying $F$; 
+	\item the green arrows are the executions starting from an initial state satisfying $\neg wlp.C.F$ but are always possible to terminate in states either satisfying $F$ or satisfying $\neg F$;
 	\item the red arrow represents executions starting from an initial state satisfying $\neg wlp.C.F$ and only terminating in final states satisfying $\neg F$. 
 \end{enumerate}
 
@@ -229,6 +229,8 @@ The situation can be trickier, for example in \autoref{subfig:wlp-g-gr}, $G$ is 
 In other words, if $C$ starts from some initial state satisfying this $G$, then maybe its execution diverges, maybe it terminates satisfying $F$, maybe not. 
 The same can be said about the $G$ in \autoref{subfig:wlp-g-ggr} and \autoref{subfig:wlp-g-grr}. 
 Finally, $G$ is weakened so much that it is simply $true$, hence satisfied by all initial states as seen in \autoref{subfig:wlp-g-ggrr}. 
+We see that there are a lot of possibilities on how to overapproximate wlp. 
+Furthermore, the analysis shown in \autoref{fig:wlp-g-1} is not accounting for the gray arrows depicted in \autoref{subfig:wlpd-extended}, the addition of which would make the number of cases explode even more. 
 
 % We thus first investigate this special case, before proceeding with $G$ in general. 
 
@@ -312,6 +314,37 @@ This demonstrates overapproximating wlp is useful to include the green and red a
 	\item or the user only have insufficient knowledge of the system, but experts can deduce other erroneous final states that are unknown to the public. 
 \end{itemize}
 To utilize this overapproximation, we either identify the preconditions that result in the green arrows, which we will do in the next section, or we first calculate the weakest liberal precondition of the erroneous postcondition that we know of, then relax this precondition by ``guessing'' similar erroneous postconditions with the extra knowledge from experts over the system. 
+
+\subsection{Example: Including Good Runs}
+Another reason one might wish to overapproximate the weakest liberal precondition is that wlp might be so strict that some good runs are excluded. 
+Cousot et al. discovered patterns in System.dll that demonstrates this effect~\cite{cousot13}. 
+\begin{lstlisting}[caption={Good Runs Excluded}, label={lst:run}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
+	... 
+	for (int i = 0; i <= a.length; i++){
+		a[i] = ...f(a[i])...; 
+		if (NonDet()) return; 
+	}
+	...
+\end{lstlisting}
+In this example in \autoref{lst:run}, $a[i]$ is an array, the function $NonDet()$ is a non-deterministic function that returns boolean values. 
+At run time, an out-of-bound error may or may not appear at line 3, depending on what happened before and after $f(a[i])$, the value of $i$ may or may not be modified, or the array $a$ may or may not be changed. 
+To achieve out-of-bound-error-free, the weakest (liberal) precondition of this program snippet would be $false$: 
+If the $NonDet()$ function in line 4 returns $false$ for some times, there is  \imptt{no} guarantee that error will not appear at line 3. 
+
+We can see from \autoref{fig:run} that $wlp.C.F$ empty, and it rules out some good runs like the green ones. 
+However, $G=a.length>0$ is an overapproximation over wlp, and it includes some good runs as indicated by the green arrows. 
+These green arrows indicate runs where $Nondet()$ returns $false$ for some times, so the program continues to run, but returning $false$ and ending the program execution before an out-of-bound could happen. 
+From the same initial state, we can be unlucky and $NonDet()$ returns $false$ for some more times, so that line 3 is executed for a couple of times more, and out-of-bound error happened, indicated by the red arrows in \autoref{fig:run}.
+
+\begin{figure}[ht]
+	\centering
+	\includesvg[width=.85\linewidth]{image/run.svg}
+	\caption{Overapproximating wlp to Include Good Runs}
+	\label{fig:run} 
+\end{figure}
+
+This example tells us that the weakest (liberal) precondition might be too strict at times, and it rules out good runs of program execution. 
+By overapproximating wlp, we end up with a more relaxed precondition, starting from which even though bad runs are still possible, we still capture some good executions that would otherwise be excluded. 
 
 \subsection{Example: To Exclude Bugs}
 %TODO
@@ -512,7 +545,7 @@ We can easily see that if we overapproximate wlp by adding all the green arrows,
 
 When $G$ corresponds to \autoref{subfig:wlp-g-gg}, we know that under its control, the program always \imptt{can} reach a final state satisfying $F$ if it terminates, while with an initial state satisfying $\neg G$, the program is \imptt{will} terminate satisfying $\neg F$.
 This behavior describes exactly the behavior of wlp with angelic non-determinism, which is more obvious if we put together \autoref{subfig:wlp-g-gg} and  \autoref{subfig:wlpa}: 
-\begin{figure}[h!]
+\begin{figure}[ht]
 	\centering
 	\raisebox{.2\height}{\includegraphics[width=.45\linewidth]{image/wlp-g/wlp-g-gg.eps}}
 	\hfill 
@@ -523,19 +556,91 @@ This behavior describes exactly the behavior of wlp with angelic non-determinism
 % However, $G$ spikes our interest when it takes the form as in \autoref{subfig:wlp-g-gg}, because under its control, the program always \imptt{can} reach a final state satisfying $F$ if it terminates, while with an initial state satisfying $\neg G$, the program is \imptt{will} terminate satisfying $\neg F$. 
 % This behavior is exactly the behavior of wlp, if we were to regard the non-deterministic choice as angelic, as hinted by the similarities between \autoref{subfig:wlp-g-gg} and \autoref{subfig:wp-angelic}. 
 
+Unfortunately, we can not use either big-step semantics in \autoref{sec:big-step} or collecting semantics in \autoref{sec:collecting} to describe the intended semantics of wlp with angelic resolution of non-determinism. 
+The reason is that both semantics can not easily distinguish between executions of programs like $C_1\square diverge$ and $skip$, but angelic wlp would require the distinction. 
+Fixing an initial state $\sigma$, with big-step semantics, we can only state about the program $C_1\square diverge$ that $\sigma$ can take a big step to whichever state the program $C_1$ can take it to: 
+\begin{center}
+	\begin{prooftree}
+		\hypo{\sigma\ar{C_1}\tau}
+		\infer1[$choice_1$]{\sigma\ar{C_1\square diverge}\tau}
+	\end{prooftree}
+\end{center}
+Hence, given a transition where $\sigma C\tau$, we do not know whether a big step towards $\tau$ is the only step $\sigma$ can take with program $C$, or it is one of the steps, and another possible step leads to non-termination. 
 
-Describing the intended behavior of wlp with angelic non-determinism (denoted by \define{wlp$_a$}) as ``if $C$ starts in an initial state satisfying $wlp_a.C.F$, then its execution either never terminates, or is always possible to end in a state satisfying $F$'', then we can deduce its semantics as follows, recalling the representation for non-termination mentioned in \autoref{sec:big-step}: 
-\begin{statement}{wlpa-sound}[Semantics of $wlp_a$]%TODO
-\ \vspace{-1.5mm}
-\[
-WRONG!!! wlp_a.C.F = \{ \sigma\in\S \mid
-\neg(\exists \tau\in\S: \sigma\goto{C}\tau) \ \ \vee\ \ 
-(\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\vDash F)
- \}
-\]
-% \label{thm:wlpa}
-\end{statement}
+Similarly, with collecting semantics, we have that 
+$$\semb{C_1\square diverge}{\sigma} = \semb{C_1}{\sigma}\cup\semb{diverge}{\sigma}= \semb{C_1}{\sigma}\cup\emptyset= \semb{C_1}{\sigma}$$ 
+Hence, the collecting semantics of $C_1\square diverge$ and $C_1$ are the same. 
+For the above reasons, we attempt to capture the intended behavior of wlp with angelic non-determinism (denoted by \define{wlp$_a$}) with case distinction of different groups of executions with help of graphical illustration. 
+We show the graphs of wp, wlp, wlp$_a$, and sp together in \autoref{fig:wp-wlp-wlpa-sp}. 
 
+\begin{figure}[ht]\centering
+	\subfloat[Weakest precondition (angelic non-determinism)\label{subfig:wpa-proof}]{
+		\includesvg[width=0.4\textwidth]{image/wpa-extended.svg}}
+	\hfill
+	\subfloat[Weakest liberal precondition (demonic non-determinism)\label{subfig:wlpd-proof}]{
+		\includesvg[width=0.4\textwidth]{image/wlpd-extended.svg}}
+	\hfill\subfloat[Strongest postconditoin (angelic non-determinism)\label{subfig:spa-proof}]{
+		\includesvg[width=0.4\textwidth]{image/spa.svg}}
+	\hfill\subfloat[Weakest liberal precondition (angelic non-determinism)\label{subfig:wlpa-proof}]{
+		\includesvg[width=0.4\textwidth]{image/wlpa-extended.svg}}
+	\hfill
+\caption{wp$_a$, wlp$_d$, sp$_a$, wlp$_a$ Together}
+\label{fig:wp-wlp-wlpa-sp}
+\end{figure}
+
+To help with reasoning, given program $C$ and postcondition $F$, we consider its executions and categorize the initial states into the following disjoint sets: 
+\begin{itemize}
+	\item $S_{FF}$: the set of all initial states where starting from any state in this set, all executions terminate, and the final states satisfy $F$. 
+	\item $S_{nFnF}$:the set of all initial states, where starting from any state in this set, all executions terminate, and the final states satisfy $\neg F$. 
+	\item $S_{FnF}$: the set of all initial states, where starting from any state in this set, at least one execution diverges, at least one execution terminates and the final state satisfies $F$, and at least one execution terminates and the final state satisfies $\neg F$. 
+	\item $S_{II}$: the set of all initial states, where starting from any state in this set, all executions diverge. The subscript $I$ stands for ``infinite''. 
+	\item $S_{IF}$: the set of all initial states, where starting from any state in this set, at least one execution diverges, and at least one execution terminates, and the final state satisfies $F$. 
+	\item $S_{InF}$: the set of all initial states, where starting from any state in this set, at least one execution diverges, and at least one execution terminates, and the final state satisfies $\neg F$. 
+	\item $S_{IFnF}$: the set of all initial states, where starting from any state in this set, at least one execution diverges, at least one execution terminates and the final state satisfies $F$, and at least one execution terminates and the final state satisfies $\neg F$. 
+\end{itemize}
+
+Similarly, given program $C$ and precondition $G$, we can categorize the final states into the following disjoint sets: 
+\begin{itemize}
+	\item $T_{U}$: the set of all unreachable final states. 
+	\item $T_{GG}$: the set of all reachable final states, where all executions leading to it originally started in an initial state satisfying $G$. 
+	\item $T_{nGnG}$: the set of all reachable final states, where all executions leading to it originally started in an initial state satisfying $\neg G$. 
+	\item $T_{GnG}$: the set of all reachable final states, where looking at any of them, there exists at least one execution reaching this final state originated in an initial state satisfying $G$, and there exists at least one execution reaching this final state originated in an initial state satisfying $\neg G$. 
+\end{itemize}
+
+Studying \autoref{fig:wp-wlp-wlpa-sp}, we see that the states satisfying wp with angelic resolution of non-determinism can be characterized as: 
+Starting from this state, termination in a final state satisfying $F$ is always possible. 
+More concretely, starting from an initial state satisfying $wp_a.C.F$, there can exist executions where it diverges, or terminates in a final state satisfying $\neg F$, but there \imptt{must} exist at least one execution where it terminates, and the final state satisfies $F$. 
+As a result, We can then characterize $wp_a.C.F$ as the following: 
+\[wp_a.C.F = S_{FF}\cup S_{FnF}\cup S_{IF}\cup S_{IFnF}\]
+
+Similarly, the states satisfying $wlp_d.C.F$ can be characterized as: 
+Starting from any of these states, either all executions lead to final states satisfying $F$ upon termination, or non-termination is guaranteed. 
+Consequently, 
+\[wlp_d.C.F = S_{FF}\cup S_{II}\cup S_{IF}\]
+
+The states satisfying $sp_a.C.G$ can be characterized as: 
+There must exist an execution from an initial state satisfying $G$ that reaches this final state. 
+\[sp_a.C.G = T_{GG}\cup T_{GnG}\]
+
+The states satisfying $wlp_a.C.F$ should behave like the following: 
+Starting from any of these states, either non-termination is guaranteed, or there must be an execution with final state satisfying $F$, or some of the executions diverge, and others terminate in a final state satisfying $\neg F$. 
+As a result, 
+\[wlp_a.C.F = S_{FF}\cup S_{FnF}\cup S_{IF}\cup S_{InF}\cup S_{IFnF}\cup S_{II} =\S-S_{nFnF}\]
+
+
+% as ``if $C$ starts in an initial state satisfying $wlp_a.C.F$, then its execution either is possible to diverge, or is possible to end in a state satisfying $F$'', 
+% then we can deduce its semantics as follows, recalling the representation for non-termination mentioned in \autoref{sec:big-step}: 
+% \begin{statement}{wlpa-sound}[Semantics of $wlp_a$]%TODO
+% \ \vspace{-1.5mm}
+% \[
+% WRONG!!! wlp_a.C.F = \{ \sigma\in\S \mid
+% \neg(\exists \tau\in\S: \sigma\goto{C}\tau) \ \ \vee\ \ 
+% (\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\vDash F)
+%  \}
+% \]
+% % \label{thm:wlpa}
+% \end{statement}
+We propose that we can find $wlp_a$ by using the necessary liberal precondition and the strongest postcondition. 
 While trying to distinguish what is and is not in $wlp_a$, we approach it in two directions: first, we find restraints that make the necessary liberal precondition $G$ where $wlp.C.F\implies G$ an overapproximation of angelic wlp ($ wlp_a.C.F \implies G$); then we find restraints that makes $G$ an underapproximation of angelic wlp. 
 Finally, we combine both directions and conclude with statements that make $G$ and $wlp_a.C.G$ equivalent. 
 We also gain a side effect of expressing wlp$_a$ without having to define it. 
@@ -544,9 +649,9 @@ We also gain a side effect of expressing wlp$_a$ without having to define it.
 \ \\ \vspace{-3mm}
 	\[\hspace{-2mm}
 	\text{ if \ \ \ \ } 
-	(wlp.C.F\implies G)
+	(wlp_d.C.F\implies G)
 	\ \wedge\ 
-	(sp.C.\neg G \implies \neg F) 
+	(sp_a.C.\neg G \implies \neg F) 
 	\text{\ \ \ \  then\ \ \ \  } 
 	wlp_a.C.F \implies G
 	\] 
@@ -554,62 +659,89 @@ We also gain a side effect of expressing wlp$_a$ without having to define it.
 \end{lemma}
 The second prerequisite \mathl{sp.C.\neg G \implies \neg F } states that from $\neg G$ we are only allowed to reach $\neg F$, making sure that all green arrows as in \autoref{fig:wlp-g-1} are included in $G$. 
 
-% macros for referencing to lines in this chapter
-\newcommand{\lblth}[1]{\hypertarget{3.#1}{{\text{#1}}}}
-\newcommand{\refth}[1]{\hyperlink{3.#1}{{\text{Line (#1)}}}}
+\renewcommand{\iff}{\Leftrightarrow}
 \begin{proof}
-	The assumption expresses that for any state $\sigma\in\S$:
-\begin{align*} 
-	wlp.C.F\implies G\  \Leftrightarrow&\ \sigma\in wlp.C.F \implies \sigma\in G \\
-	\Leftrightarrow&\ ( \forall \tau\in\S:\ \sigma\goto{C}\tau\implies  \tau\in F) \implies \sigma\in G \tag*{$\mid$ \thm{wlp-sound}} \\
-	\Leftrightarrow&\ (\forall \tau\in\S:\ \neg(\sigma\goto{C}\tau)\ \vee\ \tau\in F) \implies \sigma\in G \\
-	\Leftrightarrow&\ \neg(\exists\tau\in\S:(\sigma\goto{C}\tau)\ \wedge\ \neg(\tau\in F)) \implies \sigma\in G \tag{\lblth{a}} \\
-	% && \mid \lblth{a} \\
-	% &\ \ \ \  \vee (\forall \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G) 
-		% \hspace{0.017\textwidth} \mid \lblth{b} \\
-	%
-\end{align*}
-Also, for any state $\tau\in\S$: 
-\begin{align*}
-	sp.C.\neg G \implies \neg F \Leftrightarrow&\ \tau\in sp.C.\neg G \implies \tau\in \neg F \\
-	\Leftrightarrow&\  (\exists \mu\in\S:\ \mu\goto{C}\tau\ \wedge\ \mu\in\neg G )\implies \tau\in\neg F \tag*{$\mid$ \thm{sp-sound}}\\
-	% &\hspace{0.45\textwidth} \mid \thm{sp-sound}\\
-	\Leftrightarrow&\  \neg (\tau\in\neg F) \implies \neg (\exists \mu\in\S:\ \mu\goto{C}\tau\ \wedge\ \mu\in\neg G ) \\
-	\Leftrightarrow&\  \tau\in F \implies \forall \mu\in\S:\ \neg (\mu\goto{C}\tau\ \wedge\ \mu\in\neg G)\\
-	\Leftrightarrow&\  \tau\in F \implies \forall \mu\in\S:\ \neg (\mu\goto{C}\tau)\ \vee\ \neg(\mu\in\neg G)\\
-	\Leftrightarrow&\  \tau\in F \implies \forall \mu\in\S:\ \neg (\mu\goto{C}\tau)\ \vee\ \mu\in G
-	\tag{\lblth{b}} \\
-	%
-\end{align*}
-Our goal is to prove that for any state $\sigma\in\S$:
-\begin{align*}
-	wlp_a.C.F \implies G \Leftrightarrow&\ \sigma\in wlp_a.C.F \implies \sigma\in G \\
-	\Leftrightarrow&\  \neg(\exists \tau\in\S: \sigma\goto{C}\tau) \ \vee\ 
-	(\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\in F)\\
-	&\ \ \ \ \implies \sigma\in G \tag*{$\mid$ \stm{wlpa-sound}}\\
-	% &\hspace{0.45\textwidth} \mid \stm{wlpa-sound}\\
-	\Leftrightarrow&\  (\neg(\exists \tau\in\S: \sigma\goto{C}\tau)\implies \sigma\in G ) \tag{\lblth{c}}\\
-	% && \mid \lblth{c}\\
-	&\ \wedge\ ((\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\in F)\implies\sigma\in G) \tag{\lblth{d}}\\
-	% && \mid \lblth{d}
-\end{align*}
-We can prove \lem{wlpa-g} by proving that \refth{a} implies \refth{c} and that \refth{b} implies \refth{d}.
-For any state $\sigma\in\S$, we first prove (a)$\implies$(c):
-\begin{align*}
-	% \text{(a)}\implies\text{(c)}:\text{ for any } \\
-	true 
-	\Leftrightarrow&\ (\exists\tau\in\S:(\sigma\goto{C}\tau)\ \wedge\ \neg(\tau\in F)) \implies (\exists\tau\in\S:\sigma\goto{C}\tau)\\ 
-	\Leftrightarrow&\ \neg(\exists\tau\in\S:\sigma\goto{C}\tau) \implies \neg(\exists\tau\in\S:(\sigma\goto{C}\tau)\ \wedge\ \neg(\tau\in F))  \\ 
-	\Rightarrow&\ \neg(\exists\tau\in\S:\sigma\goto{C}\tau) \implies \sigma\in G \tag*{$\mid$ \refth{a}}\\
-\end{align*}
-It is also valid that for any state $\sigma\in\S$, (b)$\implies$(d). 
-Assume there exists $\tau\in\S$ such that for some state $\sigma\in\S$, 
-$$\sigma\goto{C}\tau\ \wedge\  \tau\in F \text{ is valid. }$$
-Then we conclude from \refth{b} that 
-$$\forall \mu\in\S:\ \neg (\mu\goto{C}\tau)\ \vee\ \mu\in G$$
-Since $\sigma\in\S$, it follows that $\neg(\sigma\goto{C}\tau)\ \vee\ \sigma\in G$. 
-We already know that $\sigma\goto{C}\tau$, hence $\sigma\in G$ must be true, therefore proving \refth{d}. 
+	Rewriting the statements above, we get:
+	\begin{align*} 
+	wlp_d.C.F{\implies} G
+	&\iff S_{FF}\cup S_{II}\cup S_{IF} \implies G \tag{a} \\
+	sp_a.C.\neg G{\implies}\neg F 
+	&\iff T_{nGnG}\cup T_{GnG} \implies \neg F \\ 
+	&\iff F\implies \neg(T_{nGnG}\cup T_{GnG}) \\
+	&\iff F\implies \S-(T_{nGnG}\cup T_{GnG}) \\
+	&\iff F\implies T_{GG}\cup T_{U} \tag{d}\\
+	wlp_a.C.F{\implies} G
+	&\iff S_{FF}\cup S_{FnF}\cup S_{IF}\cup S_{InF}\cup S_{IFnF}\cup S_{II}  \implies G \tag{e} 
+	\end{align*}
+	To prove line (e), comparing line (a) and line (e) we see that we only need to prove that 
+	$$S_{FnF}\cup S_{InF}\cup S_{IFnF} \implies G $$
+	From line (d) we see that final states in $F$ are either unreachable from any initial state, or can only be reached via executions starting from initial states satisfying $\neg G$. 
+	Since $T_U$ and ${T_nGnG}$ are disjoint, there are two separate cases. 
+	The first case is that $F\implies T_{U}$, then for any state $\tau\in F$, we know that there exists no execution that has $\tau$ as final state, so all $S\_$ with ``there exists at least one execution that terminates in a final state satisfying $F$'' as part of their descriptions are empty, i.e. $S_{FnF}, S_{IF}, S_{IFnF}$. 
+	Hence, in this case, we have that 
+	$S_{FnF}\cup S_{InF}\cup S_{IFnF} \implies G $. 
+	
+	The second case is that $F\implies T_{GG}$, this means that for any state $\tau\in F$, there exists and only exists executions leading to $\tau$ that start from an initial state satisfying $G$. 
+	This means that any $S\_$ with ``there exists at least one execution that terminates in a final state satisfying $F$'' must be a subset of $G$. 
+	Consequently, $ S_{FnF}\cup S_{InF}\cup S_{IFnF} \implies G $ is valid in this case as well. 
 \end{proof}
+
+% macros for referencing to lines in this chapter
+% \newcommand{\lblth}[1]{\hypertarget{3.#1}{{\text{#1}}}}
+% \newcommand{\refth}[1]{\hyperlink{3.#1}{{\text{Line (#1)}}}}
+% \begin{proof}
+% 	The assumption expresses that for any state $\sigma\in\S$:
+% \begin{align*} 
+% 	wlp.C.F\implies G\  \Leftrightarrow&\ \sigma\in wlp.C.F \implies \sigma\in G \\
+% 	\Leftrightarrow&\ ( \forall \tau\in\S:\ \sigma\goto{C}\tau\implies  \tau\in F) \implies \sigma\in G \tag*{$\mid$ \thm{wlp-sound}} \\
+% 	\Leftrightarrow&\ (\forall \tau\in\S:\ \neg(\sigma\goto{C}\tau)\ \vee\ \tau\in F) \implies \sigma\in G \\
+% 	\Leftrightarrow&\ \neg(\exists\tau\in\S:(\sigma\goto{C}\tau)\ \wedge\ \neg(\tau\in F)) \implies \sigma\in G \tag{\lblth{a}} \\
+% 	% && \mid \lblth{a} \\
+% 	% &\ \ \ \  \vee (\forall \tau.\sigma\goto{C}\tau:\tau\in F \Longrightarrow \sigma\in G) 
+% 		% \hspace{0.017\textwidth} \mid \lblth{b} \\
+% 	%
+% \end{align*}
+% Also, for any state $\tau\in\S$: 
+% \begin{align*}
+% 	sp.C.\neg G \implies \neg F \Leftrightarrow&\ \tau\in sp.C.\neg G \implies \tau\in \neg F \\
+% 	\Leftrightarrow&\  (\exists \mu\in\S:\ \mu\goto{C}\tau\ \wedge\ \mu\in\neg G )\implies \tau\in\neg F \tag*{$\mid$ \thm{sp-sound}}\\
+% 	% &\hspace{0.45\textwidth} \mid \thm{sp-sound}\\
+% 	\Leftrightarrow&\  \neg (\tau\in\neg F) \implies \neg (\exists \mu\in\S:\ \mu\goto{C}\tau\ \wedge\ \mu\in\neg G ) \\
+% 	\Leftrightarrow&\  \tau\in F \implies \forall \mu\in\S:\ \neg (\mu\goto{C}\tau\ \wedge\ \mu\in\neg G)\\
+% 	\Leftrightarrow&\  \tau\in F \implies \forall \mu\in\S:\ \neg (\mu\goto{C}\tau)\ \vee\ \neg(\mu\in\neg G)\\
+% 	\Leftrightarrow&\  \tau\in F \implies \forall \mu\in\S:\ \neg (\mu\goto{C}\tau)\ \vee\ \mu\in G
+% 	\tag{\lblth{b}} \\
+% 	%
+% \end{align*}
+% Our goal is to prove that for any state $\sigma\in\S$:
+% \begin{align*}
+% 	wlp_a.C.F \implies G \Leftrightarrow&\ \sigma\in wlp_a.C.F \implies \sigma\in G \\
+% 	\Leftrightarrow&\  \neg(\exists \tau\in\S: \sigma\goto{C}\tau) \ \vee\ 
+% 	(\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\in F)\\
+% 	&\ \ \ \ \implies \sigma\in G \tag*{$\mid$ \stm{wlpa-sound}}\\
+% 	% &\hspace{0.45\textwidth} \mid \stm{wlpa-sound}\\
+% 	\Leftrightarrow&\  (\neg(\exists \tau\in\S: \sigma\goto{C}\tau)\implies \sigma\in G ) \tag{\lblth{c}}\\
+% 	% && \mid \lblth{c}\\
+% 	&\ \wedge\ ((\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\in F)\implies\sigma\in G) \tag{\lblth{d}}\\
+% 	% && \mid \lblth{d}
+% \end{align*}
+% We can prove \lem{wlpa-g} by proving that \refth{a} implies \refth{c} and that \refth{b} implies \refth{d}.
+% For any state $\sigma\in\S$, we first prove (a)$\implies$(c):
+% \begin{align*}
+% 	% \text{(a)}\implies\text{(c)}:\text{ for any } \\
+% 	true 
+% 	\Leftrightarrow&\ (\exists\tau\in\S:(\sigma\goto{C}\tau)\ \wedge\ \neg(\tau\in F)) \implies (\exists\tau\in\S:\sigma\goto{C}\tau)\\ 
+% 	\Leftrightarrow&\ \neg(\exists\tau\in\S:\sigma\goto{C}\tau) \implies \neg(\exists\tau\in\S:(\sigma\goto{C}\tau)\ \wedge\ \neg(\tau\in F))  \\ 
+% 	\Rightarrow&\ \neg(\exists\tau\in\S:\sigma\goto{C}\tau) \implies \sigma\in G \tag*{$\mid$ \refth{a}}\\
+% \end{align*}
+% It is also valid that for any state $\sigma\in\S$, (b)$\implies$(d). 
+% Assume there exists $\tau\in\S$ such that for some state $\sigma\in\S$, 
+% $$\sigma\goto{C}\tau\ \wedge\  \tau\in F \text{ is valid. }$$
+% Then we conclude from \refth{b} that 
+% $$\forall \mu\in\S:\ \neg (\mu\goto{C}\tau)\ \vee\ \mu\in G$$
+% Since $\sigma\in\S$, it follows that $\neg(\sigma\goto{C}\tau)\ \vee\ \sigma\in G$. 
+% We already know that $\sigma\goto{C}\tau$, hence $\sigma\in G$ must be true, therefore proving \refth{d}. 
+% \end{proof}
 
 Now that we can use $G$ to overapproximate $wlp_a$, the logcial next step is to underapproximate it, so that in the final step we can establish equivalences between $G$ and angelic wlp:
 \begin{lemma}{g-wlpa}[G implies angelic wlp]
@@ -635,27 +767,47 @@ Consequently, we do not allow executions starting from $G$ that \imptt{only} fin
 	&\ P\implies G \implies \neg(sp.C.P \implies \neg F) \\ 
 	\Leftrightarrow&\ P\implies G \implies \neg(\forall\tau\in\S:\tau\in sp.C.P{\implies}\tau\in\neg F) \\ 
 	\Leftrightarrow&\ P\implies G \implies \exists\tau\in\S:\neg(\tau\in sp.C.P{\implies}\tau\in\neg F) \\ 
+	\Leftrightarrow&\ P\implies G \implies \exists\tau\in\S:\neg(\neg\tau\in sp.C.P\ \vee\ \tau\in\neg F) \\ 
 	\Leftrightarrow&\ P\implies G \implies \exists\tau\in\S:\tau\in sp.C.P\ \wedge\ \neg(\tau\in\neg F) \\ 
 	\Leftrightarrow&\ P\implies G \implies \exists\tau\in\S:\tau\in sp.C.P\ \wedge\ \tau\in F \\ 
-	\Leftrightarrow&\ P\implies G \implies \exists\tau\in\S:(\exists \mu\in\S:\ \mu\goto{C}\tau\ \wedge\ \mu\in P)\ \wedge\ \tau\in F \tag*{$\mid$ \thm{sp-sound}}\\ 
-	\Leftrightarrow&\ \sigma\in P {\implies} \sigma\in G {\implies} \exists\tau\in\S:(\exists \mu\in\S:\ \mu\goto{C}\tau\ \wedge\ \mu\in P)\ \wedge\ \tau\in F \tag{\lblth{e}}\\ 
+	\Leftrightarrow&\ P\implies G \implies \exists\tau\in\S:\tau\in (T_{PP}\cup T_{PnP})\ \wedge\ \tau\in F \\ 
+	\Leftrightarrow&\ \sigma\in P \implies \sigma\in G \implies \exists\tau\in\S:\tau\in (T_{PP}\cup T_{PnP})\ \wedge\ \tau\in F \tag{f}\\ 
 	%
 \end{align*}
 Our goal is to prove that for any state $\sigma\in\S$:
 \begin{align*}
 	&\ G\implies wlp_a.C.F \\ 
-	\Leftrightarrow&\  \sigma\in G\implies\sigma\in wlp_a.C.F\\
-	\Leftrightarrow&\ \sigma\in G\implies \neg(\exists \tau\in\S: \sigma\goto{C}\tau) \ \vee\ 
-	(\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\in F) \tag*{$\mid$ \stm{wlpa-sound}}\\
+	% \iff &\ \neg wlp_a.C.F \implies \neg G\\
+	% \iff &\ \neg (\S-S_{nFnF}) \implies \neg G\\
+	% \iff &\ S_{nFnF} \implies \neg G\\
+	% \iff&\  \sigma\in S_{nFnF}\implies\sigma\in \neg G\\
+	\iff&\  \sigma\in G\implies\sigma\in wlp_a.C.F\\
+	\iff&\  \sigma\in G\implies\sigma\in \S-S_{nFnF}\\
+	\iff&\  \sigma\in G\implies\sigma\in (S_{FF}\cup S_{FnF}\cup S_{IF}\cup S_{InF}\cup S_{IFnF}\cup S_{II}) \tag{g}\\
+	% =\S-S_{nFnF})\\
+	% \Leftrightarrow&\ \sigma\in G\implies \neg(\exists \tau\in\S: \sigma\goto{C}\tau) \ \vee\ 
+	% (\exists \tau\in\S: \sigma\goto{C}\tau\wedge  \tau\in F)\\
 \end{align*}
-For some state $\sigma\in\S$, assume $\sigma\in G$, then we can construct set $P=\{\sigma\}$ such that the prerequisites in \refth{e} holds. 
-Consequently, the postrequisite in holds. 
-Now we can find witnesses $\mu$ and $\tau$ such that
+If $G$ is the empty set, then our goal is automatically fulfilled. 
+Now we can assume that $G$ is not empty. 
+Looking at an arbitrary $\sigma\in G$, we can always construct set $P=\{\sigma\}$, and consequently, the prerequisites in line (f) holds. 
+As a result, the conclusion in line (f) holds: $\exists\tau\in\S:\tau\in (T_{PP}\cup T_{PnP})\ \wedge\ \tau\in F$
+
+Now we can find witnesses $\tau$ such that
 $$
-\mu\goto{C}\tau\ \wedge\ \mu\in P\ \wedge\ \tau\in F 
+\tau\in (T_{PP}\cup T_{PnP})\ \wedge\ \tau\in F
 $$
-Since $P$ is a singleton set, $\mu$ can only be $\sigma$. 
-Then we have found a witness $\tau$ such that $\sigma\goto{C}\tau$ and $\tau\in F$, satisfying the postrequisite of our goal. 
+The first case is $\tau\in T_{PP}$. 
+Remember that $T_{PP}$ is the set of all reachable final states, where all executions leading to it originally started in an initial state satisfying $P$. 
+Since $P=\{\sigma\}$, $P$ is a singleton set, from $\tau\in T_{PP}$ we can then conclude that $\tau$ can only be reached from $\sigma$. 
+This tells us that there exists an execution from $\sigma$ to $\tau$, where $\tau$ satisfies $F$. 
+This tells us that $\sigma$ can be an element of all $S\_$ except from $S_{II}$ and $ S_{nFnF}$, which means that the conclusion of line (g) is true. 
+Since we take an arbitrary $\sigma\in G$, the complete line (g) is then true.
+
+The second case is $\tau\in T_{PnP}$. 
+Remember that $\tau\in T_{PnP}$ means that there exists at least one execution from an initial state satisfying $P$, and at least one from $\neg P$. 
+Again, we can draw the conclusion that there exists an execution from $\sigma$ to $\tau$, since $P$ is a singleton set. 
+From here, we follow exactly the same reasoning of the first case, and can draw the conclusion that line (g) is valid.
 \end{proof}
 
 \begin{corollary}{g=wlp}[G equivalent to angelic wlp]
