@@ -13,7 +13,7 @@ The reason is probably that we believe in physics, astrology, and the rules and 
 It is exactly the rules and formulas this thesis attempts to investigate, in the realm of computer programs, with which we are certain that the equivalent version of the sun in a program will rise tomorrow. 
 
 Computer programs are ubiquitous in almost every aspect of human life. 
-We want them to solve our problem efficiently, and correctly. 
+We want them to solve our problems efficiently, and correctly. 
 Fortunately, brilliant scientists and engineers have taken the matter into their hands. 
 A recent example is seL4~\cite{klein09}, the first formally proven operating system kernel against overflows, memory leaks, non-termination, etc. using the interactive theorem prover Isabelle/HOL~\cite{nipkow2002isabelle}. 
 Its verification brings great potential to safety-critical fields like aircrafts and autonomous cars, the latter of which is to be in mass production in 2024.\footnote{\url{https://sel4.systems/news/2023\#nio-skyos}, accessed 2024.03.10. }
@@ -91,7 +91,7 @@ Finally, we add the notion of non-determinism to the wp transformer, and discuss
 Following this, we show the weakest liberal precondition transformer in \autoref{sec:wlp} and the strongest postcondition transformer in \autoref{sec:sp}. 
 Subsequently, we introduce a \define{big-step semantics} in \autoref{sec:big-step}  and \define{collecting semantics} in \autoref{sec:collecting} to help us reason about the semantics of the aforementioned transformers in \autoref{sec:sound} and list some properties in \autoref{sec:prop}.
 
-In \autoref{ch:appr}, we first relate wp, wlp, sp, slp together using various relations, then illustrate them in a graph. 
+In \autoref{ch:appr}, we first relate wp, wlp, sp, and slp together using various relations, then illustrate them in a graph. 
 This helps us distinguish the necessary liberal precondition with other implications that are researched, so that we can analyze the scenarios of our overapproximation in \autoref{ch:nlp}. 
 Then we provide examples to convey the usefulness of this overapproximation, and show its proof system as well as prove its soundness. 
 We then discover a special scenario that is of interest, and find restraints that qualifies this special scenario, then prove their correctness in \autoref{sec:special}. 

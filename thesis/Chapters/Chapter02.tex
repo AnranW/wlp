@@ -73,7 +73,7 @@ We also overload the symbols for predicates and use them to identify the sets th
 % But the equivalence of predicates is not the focus of this thesis, and we state that we can use \hyperlink{2.*}{Line (*)} because a predicate uniquely identifies a set of predicates, up to the equivalence relation of predicates. 
 
 By default, we take \mathl{F(\sigma)} to mean the same as \mathl{F(\sigma)= true} for convenience's sake as shown in \hyperlink{2.**}{Lines (**)}. 
-We use the equation symbol \mathl{=} to denote equivalences, and the symbols \mathl{:=} for assignments and definitions. 
+We use the equation symbol \mathl{=} to denote equivalences, and the symbol \mathl{:=} for assignments and definitions. 
 
 The operators in descending binding power: $\neg$, $\in$, $\wedge$, $\vee$, ${\implies}$, $Q\_.\_:\_$ where $Q$ is a quantifier: $Q\in\{\exists, \forall\}$. Implication binds to the left: $A{\implies} B{\implies} C$ is equivalent to $(A{\implies} B){\implies} C$.
 Now we can proceed to discuss proof rules and systems that are relevant for this thesis. 
@@ -87,8 +87,7 @@ One of the most known methods is \define{Hoare logic}.
 
 In 1969, C.A.R. Hoare wrote \textit{An Axiomatic Basis for Computer Programming}~\cite{hoare69} to explore the logic of computer programs using axioms and inference rules to prove the properties of programs. 
 He introduced \imptt{sufficient} preconditions that  guarantee correct results but do not rule out non-termination. 
-A selection of the axioms and rules are shown in~\autoref{tab:hoare}.~
-\footnote{Non-determinism was not considered in the original paper, so we treat the programs here as deterministic. 
+A selection of the axioms and rules are shown in~\autoref{tab:hoare}.\footnote{Non-determinism was not considered in the original paper, so we treat the programs here as deterministic. 
 With deterministic programs, one initial state corresponds to one final state.
 In case of non-termination, there is simply no final state. }
 
@@ -107,13 +106,13 @@ In case of non-termination, there is simply no final state. }
       % \textbf{Rule of Condition}   &  $wp.C_1.(wp.C_2.F)$\\
       \hline\hline
     \end{tabular}
-    \caption{Inference Rules for Valid Hoare Triple~\protect\footnotemark{}}
+    \caption{Inference Rules for Valid Hoare Triple\protect\footnotemark{}}
     \label{tab:hoare}
 \end{table}
 \footnotetext{We omit the symbol $\vdash$ in front of a Hoare triple, which denotes ``valid/provable'', for better readability. }
 
 Semantically, a Hoare triple {{\mathl{\hoarenm{G}{C}{F}}}} is said to be valid for (partial) correctness, if the execution of the program $C$ with an initial state satisfying the precondition $G$ leads to a final state that satisfies the postcondition $F$, provided that the program terminates. 
-The definitions in \autoref{tab:hoare} indeed correspond to this intended semantics. Formal soundness proofs can be found in Krzysztof R. Apt's survey~\cite{apt81} in 1981.
+The definitions in \autoref{tab:hoare} indeed correspond to these intended semantics. Formal soundness proofs can be found in Krzysztof R. Apt's survey~\cite{apt81} in 1981.
 As an example, consider the rule of composition: if the execution of program $C_1$ changes the state from $G$ to $F_1$, and $C_2$ changes the state from $F_1$ to $F$, then executing them consecutively should bring the program state from $G$ to $F$, with the intermediate state $F_1$.
 
 The missing guarantee of termination can be seen in the rule of iteration: consider the triple {\mathl{\hoarenm{x\leq 2}{\text{while } x\leq 1 \text{ do } x:=x*2}{1<x\leq 2}}}, it is provable in Hoare logic with the following proof tree. 
@@ -151,7 +150,7 @@ For better readability, we use an equivalent\footnote{Specifically, \mathl{if\ (
 form of GCL that is similar to modern pseudo-code as shown in \autoref{tab:gcl}. 
 
 
-\begin{table}[ht!]\centering
+\begin{table}[ht]\centering
     \begin{tabular}{clll}
     $C\ ::=$ 
       & $x:= e$ &  $\mid \ C;C $ & $\mid\  \{C\}\square \{C\} $ \\
@@ -185,7 +184,7 @@ The goal is to find the \imptt{necessary and sufficient} precondition such that 
 \autoref{fig:hoare-wp-det} shows it graphically alongside the figure for valid Hoare triples. 
 We can see that in \autoref{subfig:wp-det}, the arrows from $G$ to non-termination and from $\neg G$ to $F$ are absent. 
 
-\begin{figure}[ht!]\centering
+\begin{figure}[ht]\centering
   \subfloat[Valid Hoare Triple \label{subfig:hoare}]{
     \includegraphics[width=0.45\textwidth]{image/hoare.eps}
   }
@@ -199,7 +198,7 @@ We can see that in \autoref{subfig:wp-det}, the arrows from $G$ to non-terminati
 
 The definition of the \define{weakest precondition} transformer is inductively over the program structure in lambda-calculus style\footnote{For example, $wp.C.F$ can be seen as $wp(C,F)$ in ``typical'' style, where wp is treated as a function that has two parameters. The advantage of lambda-calculus style is scalability, we can simply extend the aforementioned function to $wp.C.F.\sigma$ where $\sigma$ means the initial state. Here wp is treated as a function that has three parameters, if we were to write it in the ``typical'' style. It is then questionable whether we changed the type of wp. } as in \autoref{tab:wp-det}: 
 
-\begin{table}[ht!]\centering
+\begin{table}[ht]\centering
     \begin{tabular}{l;{1pt/1pt}l}
     \hline\hline
       \textbf{C}&\textbf{wp.C.F}    \\ \hline
@@ -352,14 +351,13 @@ Intuitively, all the fixed points of function $\Phi$ that are not the least one 
 Only the least fixed point can guarantee termination. 
 Remember from \thm{lfp} that $lfp \ \Phi$ is the disjunction of $\Phi^{k}(false)$ for all non-negative $k$, whereas \lem{hk-phi} tells us that $H_k(F)=\Phi^{k+1}(false)$.
 
-Recall from \autoref{eq:while} that $H_k(F)$ is the weakest precondition that the program terminates satisfying $F$ after \imptt{at most} $k$ iterations, so $lfp\ \Phi$ is 
+Recall from \autoref{eq:while} that $H_k(F)$ is the weakest precondition that the program terminates satisfying $F$ after \imptt{at most} $k$ iterations, so that for all $k\in\N$, $lfp\ \Phi$ is 
 \begin{align*}
   & WHILE \text{ terminates in at most \textbf{0} iterations }\\
   \text{or } & WHILE \text{ terminates in at most \textbf{1} iterations} \\
   \text{or } & WHILE \text{ terminates in at most \textbf{2} iterations} \\
   \dots
 \end{align*}
-for all $k\in\N$. 
 Now assume that some fixed point $p$ of $\Phi$ guarantees termination in $k$ steps, since $lfp\ \Phi$ is the disjunction of all preconditions that guarantee the termination of $WHILE$ in certain steps, we know that $lfp\ \Phi \Leftrightarrow \cdots\vee\ p\ \vee$, hence $p\implies lfp\ \Phi$. 
 Since $lfp \ \Phi$ is the \imptt{least} fixed point, there can be no other fixed points that are weaker than the least one. 
 In conclusion, $p$ must be the least fixed point of $\Phi$. 
@@ -391,7 +389,7 @@ This is a design choice that is different from Dijkstra's~\cite{dijkstra75}, whe
 Both choices are justifiable, we choose to follow Zhang and Kaminski's work, favoring the resulting Galois connection between the weakest (liberal) precondition transformers and the strongest (liberal) postcondition transformers~\cite{zhang22}. 
 
 
-\begin{table}[ht!]\centering
+\begin{table}[ht]\centering
     \begin{tabular}{l;{1pt/1pt}l;{1pt/1pt}l}
     \hline\hline
       \textbf{C}&\textbf{wp.C.F} & \textbf{wlp.C.F}   \\ \hline
@@ -413,7 +411,7 @@ Both choices are justifiable, we choose to follow Zhang and Kaminski's work, fav
     \label{tab:wp-wlp}
 \end{table}
 
-% \begin{table}[ht!]\centering
+% \begin{table}[ht]\centering
 %     \begin{tabular}{ll}
 %     \hline\hline
 %       \textbf{C}&\textbf{wp.C.F}    \\ \hline
@@ -435,13 +433,13 @@ Each arrow from left to right shows a \imptt{possible} execution of program $C$.
 The effects of demonic and angelic non-determinism is highlighted in green. 
 A condition under whose control the required postcondition is \imptt{reachable but not guaranteed} is considered as a valid precondition in an angelic setting (\autoref{subfig:wp-angelic}), but not in a demonic setting (\autoref{subfig:wlp-demonic}). 
 
-% \begin{figure}[ht!]\centering
+% \begin{figure}[ht]\centering
 % \includegraphics[width=0.7\textwidth]{image/wp-nondet.eps}
 % \caption{Weakest Precondition (Angelic Non-determinism)}
 % \label{fig:wp-nondet}
 % \end{figure}
 
-\begin{figure}[ht!]\centering
+\begin{figure}[ht]\centering
   \subfloat[wp (angelic non-determinism) \label{subfig:wp-angelic}]{
     \includegraphics[width=0.45\textwidth]{image/wp-angelic.eps}
   }
@@ -515,7 +513,7 @@ It is an easy choice, since wlp is semantically the \imptt{weakest} liberal prec
 
 %done{Explain the use of gfp. Possibly relate to page 185 of Dijkstra and Scholten 1990 book. }
 
-% \begin{figure}[ht!]\centering
+% \begin{figure}[ht]\centering
 % \includegraphics[width=0.7\textwidth]{image/wlp-det.eps}
 % \caption{Weakest Liberal Precondition (Deterministic)}
 % \label{fig:wlp-det}
@@ -528,7 +526,7 @@ Following the style to define wp and wlp, Zhang and Kaminski~\cite{zhang22} (re-
 In essence, $sp.C.G$ is a postcondition that is satisfied by \imptt{all} states that are \imptt{reachable} from $G$. 
 The definition of the predicate transformer sp is shown in \autoref{tab:sp}. 
 
-\begin{table}[ht!]\centering
+\begin{table}[ht]\centering
     \begin{tabular}{l;{1pt/1pt}l}
     \hline\hline
       \textbf{C}&\textbf{sp.C.G}    \\ \hline
@@ -550,7 +548,7 @@ Instead of discussing termination starting from a precondition, sp focuses on re
 The dotted arrow points to postconditions describing unreachable final states after the execution of $C$. 
 For example, no state would satisfy $x=2$ after the execution of $x:=1$. 
 
-\begin{figure}[ht!]\centering
+\begin{figure}[ht]\centering
 \includegraphics[width=0.45\textwidth]{image/sp-angelic.eps}
 \caption{Strongest Postcondition (Angelic Non-determinism)}
 \label{fig:sp-angelic}
@@ -666,7 +664,7 @@ For a configuration $S$, a \define{filtering} $\sem{\varphi}S:=\{\sigma\mid\sigm
 The circle $\circ$ is composition as usual: $(\sem{C_2}\circ\sem{C_1})S = \sem{C_2}(\sem{C_1}S)$. 
 
 
-\begin{table}[ht!]\centering
+\begin{table}[ht]\centering
   \begin{tabular}{l;{1pt/1pt}l;{1pt/1pt}l}
   \hline\hline
     \textbf{C}&\textbf{$\llbracket$C$\rrbracket$ S}  \\ \hline
@@ -816,7 +814,7 @@ We also include some properties of predicate transformers in this section that w
 This property can be rewritten as $wp.C.F\vee \neg wlp.C.\neg F = true$.
 It tells us that wp and wlp complement each other, like in \autoref{fig:wp-wlp-complement}. 
 
-\begin{figure}[ht!]\centering
+\begin{figure}[ht]\centering
   \includesvg[width=0.5\textwidth]{image/wp-wlp-complement.svg}
   \caption{wp and wlp Are Conjugates}
   \label{fig:wp-wlp-complement}
