@@ -252,13 +252,8 @@ In other words, if program $C$ starts in any initial state satisfying $\neg G$, 
 
 This again states that \hoare{\neg G}{C}{\neg F} is a valid Hoare triple. 
 The question then naturally arises: why do we concern ourselves with $G$, if we can just prove our specifications using wp or Hoare triples? 
-To demonstrate the answer, we analyze the example written in \autoref{lst:door}. 
+To demonstrate the answer, we analyze the example in the upcoming sections. 
 
-\begin{lstlisting}[caption={Door with Sensors Counting Number of People Present}, label={lst:door}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
-	... // starting device
-	n := n + 1 |$\square$| n := n - 1 |$\square$| diverge;|\label{line:tri-nondet}|
-	... // retirement  
-\end{lstlisting}
 
 % \subsection{Example: Door with Sensors}
 \subsection{Example: To Exclude Bugs}
@@ -274,11 +269,38 @@ What if one of the sensors break?
 We can this simple scenario by putting the three parts in non-deterministic choice. 
 It can happen that a student enters the room hence increasing the count of the number of people present: $n:=n+1$; or a person exits and decreasing the number: $n:=n-1$. 
 Alternatively, the sensor can break because of old age and result in unforeseeable behavior, for example always detecting someone entering forever. 
+The pseudocode is shown in \autoref{lst:door}. 
+
+\begin{lstlisting}[caption={Door with Sensors Counting Number of People Present}, label={lst:door}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
+	... // starting device
+	n := n + 1 |$\square$| n := n - 1 |$\square$| diverge;|\label{line:tri-nondet}|
+	... // retirement  
+\end{lstlisting}
 
 We know that there is definitely something wrong, in case the security sees on their device that the number of people in a lecture hall is negative. 
-If we want to know what caused it, we can calculate the weakest liberal precondition of the program snippet with regard to $F=\{\sigma\in\S\mid\sigma.n<0\}$ in \autoref{lst:neg0}. 
+One way to try to exclude bugs is to find it the precondition, upon whose violation the program is prone to erroneous termination. 
+With this view, we name the bugs that we are aware of, like $P$ in \autoref{fig:bug}. 
+Then we calculate the weakest precondition of $P$ with regard to program $C$, then take its negation. 
+Consequently, its negation $Q$, the purple area in \autoref{fig:bug}, is an overapproximation of $wlp.C.F$, where $F$ is the postcondition that the program execution is bug free. 
+
+Specifically, if we were to violate the necessary liberal precondition $Q$, the execution of program $C$ is prone to terminate in erroneous states that we know of, namely that there are a negative number of people in the room. %, or that there are over $200$ people in the room. 
+However, starting in an initial state satisfying $Q$ does not guarantee that the executions are completely bug-free. 
+Since we may not have complete knowledge of all the error states, we can still encounter executions starting form $Q$ ending in an error state, in this case the red arrow in \autoref{fig:bug} that points to the error state ``people present during holidays'' or ``capacity of lecture hall $200$ exceeded''. 
+In conclusion, the use of necessary liberal precondition can help us avoid bugs that we have knowledge over. 
+
+\begin{figure}[t]
+	\centering
+	\includesvg[width=\linewidth]{image/bugs.svg}
+	\caption{Necessary Liberal Precondition to Avoid Bugs}
+	\label{fig:bug}
+\end{figure}
+
+This is one way to approach bug-avoidance: by the negation of the weakest precondition. 
+Another way is to try to overapproximate wlp directly. 
+
+If we want to know what caused it, we can calculate the weakest liberal precondition of the program snippet with regard to $F=\{\sigma\in\S\mid\sigma.n<0\}$, the result in \autoref{lst:neg0}. 
 We write $F=\{n<0\}$ in short: 
-\begin{lstlisting}[caption={Weakest Liberal Precondition w.r.t Postcondition $F=\{\sigma\in\S\mid\sigma.n<0\}$ }, label={lst:neg0}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
+\begin{lstlisting}[caption={Weakest (Liberal) Precondition w.r.t Postcondition $F=\{\sigma\in\S\mid\sigma.n<0\}$ }, label={lst:neg0}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
 	... // starting device
 	|\imptt{$\{n<-1\}$}|
 	|\imptt{$\{n<-1\}\ \wedge\ \{n<1\}\ \wedge\ true$}|
@@ -292,19 +314,21 @@ But it is enough? If we start the system in a state where $n=-1$, or even $n=0$,
 % \autoref{fig:door}
 \begin{figure}[ht]
 	\centering
-	\includesvg[width=0.8\linewidth]{image/example-door.svg}
+	\includesvg[width=0.7\linewidth]{image/example-door.svg}
 	\caption{$wlp.C.F = \{n<-1\}$}
 	\label{fig:door}
 \end{figure}
 We can see that with wlp, it is not enough to identify all preconditions that can result in errors. 
 In other words, the green arrows in \autoref{fig:door} are not recognized. 
-But by overapproximating wlp to include preconditions like $\{n=-1\}$ and $\{n=-1\}$, we can also include all the green arrows in $G$. 
+This tells us that wlp is so strict that it excludes the green arrows, and the reason could be that the resolution of non-termination is demonic. 
+However, by overapproximating wlp to include preconditions like $\{n=-1\}$ and $\{n=-1\}$, we can also include all the green arrows in $G$. 
 
-This is, however, not the only thing that is missing. 
-Obviously, a lecture hall does not have unlimited capacity. 
-Once the system is showing a number higher than the maximum capacity, the security would also instantly know that something is wrong. 
+On the other hand, as earlier, we might only have limited knowledge of all potential bugs in the system. 
+The lecture hall does not have unlimited capacity. 
+Once the system is showing a number higher than the maximum capacity, we know that an error happened. 
 Also, there could be conditions like ``during holiday time, the lecture halls are unoccupied'' that an expert of the system (the security guards in this case) would know, but not in general. 
-So even by including all the green arrows via overapproximation, we are still missing some of the red arrows like in \autoref{fig:door-expert}, the hidden knowledge that seasoned users possess.   
+By overapproximatin wlp even more, we might end up in a situation like in \autoref{fig:door-expert}, where the red arrows are also ``included'' in $G$.
+
 \begin{figure}[ht]
 	\centering
 	\includesvg[width=0.8\linewidth]{image/example-door-expert.svg}
@@ -312,29 +336,8 @@ So even by including all the green arrows via overapproximation, we are still mi
 	\label{fig:door-expert}
 \end{figure}
 
-This demonstrates overapproximating wlp is useful to include the green and red arrows in \autoref{fig:door-expert}, aka when: 
-\begin{itemize}
-	\item some preconditions \imptt{can but are not guaranteed} to lead to the erroneous final states non-deterministically; 
-	\item or the user only has insufficient knowledge of the system, but experts can deduce other erroneous final states that are unknown to the public. 
-\end{itemize}
-To utilize this overapproximation, we either identify the preconditions that result in the green arrows, which we will do in the next section, or we first calculate the weakest liberal precondition of the erroneous postcondition that we know of, then relax this precondition by ``guessing'' similar erroneous postconditions with the extra knowledge from experts over the system. 
+These two aspects of the example demonstrate the usefulness of the overapproximation of wlp: We can find a precondition, the violation of which would definitely lead to erroneous final states, and we can find a precondition, whose avoidance is necessary to avoid executions leading to bugs. 
 
-This is one way to regard the necessary liberal precondition. 
-Another way is to consider it the precondition, upon whose violation the program is prone to terminate with bugs. 
-With this view, we name the bugs that we are aware of, like $P$ in \autoref{fig:bug}. 
-Then we calculate the weakest precondition of $P$ with regard to program $C$, then take its negation. 
-Consequently, its negation $Q$, the purple area in \autoref{fig:bug}, is an overapproximation of $wlp.C.F$, where $F$ is the postcondition that the program execution is bug free. 
-
-Specifically, if we were to violate the necessary liberal precondition $Q$, the execution of program $C$ is prone to terminate in erroneous states that we know of, namely that there are a negative number of people in the room, or that there are over $200$ people in the room. 
-However, starting in an initial state satisfying $Q$ does not guarantee that the executions are completely bug-free. 
-Since we do not have complete knowledge of all the error states, we can still encounter executions starting form $Q$ ending in an error state, in this case the red arrow in \autoref{fig:bug} that points to the error state ``people present during holidays''. 
-
-\begin{figure}[ht]
-	\centering
-	\includesvg[width=\linewidth]{image/bugs.svg}
-	\caption{Necessary Liberal Precondition to Avoid Bugs}
-	\label{fig:bug}
-\end{figure}
 
 
 
@@ -616,13 +619,13 @@ $$\displaystyle\frac{\forall X=\Phi(X):\nlp {P} {C} {X}}{\nlp {P} {WHILE} {\varp
 	$$wlp.C.F\implies wlp.C.Q \implies P \implies G$$
 \end{proof}
 
-\begin{lemma}{incomplete-pf}[The proof system is incomplete]
-	here 
-\end{lemma}
+% \begin{lemma}{incomplete-pf}[The proof system is incomplete]
+% 	here 
+% \end{lemma}
 
-\begin{proof}
-	here 
-\end{proof}
+% \begin{proof}
+% 	here 
+% \end{proof}
 
 
 \section{A Special Case}\label{sec:special} %: $G$ is wlp with Angelic Non-determinism
@@ -911,7 +914,7 @@ With this corollary, we can identify all initial states that lead to executions 
 By setting the necessary liberal precondition $G$ to be equal to $wlp_a.C.F$, we make sure that $G$ is satisfied by all such states. 
 If we think $F$ to be the specification for erroneous termination, then his means that $G$ is concerned with \imptt{all} problematic initial states, and it is necessary to avoid $G$ to steer clear of those errors. 
 
-\section{From Necessary Precondition to Necessary Liberal precondition}\label{sec:np-nlp}
+\section{From Necessary Precondition to Necessary Liberal Precondition}\label{sec:np-nlp}
 To reason about correctness, it is sometimes helpful to first reason about partial correctness, then supplement with termination proof to reach total correctness. 
 For example, when Hoare triple was first proposed~\cite{hoare69}, it is in form of the sufficient precondition that guarantees partial correctness: 
 $$\hoarenm{H}C F\ \Leftrightarrow\  H{\implies} wlp.C.F$$
@@ -1037,16 +1040,17 @@ This is not surprising, since partial correctness and incorrectness are each oth
 \end{figure}
 
 \medskip
-\colorbox{red!30}{
-	this summary has to be changed
-}%TODO
 To summarize this chapter, we started with the description of relations that connect the predicate transformers together, to introduce the necessary liberal precondition. 
-Then we discovered that $G$ can be an indicator of ``bad'' precondition that is necessary to avoid, to successfully terminate. 
-We can do it in two ways: 
-\begin{enumerate}
-	\item If we are sure that we captured all undesired final states in $F$, then we use the necessary liberal precondition that underapproximates (overapproximates) $wlp_a$, so that we catch as much ``bad'' initial states as possible. 
-	\item If we only have limited knowledge of the erroneous final states, then we appeal to experts of the system for other potential errors in order to reach necessary liberal precondition. 
-\end{enumerate}
+Then we discovered that the weakest liberal precondition can serve as the precondition, that is necessary to avoid bugs. 
+We then proceeded to define a proof system for the necessary liberal precondition, and prove its soundness. 
+We also identify a special case where the necessary liberal precondition corresponds to wlp with angelic resolution of non-determinism. 
+While attempting to overapproximate wlp, we discover a class of predicate transformers that we call $wp_d^+$ that serves as the cut between partial correctness and partial incorrectness. 
+% where an initial state that do starting  the avoidance of which , $G$ can be an indicator of ``bad'' precondition that is necessary to avoid, to successfully terminate. 
+% We can do it in two ways: 
+% \begin{enumerate}
+% 	\item If we are sure that we captured all undesired final states in $F$, then we use the necessary liberal precondition that underapproximates (overapproximates) $wlp_a$, so that we catch as much ``bad'' initial states as possible. 
+% 	\item If we only have limited knowledge of the erroneous final states, then we appeal to experts of the system for other potential errors in order to reach necessary liberal precondition. 
+% \end{enumerate}
 
 
 

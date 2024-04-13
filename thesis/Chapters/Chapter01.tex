@@ -55,7 +55,7 @@ where $G$ is an overapproximation of the strongest liberal precondition of postc
 Despite focusing on different transformers and relations, incorrectness logic gives great intuition on how to approach the overapproximation over wlp.
 
 \paragraph{Contribution}
-This thesis yields results both in pre- and postcondition transformers and the implication $wlp.C.F\implies G$. 
+This thesis yields results regarding in pre- and postcondition transformers and the implication $wlp.C.F\implies G$. 
 The results are listed below in chronological order: 
 \begin{enumerate}
     \item We prove that the definition of the weakest precondition transformer of while-programs by Dijkstra~\cite{dijkstra75} and the one using the least fixed point coincide, and gave intuition to explain the necessity of using the least fixed point instead of using any other fixed point. 
@@ -78,6 +78,7 @@ The results are listed below in chronological order:
         \label{fig:intro-g}
     \end{figure}
     We capture these preconditions by approaching from top and bottom, namely finding scenarios in which the necessary liberal precondition $G$ underapproximates these special preconditions, and finding scenarios where $G$ overapproximates them. In this way, we can establish an equivalence between $G$ and wlp added with the special preconditions, given constraints. This $G$ is exactly wlp with angelic non-determinism. 
+    \item We discover a type of preconditions that we name $wp_d^+$. They serve as the ``cut'' between partial correctness and partial incorrectness, in the sense that $wp_d^+.C.F$ corresponds to partial correctness, and $\neg wp_d^+.C.F$ corresponds to partial incorrectness. 
 \end{enumerate}
 
 
@@ -88,12 +89,13 @@ Then we display the weakest precondition transformer in \autoref{sec:wp}, compar
 Finally, we add the notion of non-determinism to the wp transformer, and discuss the difference between angelic and demonic non-determinism and explain our design choice. 
 
 Following this, we show the weakest liberal precondition transformer in \autoref{sec:wlp} and the strongest postcondition transformer in \autoref{sec:sp}. 
-Subsequently, we introduce a \define{big-step semantics} in \autoref{sec:big-step} to help us define the semantics of the aforementioned transformers in \autoref{sec:sound} and list some properties in \autoref{sec:prop}.
+Subsequently, we introduce a \define{big-step semantics} in \autoref{sec:big-step}  and \define{collecting semantics} in \autoref{sec:collecting} to help us reason about the semantics of the aforementioned transformers in \autoref{sec:sound} and list some properties in \autoref{sec:prop}.
 
-In \autoref{ch:nlp}, we first relate wp, wlp, sp, slp together using various relations, then illustrate them in a graph in \autoref{ch:appr}. 
-This helps us distinguish the necessary liberal precondition with other implications that are researched, so that we can analyze the scenarios of our overapproximation in \autoref{sec:general}. 
-Then we provide an example to convey the usefulness of this overapproximation, and show its proof system as well as prove its soundness. 
+In \autoref{ch:appr}, we first relate wp, wlp, sp, slp together using various relations, then illustrate them in a graph. 
+This helps us distinguish the necessary liberal precondition with other implications that are researched, so that we can analyze the scenarios of our overapproximation in \autoref{ch:nlp}. 
+Then we provide examples to convey the usefulness of this overapproximation, and show its proof system as well as prove its soundness. 
 We then discover a special scenario that is of interest, and find restraints that qualifies this special scenario, then prove their correctness in \autoref{sec:special}. 
+We also show the class of predicate transformer we call $wp_d^+$, which serves as the ``cut'' between partial correctness and partial incorrectness. 
 Finally, we summarize our conclusions in \autoref{ch:conclusion} and propose possible future work. 
 
 
