@@ -16,7 +16,7 @@ Computer programs are ubiquitous in almost every aspect of human life.
 We want them to solve our problem efficiently, and correctly. 
 Fortunately, brilliant scientists and engineers have taken the matter into their hands. 
 A recent example is seL4~\cite{klein09}, the first formally proven operating system kernel against overflows, memory leaks, non-termination, etc. using the interactive theorem prover Isabelle/HOL~\cite{nipkow2002isabelle}. 
-Its verification brings great potential to safety-critical fields like aircrafts and autonomous cars, the latter of which is to be in mass production in 2024.\footnote{\url{https://sel4.systems/news/2023\#nio-skyos}, accessed 10.03.2024. }
+Its verification brings great potential to safety-critical fields like aircrafts and autonomous cars, the latter of which is to be in mass production in 2024.\footnote{\url{https://sel4.systems/news/2023\#nio-skyos}, accessed 2024.03.10. }
 
 Imagine soon being driven by an autonomous car carrying seL4. 
 It is desirable that it delivers us to the correct destination, and never get stuck driving around the same block without making progress. 
@@ -74,7 +74,7 @@ The results are listed below in chronological order:
     \begin{figure}[t]
         \centering
         \includegraphics[width=.6\linewidth]{image/wlp-g/wlp-g-gg.eps}
-        \caption{Necessarily Liberal Precondition $G$ That Additionally Has Green Dots}
+        \caption{Necessary Liberal Precondition $G$ That Additionally Has Green Dots}
         \label{fig:intro-g}
     \end{figure}
     We capture these preconditions by approaching from top and bottom, namely finding scenarios in which the necessary liberal precondition $G$ underapproximates these special preconditions, and finding scenarios where $G$ overapproximates them. In this way, we can establish an equivalence between $G$ and wlp added with the special preconditions, given constraints. This $G$ is exactly wlp with angelic non-determinism. 

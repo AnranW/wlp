@@ -236,7 +236,6 @@ The definition for the while-loop~\cite{kaminski19} is trickier, but we can veri
 \subsection{Loops and Fixed Points}\label{sec:define loops}
 \paragraph{Defining Loops}
 In Dijkstra's original paper~\cite{dijkstra75}, he defined wp for while-loops based on its (intended) semantics, i.e. the precondition that guarantees loop termination with the required postcondition within a certain number of iterations. 
-
 Let 
 \[
 WHILE=while(\varphi)\{C'\}
@@ -244,10 +243,10 @@ WHILE=while(\varphi)\{C'\}
 IF=  if\ (\varphi)\{C'\}\ else\ \{diverge\}. 
 \] 
 Note that $IF$ is originally defined as $\underline{if}\ B_1 \to SL_1 \ []\ \dots\ []\ B_n\to SL_n\ \underline{fi}$, where $B_i$ are guards, and $SL_i$ are sub-programs that are executed once their corresponding guards are evaluated to true, thus the name \imptt{guarded} command language.
-If multiple guard are true, then any of the corresponding sub-programs can be executed, which is how non-determinism is realized in Dijkstra's GCL. 
+If multiple guards are true, then any of the corresponding sub-programs can be executed, which is how non-determinism is realized in Dijkstra's GCL. 
 If none of the guards is true, then the program does not terminate in a normal state, rather \imptt{diverges}. 
 
-In our flavor of GCL, non-determinism is denoted specifically with the operator $\square$, and $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}$ does not lead to divergence in case its guard $\varphi$ evaluates to true, rather the $else$-branch. 
+In our flavor of GCL, non-determinism is denoted explicitly with the operator $\square$, and $if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}$ does not lead to divergence in case its guard $\varphi$ evaluates to true, but the $else$-branch if $\varphi$ is not satisfied. 
 In essence, the $if$ in our flavor of GCL is equivalent to $\underline{if}\ \varphi \to C_1\ []\ \neg \varphi\to C_2\ \underline{fi}$. 
 As a result, to replicate $IF=\underline{if}\ B_1 \to SL_1 \ []\ \dots\ []\ B_n\to SL_n\ \underline{fi}$ where divergence is possible in case none of the guards is true, we need $diverge$ instead of $skip$ in the $else$-branch. 
 
@@ -259,7 +258,7 @@ H_0(F)=( \neg \varphi\wedge F )
 H_k(F)=wp.IF.H_{k-1}(F) \vee H_0(F). 
 \]
 
-\mathl{IF} is defined in such way that $wp.IF.X$ is the weakest precondition that makes sure the guard of $C'$ discharges once and $C'$ is executed once, leaving the program in a state satisfying $X$.
+\mathl{IF} is defined in such way that $wp.IF.X$ is the weakest precondition that makes sure the guard of $C'$ is satisfied once and $C'$ is executed once, leaving the program in a state satisfying $X$.
 As a result, $H_k(F)$ corresponds to the weakest precondition such that the program terminates in a final state satisfying $F$ after \imptt{at most} $k$ iterations.
 
 
@@ -296,7 +295,7 @@ We can then derive the need for fixed points:
                 & \seq \varphi\wedge wp.C'.(wp.WHILE.F)\ \vee\ \neg\varphi\wedge F\\ 
                 & \seq \Phi(wp.WHILE.F)\\ 
 \end{align*}
-The result $wp.WHILE.F = \Phi(wp.WHILE.F)$ means that $wp.WHILE.F$ should be a fix point of function $\Phi$ by definition.
+The result $wp.WHILE.F = \Phi(wp.WHILE.F)$ means that $wp.WHILE.F$ should be a fixed point of function $\Phi$ by definition.
 
 The question then arises: can we define wp with any fixed point? 
 The answer is no. 
@@ -307,7 +306,7 @@ Here, we show the need for \imptt{least} fixed points by verifying that the defi
 Thanks to domain theory, we have a heuristic to calculate the least fixed point of $\Phi$. 
 %we We borrow a theorem from domain theory that yields a computation for least fixed points, provided they exist: 
 
-\begin{theorem}{lfp}[lfp heuristics]~{\normalfont\cite{kaminski19}}
+\begin{theorem}{lfp}[Kleene's fixed point theorem]~{\normalfont\cite{kaminski19}}
 $$lfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(false)$$
 \end{theorem}
 
@@ -326,7 +325,7 @@ Proof by induction.
                   & = \neg\varphi\wedge F                                    && |\ \text{predicate calculus} \\
                   & = H_0(F)
   \end{align*}
-\hyperlink{2.***}{Line (***)} is supported by the Law of Excluded Miracle~\cite[p.18]{dijkstra76}: for all programs $C$, $wp.C.false = false$. 
+\hyperlink{2.***}{Line (***)} is supported by what Dijkstra called the Law of Excluded Miracle~\cite[p.18]{dijkstra76}: for all programs $C$, $wp.C.false = false$. 
 It states that it is impossible for a program to terminate in a state satisfying no postcondition. 
 
 \vspace{-0.25cm}\paragraph{Step case: } 
@@ -347,9 +346,9 @@ It states that it is impossible for a program to terminate in a state satisfying
 Combining \thm{lfp} and \autoref{eq:while}, as well as the fact that $\Phi^0(false)=false$, we can arrive at the conclusion that 
 $$lfp\ \Phi = wp.WHILE.F$$
 i.e. the definitions with the least fixed point and Dijkstra's definition are equivalent.
-And since least fixed points are unique if they exist, it is necessary to use the \imptt{least} fixed point to define wp. 
+And since least fixed points are unique if they exist, it is necessary to use the \imptt{least} fixed point to define wp in the way intended by Dijkstra. 
 
-Intuitively, all the fixed points of function $\Phi$ can potentially lead to non-termination, but can \imptt{not guarantee} termination. 
+Intuitively, all the fixed points of function $\Phi$ that are not the least one can potentially lead to non-termination. 
 Only the least fixed point can guarantee termination. 
 Remember from \thm{lfp} that $lfp \ \Phi$ is the disjunction of $\Phi^{k}(false)$ for all non-negative $k$, whereas \lem{hk-phi} tells us that $H_k(F)=\Phi^{k+1}(false)$.
 
@@ -366,7 +365,7 @@ Since $lfp \ \Phi$ is the \imptt{least} fixed point, there can be no other fixed
 In conclusion, $p$ must be the least fixed point of $\Phi$. 
 
 This tells us that all fixed points that are not the least one can potentially lead to non-termination, but only the least fixed point guarantees termination. 
-Since wp is concerned with total correctness, the need for lfp arises. 
+Since wp is concerned with total correctness, the need for least fixed point arises. 
 
 The advantage of using the least fixed point to define wp is that there are heuristics to find it, whereas \autoref{eq:while} excels at giving intuitions for the preconditions that guarantee loop termination. 
 % Essentially, they express the same predicate, i.e. the ``weakest'' precondition for while-loops which is unique. 
@@ -380,7 +379,7 @@ Following the same reasoning as \autoref{eq:fp}, we can conclude that $wlp.C.F$ 
 Hence, by definition, $wlp.WHILE.F = gfp\ \Phi$. 
 
 
-\subsection{The Non-deterministic Case: Angelic vs. Demonic}\label{sec:wp-nondet}
+\subsection{The Non-Deterministic Case: Angelic vs. Demonic}\label{sec:wp-nondet}
 Now we bring the non-deterministic choice back into the picture and add its wp to \autoref{tab:wp-wlp}. 
 Here we assume a setting with \define{angelic non-determinism}, where we assume that whenever non-determinism occurs, it will be resolved in our favor.
 This means we are optimistic that the non-determinism is likely to resolve to our favor, meaning that we consider an initial state \imptt{can} lead the program execution to terminate in a final state satisfying $F$, we consider it a valid initial state to satisfy the weakest (liberal) precondition. 
@@ -696,7 +695,7 @@ This gives us two interesting insights:
 First, a configuration corresponds to a class of equivalent predicates. 
 Note that we can have predicates in different form that identify the same mapping from program states to truth values, for example 
 $$P\implies Q  \text{\ \  and\ \  }  \neg P \vee Q$$
-Then the set form of multiple predicates can be identical to the set of program states described by the configuration. 
+Then the set representation of multiple predicates can be identical to the set of program states described by the configuration. 
 Nevertheless, we can see that a configuration is not much different from a predicate. 
 Second, a filtering is a set intersection. Rewriting the filtering, we get $\sem{\varphi}S =\{\sigma\mid\sigma\in S \wedge \sigma\in\varphi\} = \varphi\cap S$. 
 % \stepcounter{footnote} % for correct footnote numbering
@@ -764,9 +763,8 @@ wlp.C.F.\sigma = \underset{\tau\in\sem{C}\{\sigma\}}{\bigwedge} F.\tau
 \]
 % \label{thm:wlp}
 \end{theorem}
-$wlp.C.F$ is satisfied exactly by initial states under whose control the execution of $C$ either never terminates or terminates satisfying $F$
-
-Similar as before, we can rewrite \thm{wlp-sound} as: 
+$wlp.C.F$ is satisfied exactly by initial states under whose control the execution of $C$ either never terminates or terminates satisfying $F$. 
+Similar to before, we can rewrite \thm{wlp-sound} as: 
 \[
   wlp.C.F.\sigma = \forall \tau\in\sem{C}\{\sigma\}: F.\tau
 \]
@@ -778,7 +776,7 @@ And consequently:
 \end{corollary}
 
 From \thm{wp-sound} and \thm{wlp-sound}, we see again that the resolving the non-determinism of wp as angelic and that of wlp is demonic is a good choice. 
-It yields a simple and elegant way to define the soundness properties of wp and wlp using the collecting semantics, which the demonic resolution for wp and angelic resolution for wlp can not achieve. 
+It yields a simple and elegant way to define the soundness properties of wp and wlp using the collecting semantics. %, which the demonic resolution for wp and angelic resolution for wlp can not achieve. 
 
 To support the reasoning in \autoref{sec:special}, we also need the soundness property of sp: 
 \begin{theorem}{sp-sound}[Soundness of sp]~{\normalfont\cite{vries11,zhang22}}
@@ -839,6 +837,12 @@ It states that if we relax the postcondition into a weaker, more general conditi
 % \[wlp.C.false = preconditions that lead to non-termination\]
 The left side of the equation describes the set of initial states that ``either never terminates, or terminates satisfying $true$'', which describes all initial states, hence it should equal to the set of all states, i.e. a predicate that maps all states to $true$.
 
+\begin{theorem}{wp-false}~{\normalfont\cite{dijkstra90}}[The law of excluded miracle]
+  $\forall C\in\C:\ wp.C.false = false$
+\end{theorem}
+This theorem states that we can not have executions that terminates in a final state satisfying $false$, which would indicate a ``miracle''. 
+
+\medskip
 With these theorems, we finish this chapter and the first part of this thesis. 
 In the first part, we explain our motivation to study the predicate transformer, then proceed to discuss background information by first list the notations used throughout this thesis. 
 Following this, we showcased the relevant formalism for this thesis, namely Hoare triples, the weakest (liberal) precondition transformer, and the strongest postcondition transformer. 

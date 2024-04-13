@@ -42,7 +42,7 @@ Formally, the decision to look at the non-deterministic choice as angelic is ref
 $$wp.C.(\{C_1\}\square \{C_2\}) = wp.C_1.F\vee wp.C_2.F$$ for a postcondition $F$ in \autoref{tab:wp-wlp}.
 
 On the other hand, if the non-deterministic choice is resolved as demonic, we are pessimistic over the result of the non-deterministic choice: we assume it will not resolve to our favor, hence we are only confident to include a condition into the valid precondition set if all possible paths end in a final state satisfying our desired postcondition upon termination. 
-Graphically, the green arrows are not included in $wp_d$ and $wlp_D$ in \autoref{subfig:wpd} and \autoref{subfig:wlpd}. 
+Graphically, the green arrows are not included in $wp_d$ and $wlp_d$ in \autoref{subfig:wpd} and \autoref{subfig:wlpd}. 
 The definition is then using conjuncts instead of disjuncts, like 
 $$wlp.C.(\{C_1\}\square \{C_2\}) = wlp.C_1.F\wedge wlp.C_2.F$$ for a postcondition $F$ in \autoref{tab:wp-wlp}.
 
@@ -79,22 +79,16 @@ The choice whether to resolve the non-determinism angelically or demonically for
 	\label{fig:wp-family-relation}
 \end{figure}
 
-In this thesis, we prefer wp with angelic non-determinism and wlp with demonic non-determinism, because this choice gifts us Galois connection between the precondition transformers and the postcondition transformers~\cite{zhang22}, which we will illustrate in \autoref{sec:literature}: 
-\begin{theorem}{thm:galois-wp}[Galois connection between wp and slp]
-	$$wp_a.C.F \implies G \text{ if and only if }F\implies slp_d.C.G$$
-\end{theorem}
+In this thesis, we prefer wp with angelic non-determinism and wlp with demonic non-determinism, because this choice gifts us Galois connection between the precondition transformers and the postcondition transformers~\cite{zhang22}, which we will illustrate in \autoref{sec:literature}. 
 
-\begin{theorem}{thm:galois-wlp}[Galois connection between wlp and sp]
-	$$G \implies wlp_d.C.F \text{ if and only if } sp_a.C.G\implies F$$
-\end{theorem}
 
 \section{Postcondition Transformers}
 The strongest postcondition was originally discussed as a side-product of the wp and wlp transformers by Dijkstra and Scholten~\cite{dijkstra90}. 
-$sp.S.Y$ is meant to describe ``those final states for which there exists a computation under control of S that belongs to the class \textit{initially Y}'', but it has found more important utilities. 
-For example, de Vries and Koutavas~\cite{vries11} use sp to reason with randomized algorithms, although they called it \define{weakest postconditions}. 
-O'Hearn~\cite{ohearn2020IncorrectnessLogic} uses sp to define \define{incorrectness logic} by underapproximating it, building the theoretical foundation to a new method of identifying errors in programs. 
+$sp.C.G$ describes ``those final states for which there exists a computation under control of $C$ that belongs to the class \textit{initially G}'', but it has found more important utilities. 
+For example, de Vries and Koutavas~\cite{vries11} use sp to reason about randomized algorithms, although they called it \define{weakest postconditions}. 
+O'Hearn~\cite{ohearn2020IncorrectnessLogic} uses sp to define \define{incorrectness logic} by underapproximating it, building the theoretical foundation for a new method of identifying errors in programs. 
 
-Instead of questioning about termination and final states upon termination, like the precondition transformers, the postcondition transformers question about reachability and initial states that can reach the desired postconditions. 
+Instead of reasoning about termination and final states upon termination as precondition transformers do, the postcondition transformers reason about reachability and initial states that can reach the desired postconditions. 
 The choice of angelic and demonic non-determinism also plays a rule while determining the semantics of the postcondition transformers, as shown in \autoref{fig:sp-family}. 
 
 \begin{figure}[ht!]\centering
@@ -115,13 +109,13 @@ The choice of angelic and demonic non-determinism also plays a rule while determ
 
 Note that while sp is well-researched, slp is less investigated to the best of our knowledge. 
 For example, Wulandari and Plump~\cite{wulandari2020VerifyingGraphPrograms} defined and proved soundness for slp, but only for loop-free programs. 
-While Li et al.~\cite{li2011NonlinearMathematicsUncertainty} proposed the definition of slp including loops, but did not include proof for soundness and completeness. 
-Even so, the semantics of slp is rather undisputed: slp should be sp joint with all unreachable postconditions. 
+Li et al.~\cite{li2011NonlinearMathematicsUncertainty} proposed the definition of slp including loops, but did not include soundness proof, while Zhang and Kaminski~\cite{zhang22-full} provided a definition of slp and soundness proof using collecting semantics. 
+% Even so, the semantics of slp is rather undisputed: slp should be sp joint with all unreachable postconditions. 
 
 Following the same principles as the ones for precondition transformers, we can deduce a similar relation between the postcondition transformers with different resolution for non-determinism, as seen in \autoref{fig:sp-family-relation}. 
 The main difference is that the arrows pointing up are not labelled with termination, but reachability. 
 
-\begin{figure}[ht]
+\begin{figure}[t]
 	\centering
 	\includesvg[width=.5\linewidth]{image/sp-family-relation.svg}
 	\caption{Relations in sp-Family}
@@ -129,10 +123,20 @@ The main difference is that the arrows pointing up are not labelled with termina
 \end{figure}
 
 \section{Approximation Triples in Literature}\label{sec:literature} 
+Now that we established relations between the precondition transformers and between the postcondition transformers, we can attempt to also establish relations that link the pre- and postcondition transformers together, this is where the Galois connection comes into play: 
+
+\begin{theorem}{thm:galois-wp}~\cite{zhang22}[Galois connection between wp and slp]
+	$$wp_a.C.F \implies G \text{ if and only if }F\implies slp_d.C.G$$
+\end{theorem}
+
+\begin{theorem}{thm:galois-wlp}~\cite{zhang22}[Galois connection between wlp and sp]
+	$$G \implies wlp_d.C.F \text{ if and only if } sp_a.C.G\implies F$$
+\end{theorem}
+
 Supplementing the Galois connection specified in \thm{thm:galois-wp} and \thm{thm:galois-wlp}, we arrive at \autoref{fig:wp-sp-relation}. 
 It is now obvious that we chose to resolve non-determinism exactly like the colored ones in \autoref{fig:wp-sp-relation}, so that we can conveniently connect the pre- and postcondition transformers. 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\includesvg[width=\linewidth]{image/wp-sp-relation-h.svg}
 	\caption{Connecting wp-Family and sp-Family}
@@ -140,7 +144,7 @@ It is now obvious that we chose to resolve non-determinism exactly like the colo
 \end{figure}
 
 The advantage of the design choice of wp and sp with angelic non-determinism as well as wlp and slp with demonic non-determinism shows itself now. 
-By choosing the formalism that are colored in \autoref{fig:wp-sp-relation}, all the under- and overapproximations over the predicate transformers are related well together, as we depict in \autoref{fig:triples}.
+By choosing the formalism that are colored in red and blue in \autoref{fig:wp-sp-relation}, all the under- and overapproximations over the predicate transformers are related well together, as we depict in \autoref{fig:triples}.
 \begin{figure}[h]
 	\centering
 	\includesvg[width=\linewidth]{image/existing-triples.svg}
@@ -152,14 +156,14 @@ Some of the implications in \autoref{fig:wp-sp-relation} are well-studied by now
 Since the view on angelic or demonic non-determinism varies depending on the authors' choice, and do not make fundamental differences on their results, we will mention it in the description, but drop the subscripts $_a$ and $_d$ in the remainder of the section. 
 
 \paragraph{Paritial Correctness}
-For example, the blue implication $$G\implies wlp.C.F$$ corresponds to a Hoare triple~\cite{hoare69} with respect to partial correctness: \hoare G C F is valid if and only if $G\implies wlp.C.F$~\cite{gordon2010ForwardHoare,nipkow2002isabelle}. 
+The blue implication $$G\implies wlp.C.F$$ corresponds to a Hoare triple~\cite{hoare69} with respect to partial correctness: \hoare G C F is valid if and only if $G\implies wlp.C.F$~\cite{gordon2010ForwardHoare,nipkow2002isabelle}. 
 This means that if the program $C$ starts in a state satisfying $G$, then the execution must end in a final state satisfying $F$, if it terminates. 
 In terms of approximation, we can say that the precondition in the valid Hoare triple is an underapproximation of the weakest precondition. 
 
-Hoare triple does not originally contain rules for non-deterministic choice, but it can be added without much difficulty, for example with demonic non-determinism~\cite{nipkow2002HoareLogicsIsabelle}: 
+Hoare logic does not originally contain rules for non-deterministic choice, but it can be added without much difficulty, for example with demonic non-determinism~\cite{nipkow2002HoareLogicsIsabelle}: 
 \begin{center}
 	\begin{prooftree}
-		\Hypo{$\hoare G {C_1} F,\ \hoare G {C_2} F$}
+		\Hypo{$\hoare G {C_1} F,\ \  \hoare G {C_2} F$}
 		\infer1{$\hoare G {C_1\square C_2}F$}
 	\end{prooftree}
 \end{center}
@@ -178,8 +182,8 @@ $P$ is the so-called \define{invariant}, a condition that stays unchanged before
 $v$ in this case is the \define{variant}, it is modified by the execution of the program. 
 Specifically, $v$ reduces with each execution of the sub-program $C$ inside the loop body. 
 Since $v$ is a natural number, it is never negative, i.e. bound from the bottom. 
-Naturally, execution of the loop has to stop at some point, the loop body $C$ can be executed maximum $v$ times. 
-This version of Hoare triple proves total correctness (termination and correctness), and it corresponds to the implication labelled with ``total correctness'' in \autoref{fig:wp-sp-relation}: 
+Consequently, the execution of the loop terminates at some point, and the loop body $C$ can be executed maximum $n$ times. 
+This version of Hoare logic proves total correctness (termination and correctness), and it corresponds to the implication labelled with ``total correctness'' in \autoref{fig:wp-sp-relation}: 
 $$G\implies wp.C.F$$
 
 \paragraph{Total Incorrectness}
@@ -190,19 +194,19 @@ $$F\implies sp.C.G$$
 With this triple, we can prove the reachability of states described by $F$ starting from the initial condition satisfying $G$. 
 We can view it as an indication that the program $C$ was not constructed correctly, and bugs described by $F$ are reachable~\cite{ohearn2020IncorrectnessLogic}; or use it to prove that the final states in $F$ are reachable via randomized programs~\cite{vries11}. 
 
-They all take an angelic view on the non-determinism, as well as Dijkstra and Scholten~\cite{dijkstra90}.  
-For example, O'Hearn defines the rule for non-deterministic choice as follows($\epsilon$ is either $ok$ or $er$, an indicator whether the final condition is reached normally or erroneously): 
+In reverse Hoare logic and incorrectness logic, the resolution of non-determinism is considered as angelic, same as how Dijkstra and Scholten view the resolution of non-determinism with sp~\cite{dijkstra90}.  
+For example, O'Hearn defines the rule for non-deterministic choice as follows ($\epsilon$ is either $ok$ or $er$, an indicator whether the final condition is reached normally or erroneously): 
 \begin{center}
 	\begin{prooftree}
 		\Hypo{[P]C_i[\epsilon:Q]}
 		\infer1[choice (where $i=1$ or $2$)]{[P]C_1+C_2[\epsilon:Q]}
 	\end{prooftree}
 \end{center}
-Zhang and Kaminski~\cite{zhang22} supplemented the word ``total'' to the name of this triple, reason being that the strongest postcondition transformer only include final states that are reachable, dual to the total correctness triple that only allows states that lead to termination. 
+Zhang and Kaminski~\cite{zhang22} supplemented the word ``total'' to the name of this triple, the reason being that the strongest postcondition transformer only include final states that are reachable, dual to the total correctness triple that only allows states that lead to termination. 
 
 \paragraph{Partial Incorrectness}
 As the name indicates, when there is ``total incorrectness'', there should be ``partial incorrectness''. 
-The red implications correspond to the triples for partial incorrectness. 
+The red implications in \autoref{fig:triples} correspond to the triples for partial incorrectness. 
 As mentioned in the previous section, the slp transformer lacks attention, starting with a sound definition with loops~\cite{wulandari2020VerifyingGraphPrograms,li2011NonlinearMathematicsUncertainty}. 
 As far as our knowledge, the underapproximation triple of slp 
 $$F\implies slp.C.G$$ 
@@ -211,13 +215,18 @@ However, the Galois connection relates it to the overapproximation triple of wp:
 $$wp.C.F\implies G$$
 Cousot et al.~\cite{cousot13} studied an implication similar to this triple to help lighten the burden of providing specifications in design by contract programming schemes. 
 They call it the ``necessary preconditions'', in the sense that these preconditions can not guarantee correctness, but once violated, definitely lead to erroneous final states. 
-They achieve this by finding preconditions that will definitely lead to erroneous final states, then take its negation. 
+They achieve this by finding preconditions that will definitely lead to erroneous final states and taking their negation. 
 Because they separated the issue of termination from their necessary precondition reasoning by assuming that all programs terminate, their necessary precondition is not exactly an overapproximation of wp. 
 Nevertheless, it gives intuition on one of the ways to approach the necessary liberal precondition. 
 
 \paragraph{Necessary Liberal Precondition}
 The overapproximation of wlp is the main focus of this thesis, denoted with orange label in \autoref{fig:wp-sp-relation}: 
-$wlp.C.F\implies G$. 
+$$wlp.C.F\implies G$$
+The name is decided from the characteristic of this triple: 
+\imptt{Necessary}, because its violation will lead to violation of the given postcondition, the definition of a necessary condition in logical terms. 
+\imptt{Liberal}, because we take a liberal view on non-termination. We accept initial states that can lead to non-termination as satisfying our precondition. 
+\imptt{Precondition}, because we are concerned with the conditions before the execution of a program. 
+
 It reflexes an extremely relaxed view: in this triple, $G$ can be satisfied by all possible initial states, under whose control the program can diverge, successfully terminate, erroneously terminate \dots
 The only certainty is that $G$ is the necessary condition, in the sense that once violated, the program can definitely reach erroneous final states. 
 We will study this triple further in the upcoming sections. 
@@ -225,7 +234,7 @@ We will study this triple further in the upcoming sections.
 \paragraph{Remaining Triple}
 The remaining triple denoted with label ``what?'' still awaits investigation as far as we know: 
 $$slp.C.G\implies F$$
-We think that one approach is to first establish a sound definition for slp, then find connection between $slp$ and $sp$, either by conjugation or reachability depending on the choice how to resolve non-determinism. 
+We think that one approach is to first establish a sound definition for slp, then find a connection between $slp$ and $sp$, either by conjugation or reachability depending on the choice how to resolve non-determinism. 
 From here, one can start investigating this triple following similar methods for other triples. 
 
 With this overview of triples studied in literature, we know that the triple $wlp.C.F\implies G$ is still an open question, and not automatically solved by a Galois connection to another implication. 

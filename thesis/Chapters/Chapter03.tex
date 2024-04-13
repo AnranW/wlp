@@ -33,29 +33,29 @@ This chapter includes our most important results:
 In the upcoming sections, we first relate together wp, wlp, sp, and slp with both angelic and demonic non-determinism, so we can distinguish the necessary liberal precondition from the existing triples that are already well-studied. 
 In this chapter, we first discuss the general semantics of the necessary liberal precondition, then focus on a characteristic scenario and show properties that captures it. 
 
-\section{Relating Overapproximation of wlp with sp}\label{sec:negative}
-Remember in \autoref{sec:literature}, we mentioned that there is an equivalence relation between the underapproximation of wlp and overapproximation of sp via Galois connection: 
+\section{Relating Overapproximations of wlp and sp}\label{sec:negative}
+Recall that in \autoref{sec:literature}, we mentioned that there is an equivalence relation between the underapproximation of wlp and the overapproximation of sp via a Galois connection: 
 \begin{align}
-	G\implies wlp.C.F\text{ iff }sp.C.G\implies F \tag{*}
+	G\implies wlp.C.F\text{\ \ \ \ iff\ \ \ \   } sp.C.G\implies F \tag{*}
 \end{align}
-One might wonder, can we also establish some similar relation between the overapproximation of wlp and underapproximation of sp:  
+One might wonder whether we can also establish some similar relation between the overapproximation of wlp and the underapproximation of sp:  
 \begin{align}
-	wlp.C.F \implies G\ \  \rlap{\(\quad?\)}\longleftrightarrow \ \ F\implies sp.C.G \tag{**}
+	wlp.C.F \implies G\ \ \ \  \rlap{\(\quad?\)}\longleftrightarrow \ \ \ \ F\implies sp.C.G \tag{**}
 \end{align}
-This would imply that we merely need to study the underapproximation of $sp$ to result in the overapproximation of $wlp$, the former of which is studied as the total incorrectness triple~\cite{ohearn2020IncorrectnessLogic}. 
+This would imply that we merely need to study the underapproximation of $sp$ to result in the overapproximation of $wlp$, where the underapproximation of $sp$ is studied as the (total) incorrectness triple~\cite{ohearn2020IncorrectnessLogic}. 
 
 The answer is no. 
 Without additional constraints, we can not directly establish any implication relations between $wlp.C.F\implies G$ and $F\implies sp.C.G$. 
 
-Remember from \autoref{ch:appr} that $wlp.C.F$ describes all initial states that can potentially lead to non-termination, and $sp.C.G$ is satisfied only by final states that are reachable. 
+Remember from \autoref{ch:appr} that all initial states that guarantee non-termination satisfy $wlp.C.F$, and that $sp.C.G$ is satisfied only by final states that are reachable. 
 Termination and reachability are two different aspects of program execution. 
-If we denote explicitly the states that can lead to non-termination with blue squares, and states that are unreachable with orange circles, then we can see on the left half of \autoref{fig:wlp-sp-nonterm-reach} that $F$ can also be satisfied with unreachable states, and from the right half that $G$ can also be satisfied by states leading to non-termination.
+If we denote explicitly the states that can lead to non-termination with blue squares, and states that are unreachable with orange circles, then we can see on the left half of \autoref{fig:wlp-sp-nonterm-reach} that $F$ can also be satisfied by unreachable states, and from the right half that $G$ can also be satisfied by states leading to non-termination.
 In general, without further constraints, $F$ in \autoref{fig:wlp-sp-nonterm-reach} is decorated with \imptt{some} of the orange circles, and $G$ is decorated with \imptt{some} of the blue squares. 
 
 \begin{figure}[ht]
 	\centering
 	\includesvg[width=\linewidth]{image/wlp-sp-nonterm-reach.svg}
-	\caption{Non-terminating and unreachable States}
+	\caption{Non-Terminating and Unreachable States}
 	\label{fig:wlp-sp-nonterm-reach}
 \end{figure}
 
@@ -70,7 +70,7 @@ We can deduce the weakest liberal precondition:
 	&\Leftrightarrow \{x\geq 2\}
 \end{align*}
 As a result, as long as the program $C$ starts in an initial state satisfying $x\geq 2$, it will terminate in a state satisfying $F=\{x>2\}$. 
-However, a state where $x$ evaluates to $3$ would satisfy $F$, but it is never reachable: assume the else-branch was discharged, then $x$ must evaluate to $2$ initially, so else-branch would not be discharged; otherwise assume the if-branch was discharged, then $x$ mush initially evaluate to $1$, but then the if-branch would not be discharged. 
+However, a state where $x$ evaluates to $3$ would satisfy $F$, but it is never reachable: assume the else-branch was executed, then $x$ must evaluate to $2$ initially, but else-branch will only be executed when $x\neq 2$ and this assumption leads to contradiction; otherwise assume the if-branch was executed, then $x$ must initially evaluate to $1$, but then the if-branch would not be executed. 
 Hence, any state where $x$ evaluates to $3$ is unreachable, but still satisfies the desired postcondition $F$. 
 Such states are denoted as orange circles in \autoref{fig:wlp-sp-nonterm-reach}. 
 Similarly, $sp.C.F$ can also be satisfied by initial states that can lead to non-termination.
@@ -86,12 +86,12 @@ Assume preconditions $G$ satisfies $wlp.C.F\implies G$, we can end up in a situa
 \end{figure}
 
 \newcommand{\nimplies}{\rlap{\(\quad\not\)}\implies} %symbol for not implies
-We see on the left side of \autoref{fig:wlp-sp-nonterm-reach} that $G$ ``includes'' all the blue squares, and $F$ only some of the orange circles. 
+We see on the left side of \autoref{fig:wlp-g-sp-g} that $G$ ``includes'' all the blue squares, and $F$ only some of the orange circles. 
 Now what do we know about $sp.C.G$? 
-We see on the right side of \autoref{fig:wlp-sp-nonterm-reach}, $sp.C.G$ is only satisfied by reachable states, i.e. none of the orange circles. 
-This means that in general, without further constraints, we at least have that $F\nimplies sp.C.G$, since $F$ may be satisfied by unreachable states, but $sp.C.G$ is only satisfied by reachable states. 
+We see on the right side of \autoref{fig:wlp-g-sp-g}, $sp.C.G$ is only satisfied by reachable states, i.e. none of the orange circles. 
+This means that in general, without further constraints, we can not always conclude that $F\implies sp.C.G$, since $F$ may be satisfied by unreachable states, but $sp.C.G$ is only satisfied by reachable states. 
 
-Can we then have a relation like $sp.C.G\implies F$? 
+Can we then always have a relation like $sp.C.G\implies F$ for arbitrary $G$ and $F$? 
 The answer is no. Assume we have both $wlp.C.F\implies G$, and $sp.C.G\implies F$, then with the Galois connection mentioned in line (*), we can conclude that $G\implies wlp.C.F$, which means that $G\Leftrightarrow wlp.C.F$, $G$ must be \imptt{exactly} the weakest liberal precondition of $F$. 
 Since we can only assume that $G$ overapproximates wlp, we can not draw the conclusion that $sp.C.G\implies F$. 
 As a result, from $wlp.C.F\implies G$ we can neither conclude $sp.C.G\implies F$ nor $F\implies sp.C.G$. 
@@ -103,7 +103,7 @@ Analogously, assume $F\implies sp.C.G$, what can we state about $wlp.C.F$?
 	\caption{$wlp.C.F$ where $F$ Is Underapproximation of $sp.C.G$}
 	\label{fig:f-sp-wlp-f}
 \end{figure}
-From the left side of \autoref{fig:f-sp-wlp-f}, we can read that $F$ does not ``include'' orange circles, i.e. $F$ is only satisfied by reachable states. 
+From the left side of \autoref{fig:f-sp-wlp-f}, we can see that $F$ does not ``include'' orange circles, i.e. $F$ is only satisfied by reachable states. 
 What do we know then about the relation between $wlp.C.F$ and $G$? 
 We see from \autoref{fig:f-sp-wlp-f}, $wlp.C.F$ ``includes'' all the blue squares, but $G$ only some of them. 
 Consequently, we can not conclude that $wlp.C.F\implies G$. 
@@ -152,7 +152,7 @@ wlp.C.F{\implies} G & \Leftrightarrow \neg G {\implies} \neg wlp.C.F \\
 \end{align*}
 These equivalences indicate that \hoare{\neg G}C{\neg F} is a valid Hoare triple with respect to total correctness, i.e. if $C$ starts in an initial condition satisfying $ \neg G$, then its execution \imptt{must} terminate, and it must be able to terminate satisfying $\neg F$. 
 
-\subsection{Overapproximation of wlp}
+% \subsection{Overapproximation of wlp}
 In \autoref{sec:wlp} we define the weakest liberal precondition and state that it characterizes all the preconditions starting from which the program either \imptt{diverges} or \imptt{will} terminate in a state satisfying $F$. 
 We are certain to use ``will'' instead of ``can'' as the non-deterministic choice is viewed as demonic, so the behavior of wlp can be depicted by \autoref{subfig:wlpd}. 
 
@@ -216,8 +216,10 @@ We categorize the executions of the program in four ways:
 \caption{Case Distinction of Preconditions Weaker Than wlp (Cont.) }
 \label{fig:wlp-g-2}
 \end{figure}
-If we were to weaken the precondition, it can happen in various ways as shown in \autoref{subfig:wlpd}{\color{RoyalBlue}-9}. 
-For example, \autoref{subfig:wlpd} shows the situation where $G$ is exactly $wlp.C.F$. 
+
+Without additional constraints, if we were to weaken the precondition, a lot of cases exist, and we can not make many statements about the weakened precondition. 
+Various scenarios are shown in \autoref{subfig:wlp-g}{\color{RoyalBlue}-9}. 
+For example, \autoref{subfig:wlp-g} shows the situation where $G$ is exactly $wlp.C.F$. 
 But in \autoref{subfig:wlp-g-g}, $G$ is strictly weaker than $wlp.C.F$. 
 Here, $G$ is satisfied by all initial states that satisfy $wlp.C.F$, plus \imptt{some} of the initial states, starting from which the execution can end satisfying $F$ or $\neg F$, aka some of the green arrows. 
 Further, the $G$ in \autoref{subfig:wlp-g-gg} is satisfied by \imptt{all} the above initial states, i.e. all the green arrows start from $G$. 
@@ -236,7 +238,7 @@ Furthermore, the analysis shown in \autoref{fig:wlp-g-1} is not accounting for t
 
 % While having restrictions on $G$ yields interesting results, without the restrictions we can still find useful characteristics. 
 In general, when $wlp.C.F\implies G$, $G$ can be satisfied by all possible initial states, which can be the starting points of black, green, red, or dashed arrows, representing executions terminating in states satisfying $F$, $F$ or $\neg F$, $\neg F$, or non-terminating, respectively. 
-As a result, we can not make many statements without adding extra restrictions to $G$. 
+As a result, we can not make many statements about the states in $G$ without adding extra restrictions to $G$. 
 
 However, we can see from \autoref{subfig:wlpd}{\color{RoyalBlue}-9} that when $\neg G$ is not empty, there is always some arrow ending in $\neg F$. 
 So there always exists some execution that starts from an initial state satisfying $\neg G$, and ends in a final state satisfying $\neg F$%: \hoare{\neg G}C{\neg F} is a valid hoare triple. 
@@ -258,7 +260,9 @@ To demonstrate the answer, we analyze the example written in \autoref{lst:door}.
 	... // retirement  
 \end{lstlisting}
 
-\subsection{Example: Door with Sensors}
+% \subsection{Example: Door with Sensors}
+\subsection{Example: To Exclude Bugs}
+The necessary liberal precondition can also be regarded as a method to rule out bugs. 
 In the author's student life, there was a door at university that she always finds interesting. 
 The door is located at a lecture hall, equipped with two sensors on the left and right sides of the door frame. 
 Each time a person walks in or out, the sensor registers and adds or decreases the number of people in the lecture hall, making a small tick sound. 
@@ -272,7 +276,7 @@ It can happen that a student enters the room hence increasing the count of the n
 Alternatively, the sensor can break because of old age and result in unforeseeable behavior, for example always detecting someone entering forever. 
 
 We know that there is definitely something wrong, in case the security sees on their device that the number of people in a lecture hall is negative. 
-If we want to know what caused it, we can calculate the weakest liberal precondition of the program snippet with regard to $F=\{\sigma\in\S\mid\sigma.n<0\}$ in \autoref{lst:door}. 
+If we want to know what caused it, we can calculate the weakest liberal precondition of the program snippet with regard to $F=\{\sigma\in\S\mid\sigma.n<0\}$ in \autoref{lst:neg0}. 
 We write $F=\{n<0\}$ in short: 
 \begin{lstlisting}[caption={Weakest Liberal Precondition w.r.t Postcondition $F=\{\sigma\in\S\mid\sigma.n<0\}$ }, label={lst:neg0}, language=java, numbers=left, stepnumber=1, captionpos=b,escapechar=|,frame=single]
 	... // starting device
@@ -285,7 +289,7 @@ We write $F=\{n<0\}$ in short:
 
 It seems like we should avoid starting the system in a state where $n$ is less than $-1$. 
 But it is enough? If we start the system in a state where $n=-1$, or even $n=0$, we can still reach an erroneous state where the value of $n$ is negative. 
-\autoref{fig:door}
+% \autoref{fig:door}
 \begin{figure}[ht]
 	\centering
 	\includesvg[width=0.8\linewidth]{image/example-door.svg}
@@ -311,9 +315,28 @@ So even by including all the green arrows via overapproximation, we are still mi
 This demonstrates overapproximating wlp is useful to include the green and red arrows in \autoref{fig:door-expert}, aka when: 
 \begin{itemize}
 	\item some preconditions \imptt{can but are not guaranteed} to lead to the erroneous final states non-deterministically; 
-	\item or the user only have insufficient knowledge of the system, but experts can deduce other erroneous final states that are unknown to the public. 
+	\item or the user only has insufficient knowledge of the system, but experts can deduce other erroneous final states that are unknown to the public. 
 \end{itemize}
 To utilize this overapproximation, we either identify the preconditions that result in the green arrows, which we will do in the next section, or we first calculate the weakest liberal precondition of the erroneous postcondition that we know of, then relax this precondition by ``guessing'' similar erroneous postconditions with the extra knowledge from experts over the system. 
+
+This is one way to regard the necessary liberal precondition. 
+Another way is to consider it the precondition, upon whose violation the program is prone to terminate with bugs. 
+With this view, we name the bugs that we are aware of, like $P$ in \autoref{fig:bug}. 
+Then we calculate the weakest precondition of $P$ with regard to program $C$, then take its negation. 
+Consequently, its negation $Q$, the purple area in \autoref{fig:bug}, is an overapproximation of $wlp.C.F$, where $F$ is the postcondition that the program execution is bug free. 
+
+Specifically, if we were to violate the necessary liberal precondition $Q$, the execution of program $C$ is prone to terminate in erroneous states that we know of, namely that there are a negative number of people in the room, or that there are over $200$ people in the room. 
+However, starting in an initial state satisfying $Q$ does not guarantee that the executions are completely bug-free. 
+Since we do not have complete knowledge of all the error states, we can still encounter executions starting form $Q$ ending in an error state, in this case the red arrow in \autoref{fig:bug} that points to the error state ``people present during holidays''. 
+
+\begin{figure}[ht]
+	\centering
+	\includesvg[width=\linewidth]{image/bugs.svg}
+	\caption{Necessary Liberal Precondition to Avoid Bugs}
+	\label{fig:bug}
+\end{figure}
+
+
 
 \subsection{Example: Including Good Runs}
 Another reason one might wish to overapproximate the weakest liberal precondition is that wlp might be so strict that some good runs are excluded. 
@@ -346,16 +369,14 @@ From the same initial state, we can be unlucky and $NonDet()$ returns $false$ fo
 This example tells us that the weakest (liberal) precondition might be too strict at times, and it rules out good runs of program execution. 
 By overapproximating wlp, we end up with a more relaxed precondition, starting from which even though bad runs are still possible, we still capture some good executions that would otherwise be excluded. 
 
-\subsection{Example: To Exclude Bugs}
-%TODO
-The necessary liberal precondition can also be regarded as a method to rule out bugs
+
 
 
 \subsection{Proof System}\label{sec:system}
 \newcommand{\nlp}[3]{\langle #1 \rangle\ #2\ \langle #3 \rangle}
 We call the overapproximation of wlp \define{necessary liberal precondition}, ``necessary'' because it is required to ensure avoidance of erroneous final states, and ``liberal'', because it is satisfied by all initial states that can potentially lead to non-termination, just like wlp. 
 We provide a proof system in \autoref{tab:proof-system}. 
-We use $\nlp G C F$ to denote that $G$ is a valid necessarily liberal precondition for program $C$ given postcondition $F$. 
+We use $\nlp G C F$ to denote that $G$ is a valid necessary liberal precondition for program $C$ given postcondition $F$. 
 
 The rules are mostly unsurprising. 
 Remember that we would like to construct rules to prove that a precondition is the necessary liberal precondition, it should overapproximate the weakest liberal precondition, i.e. a triple $\nlp G C F$ should satisfy: 
@@ -397,12 +418,12 @@ Note that the last line is an implication in both directions, because we take th
 \begin{center}
 	\begin{prooftree}
 		\Hypo{$\hoare{P\wedge\varphi\wedge v\in\N\wedge v=n\ \ }{C}{\ \ P\wedge v\in\N\wedge v<n}$}
-		\infer1[$while_h$]{$\hoare {P\wedge v\in\N\ \ } {while\ (\varphi)\ do\ C} {\ \ \neg\varphi\wedge P\wedge t\in\N}$}
+		\infer1[$while_h$]{$\hoare {P\wedge v\in\N\ \ } {while\ (\varphi)\ do\ C} {\ \ \neg\varphi\wedge P\wedge v\in\N}$}
 	\end{prooftree}
 \end{center}
 % In other words, \hoare{\neg G}C{\neg F} can be a valid Hoare triple with respect to partial correctness, but an initial state satisfying $\neg G$ does not necessarily guarantee termination, hence $\neg G$ is not necessarily a subset of $wp.C.\neg F$. 
 % If we were to take Hoare triple with additional rules to prove termination~\cite{manna74}, the implication at line (*) would be in both directions. 
-This is necessary to give intuition of the consequence rule in our proof system.
+We also give intuition of the consequence rule in our proof system.
 Assuming that the triple $\nlp\cdot\cdot\cdot$ is sound (which we will prove later in this section), i.e. $\nlp P C Q \implies (wlp.C.F{\implies} G)$, we can derive the $conseq$ rule from $consqe_h$  : 
 \begin{center}
 	\begin{prooftree}
@@ -431,17 +452,19 @@ Assuming that the triple $\nlp\cdot\cdot\cdot$ is sound (which we will prove lat
 %   \displaystyle\frac{\nlp {\varphi\wedge F\wedge v=n} {C'} {F\vee v>n},\ v,n\in\N}{\nlp {\varphi\vee F} {WHILE} {F}} while &
 %   \displaystyle\frac{\nlp {\varphi\wedge v=n} {C'} {v>n},\ v,n\in\N}{\nlp {\varphi\vee F} {WHILE} {F}} while &
 % \displaystyle\frac{\forall P\in\P.\ \nlp {\varphi\wedge P} {C'} {\varphi}}{\nlp {\varphi\vee F} {WHILE} {F}} while &
-\\[3ex]
 %   \displaystyle\frac{P\implies\neg\varphi}{\nlp {P\wedge F} {WHILE} {F}} while_0 &
-  \displaystyle\frac{\nlp {P} {C} {\varphi\vee P}}{\nlp {P} {WHILE} {\varphi\vee P}} while &
+%   \displaystyle\frac{\nlp {P} {C} {\varphi\vee P}}{\nlp {P} {WHILE} {\varphi\vee P}} while &
+\displaystyle\frac{\forall X=\Phi(X):\nlp {P} {C} {X}}{\nlp {P} {WHILE} {\varphi\vee P}} while
 %   \displaystyle\frac{\nlp {P} {C} {F}}{\nlp {P\vee F} {WHILE} {F}} while_2 &
   \\[3ex]
   \displaystyle\frac{\nlp G {C_1} F,\ \nlp G {C_2} F}{\nlp G {C_1\square C_2} F} choice &
   \displaystyle\frac{P{\implies} G,\ \nlp P C Q,\ F{\implies} Q}{\nlp{G}{C}{F}} conseq 
   \\[3ex]
   \text{ where } IF= if\ (\varphi)\ \{C_1\}\ else\ \{C_2\}\text{, }
-  & WHILE= while\ (\varphi)\ do\ \{C\}.
-  \end{array}$}
+  & WHILE= while\ (\varphi)\ do\ \{C\}, 
+  \\
+  \Phi(X):=\neg\varphi\wedge P \ \vee\  \varphi\wedge wlp.C.X
+\end{array}$}
   \caption{The Proof System}
   \label{tab:proof-system}
 \end{table}
@@ -450,24 +473,73 @@ It is however not trivial to construct the while rule.
 Assume we would like to find some $G$ to overapproximate $wlp.WHILE.F$, unfolding according to the definition in \autoref{tab:wp-wlp}: 
 \begin{align*}
 	wlp.WHILE.F &= gfp\ X. \Phi(X)\\  
-	&= gfp\ X.\ (\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X) 
+	&= gfp\ X.\ (\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C.X) 
 \end{align*}
 Since $G$ overapproximates $wlp.WHILE.F$, the greatest fixed point of $\Phi$, then $G$ must also overapproximate any fixed point of $\Phi$: 
-For any fixed point $P$ of $\Phi$, it is valid that $P\implies gfp\ \Phi$, add the fact that $gfp\ \Phi\implies G$, we can conclude that $P\implies G$. 
+For any fixed point $P$ of $\Phi$, it must be valid that $P\implies gfp\ \Phi$. 
+Together with $gfp\ \Phi\implies G$, we can conclude that $P\implies G$. 
 In other words, the weakest liberal precondition $G$ must overapproximate all fixed points of $\Phi$: 
+\renewcommand{\iff}{\Leftrightarrow}
 \begin{align*}
 	&\forall P. P=\Phi(P): P\overset{!}{\implies} G\\  
-	\Leftrightarrow \ &\forall P. P=(\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X): P\overset{!}{\implies} G\\  
-	&= gfp\ X.\ (\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C'.X) 
+	\iff \ &\forall P=\Phi(P). (\neg\varphi\wedge F)\vee(\varphi\wedge wlp.C.P)\overset{!}{\implies} G\\  
+	\iff \ &\forall P=\Phi(P). (\neg\varphi\wedge F) \overset{!}{\implies} G 
+	\ \ \wedge\ \ 
+	(\varphi\wedge wlp.C.P)\overset{!}{\implies} G\\  
 \end{align*}
+The first conjunct can be fulfilled by choosing $G=(\neg\varphi\wedge F)\ \vee\cdots$, however, the overapproximation of the second conjunct is not straightforward. 
+Remember from \autoref{sec:define loops} that when $P$ is a fixed point of the characteristic function $\Phi$ and $P$ is not the least fixed point, then $P$ is satisfied by initial states starting from which non-termination is possible. 
+Now that we need to overapproximate all $wlp.C.P$ where $P$ is a fixed point of the characteristic function, we need to ``capture'' all initial states where non-termination is possible. 
+In other terms, we need to prove non-termination. 
+One approach would be to first prove termination, then take the negation. 
 
-
-
-
-
-
-
-
+Again, we try to get intuition from the while-rule in Hoare logic, namely the $while_h$ above. 
+Since we are doing informal deduction, we replace $v\in\N$ with $v\geq 0$ to give nicer formulas when negated.
+This helps us rewrite the $while_h$ rule into $while_h'$: 
+\begin{center}
+	\begin{prooftree}
+		\Hypo{$\hoare{P\wedge\varphi\wedge v\geq 0\wedge v=n\ \ }{C}{\ \ P\wedge v\geq 0\wedge v<n}$}
+		\infer1[$while_h'$]{$\hoare {P\wedge v\geq 0\ \ } {while\ (\varphi)\ do\ C} {\ \ \neg\varphi\wedge P\wedge v\geq 0}$}
+	\end{prooftree}
+\end{center}
+% Assume that the upper line of $while_h'$ is proven, then
+% \begin{align*}
+% 	&\nlp {\neg(P\wedge\varphi\wedge v\geq 0\wedge v=n)} {C} {\neg(P\wedge v\geq 0\wedge v<n)} \tag{**}
+% \end{align*}
+% should also be valid. 
+% Line (**) is equivalent to: 
+% \begin{align*}
+% 	&(**)\\
+% 	\iff & \nlp {\neg P\vee\neg \varphi\vee v< 0\vee v\neq n} {C} {\neg P\vee v<0\vee v\geq n}\\
+% 	\iff & wlp.C.(\neg P\vee v<0\vee v\geq n)\implies (\neg P\vee\neg \varphi\vee v< 0\vee v\neq n)\\ 
+% 	\iff & (wlp.C.\neg P\implies (\neg P\vee\neg \varphi\vee v< 0\vee v\neq n))\\ 
+% 	&\ \ \wedge (wlp.C.(v<0)\implies (\neg P\vee\neg \varphi\vee v< 0\vee v\neq n))\\
+% 	&\ \ \wedge (wlp.C.(v\geq n)\implies (\neg P\vee\neg \varphi\vee v< 0\vee v\neq n)) \tag{***}\\ 
+% \end{align*}
+% The last equivalence, noted with (***), is derived from the monotonicity of $wlp.C$ (\thm{wlp-mono}) and the fact that $A\implies A\vee B$ for all predicates $A$, $B$. 
+Let $WHILE = while\ (\varphi)\ do\ C$. 
+Following the principle that \hoare{G}C F is a valid Hoare triple if and only if $\nlp {\neg G} C {\neg F}$ is a valid necessary liberal precondition triple, from the bottom line of $hoare_h'$ we \imptt{should} be able to prove that 
+\begin{align*}
+	& \nlp {\neg(P\wedge v\geq 0)} {while\ (\varphi)\ do\ C} {\neg(\neg\varphi\wedge P\wedge v\geq 0)} \text{ should be valid}\\
+	\iff\ & \nlp{\neg P\vee v< 0} {while\ (\varphi)\ do\ C} {\varphi\vee \neg P\vee v< 0} \text{ should be valid}\\
+	\iff\ & wlp.WHILE.(\varphi\vee \neg P\vee v< 0)\ \  \overset{!}{\implies}\neg P\vee v< 0\\
+	\iff \ & gfp\ X.\ \neg\varphi\wedge(\varphi\vee \neg P\vee v< 0) \ \ \vee\ \  \varphi\wedge wlp.C.X  \ \ \overset{!}{\implies}\neg P\vee v< 0\\
+	\iff \ & gfp\ X.\ \neg\varphi\wedge (\neg P\vee v< 0) \ \ \vee\ \  \varphi\wedge wlp.C.X  \ \ \overset{!}{\implies}\neg P\vee v< 0 \tag{e}\\
+\end{align*}
+Finally, let $\Phi(X):=\neg\varphi\wedge (\neg P\vee v< 0) \ \vee\  \varphi\wedge wlp.C.X$, 
+we can see that the necessary and sufficient condition to achieve line (e) is: 
+\begin{align*}
+	& \forall X=\Phi(X):\neg\varphi\wedge (\neg P\vee v< 0) \ \ \vee\ \  \varphi\wedge wlp.C.X  \ \ \implies \neg P\vee v< 0 \\ 
+	\iff \ & \forall X=\Phi(X):(\neg\varphi\wedge (\neg P\vee v< 0) \ \implies \neg P\vee v< 0) \\ 
+	& \hspace{.15\linewidth} \wedge\ \  (\varphi\wedge wlp.C.X \implies \neg P\vee v< 0)  \\ 
+	\iff \ &\forall X=\Phi(X): \  \varphi\wedge wlp.C.X \implies \neg P\vee v< 0  \tag{h}\\ 
+\end{align*}
+And a sufficient condition to arrive at line (h) is that:
+$$\forall X=\Phi(X):  wlp.C.X \implies \neg P\vee v< 0 $$
+This condition corresponds to the validity of $\nlp{\neg P\vee v< 0}{C}{X}$, for all fixed points of $\Phi(X)$. 
+This choice is enough for us to construct a sound proof system.%, but we will see that the resulted proof system is not complete. 
+As a result, syntactically replacing $\neg P\vee n<0$ by $P$, we can construct a while-rule: 
+$$\displaystyle\frac{\forall X=\Phi(X):\nlp {P} {C} {X}}{\nlp {P} {WHILE} {\varphi\vee P}} while$$
 
 \begin{lemma}{sound-pf}[The proof system is sound]
 	\ \\
@@ -516,9 +588,23 @@ In other words, the weakest liberal precondition $G$ must overapproximate all fi
 	$$\neg\varphi\wedge wlp.C_2.F\implies wlp.C_2.F \implies \neg\varphi\wedge G\implies G$$
 	Hence $wlp.IF.F \implies G$. 
 	\paragraph{Case $while$}
-	\colorbox{red!30}{
-		how to support taking these rules instead of others? 
-	}%TODO
+	From the induction hypothesis we can derive that 
+	\begin{align*}
+		&\forall X=\Phi(X):  wlp.C.X\implies P \\
+		\implies\ & \forall X=\Phi(X): \varphi\wedge wlp.C.X\implies P 
+	\end{align*}
+	It is a fact that $\neg\varphi\wedge P \implies P$, from $\neg\varphi\wedge P \iff \neg\varphi\wedge (\varphi\vee P)$ we can deduce that $$\neg\varphi\wedge (\varphi\vee P) \implies P$$. 
+	Combining with the previous result, we get that 
+	$$\forall X=\Phi(X):  \neg\varphi\wedge P  \ \ \vee \ \ \varphi \wedge wlp.C.X\implies P$$
+	Because 
+	$\Phi(X) = \neg\varphi\wedge P \ \vee\  \varphi\wedge wlp.C.X$, we can conclude that 
+	\begin{align*}
+		& gfp \ X. \  \neg\varphi\wedge P  \ \ \vee \ \ \varphi \wedge wlp.C.X\implies P\\
+		\iff &\ gfp \ X. \  \neg\varphi\wedge (\varphi\vee P)  \ \ \vee \ \ \varphi \wedge wlp.C.X\implies P
+	\end{align*}
+	Hence, 
+	$wlp.WHILE.(\varphi\vee P)\implies P$, and we have proved our goal.
+
 	\paragraph{Case $choice$} Similar to the case with $seq$, we can prove that $wlp.(C_1\square C_2).F \implies G$ from 
 	$$wlp.(C_1\square C_2).F = wlp.C_1.F \wedge wlp.C_2.F$$
 	and 
@@ -830,11 +916,23 @@ To reason about correctness, it is sometimes helpful to first reason about parti
 For example, when Hoare triple was first proposed~\cite{hoare69}, it is in form of the sufficient precondition that guarantees partial correctness: 
 $$\hoarenm{H}C F\ \Leftrightarrow\  H{\implies} wlp.C.F$$
 Then Manna and Pnueli~\cite{manna74} provided a termination proof for while-loops in Hoare triple, so that the extended Hoare Triple is a sufficient precondition that guarantees total correctness: 
-$$\hoarenm{H'}C F\ \Leftrightarrow\ H'{\implies} wp.C.F$$
+$${H}[C] F\ \Leftrightarrow\ H{\implies} wp.C.F$$
 Explicitly, to arrive at $H\implies wp.C.F$, we can first investigate $H\implies wlp.C.F$, then supplement it with a termination proof.
 
 It stands to reason that while attempting to reason about the necessary liberal precondition, we can take a similar approach but from the opposite direction: starting from necessary precondition $wp.C.F \implies G$, supplementing it with a termination or non-termination proof, we try to reach the necessary liberal precondition $wlp.C.F\implies G$. 
 % In other words, from $wp.C.F\implies G$, how we reach $wlp.C.F\implies G$? 
+
+Graphically, it means that we first find a $G$ in \autoref{fig:wp-g-wlp-g} that is greater than wp, indicated as the yellow area. 
+This $G$ is satisfied additionally by some of the initial states, starting from which divergence is possible, represented by the blue squares in \autoref{fig:wp-g-wlp-g}, but not all of them. 
+Consequently, we either find a $P$ by proving non-termination, such that it is greater than $G$, and that it ``covers'' all the blue squares, which means that $P$ is an overapproximation of wlp. 
+Alternatively, we can also find a $\neg P$ as indicated by the green area in \autoref{fig:wp-g-wlp-g} by proving termination, which also concludes means that $P$ is a necessary liberal precondition. 
+
+\begin{figure}[ht]
+	\centering
+	\includesvg[width=\linewidth]{image/wp-g-to-wlp-g.svg}
+	\caption{Approaching Necessary Liberal Precondition from Necessary Precondition}
+	\label{fig:wp-g-wlp-g}
+\end{figure}
 
 \newcommand{\wpp}{wp_d^+}
 First, we attempt to find a necessary precondition $G$ where $ wp.C.F\implies G$. 
