@@ -298,14 +298,14 @@ The result $wp.WHILE.F = \Phi(wp.WHILE.F)$ means that $wp.WHILE.F$ should be a f
 
 The question then arises: can we define wp with any fixed point? 
 The answer is no. 
-In fact, Dijkstra and Scholten~\cite{dijkstra90} later also gave definitions for wp and wlp in an equivalent form of least and greatest fixed points. 
+In fact, Dijkstra and Scholten~\cite{dijkstra90} later also give definitions for wp and wlp in an equivalent form of least and greatest fixed points. 
 They called it "strongest" and "weakest solution". 
 They also proved that it is necessary to use the extreme solutions.
 Here, we show the need for \imptt{least} fixed points by verifying that the definition in \autoref{tab:wp-det} coincides with Dijkstra's definition in \autoref{eq:while}.
 Thanks to domain theory, we have a heuristic to calculate the least fixed point of $\Phi$. 
 %we We borrow a theorem from domain theory that yields a computation for least fixed points, provided they exist: 
 
-\begin{theorem}{lfp}[Kleene's fixed point theorem]~{\normalfont\cite{kaminski19}}
+\begin{theorem}{lfp}{\normalfont\cite{kaminski19}}[Kleene's fixed point theorem]~
 $$lfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(false)$$
 \end{theorem}
 
@@ -506,8 +506,9 @@ A graphical representation can be found on \autoref{subfig:wlp-demonic}.
 
 As preluded earlier, greatest fixed points are used to define wlp for while-loops. 
 It is an easy choice, since wlp is semantically the \imptt{weakest} liberal precondition, and $wlp.WHILE.F$ should be a fixed point of its characteristic function, similar to \autoref{sec:define loops}. 
-
-\begin{theorem}{gfp}{\normalfont\cite{kaminski19}}[gfp heuristics]
+We can also find the greatest fixed point of a function in a way analogous to \thm{lfp}. 
+We show it in \thm{gfp}. 
+\begin{theorem}{gfp}{\normalfont\cite{kaminski19}}
   $gfp\ \Phi = \underset{n\in\N}{sup}\ \Phi^n(true)$
 \end{theorem}
 

@@ -30,7 +30,7 @@ They are written as such: \hoare{G}{C}{F}.
 %%\footnote{Originally it was written as $F \{C\} G$, but now it is often written with brackets around conditions instead of the program.} 
 It states that if the system starts in a state that satisfies the precondition, then the state after the execution of the program will satisfy the postcondition, provided that the program terminates.
 Hoare triples are elegant in that once we have appropriate preconditions, we can follow their reference rules on sequential programs with ease. 
-But with Hoare triples in their original form, we know the program is correct, but we are not sure of its termination. 
+With Hoare triples in their original form, we know the program is correct, but we are not sure of its termination. 
 This is called \define{partial correctness}. 
 
 To prove a program totally correct, Dijkstra presented the \define{weakest precondition transformer}~\cite{dijkstra75} (wp): starting with a postcondition, it works backwards and calculates what the weakest precondition is that guarantees both correctness and termination. 
@@ -38,7 +38,7 @@ A predicate $P$ is considered to be \define{weaker} than $Q$, if $Q\implies P$ i
 Conversely, $Q$ is \define{stronger} than $P$. 
 In Hoare triples, the precondition is a \imptt{sufficient} condition for the program to be correct in that the final state will satisfy the desired postcondition, while with wp we obtain a \imptt{necessary and sufficient} precondition. 
 Relaxing the commitment for termination, Dijkstra also proposed the \define{weakest liberal precondition transformer}~\cite{dijkstra90} (wlp) which delivers preconditions so that the program either terminates correctly or never terminates, proving partial correctness. 
-The name contains the word \define{liberal}, in the sense that the wlp transformer takes a more ``liberal'' view on non-termination, that divergence or execution forever is considered as acceptable in this case. 
+The name contains the word \define{liberal}, in the sense that the wlp transformer takes a more ``liberal'' view on non-termination: divergence or execution forever is considered as acceptable in this case. 
 
 Since then, a plethora of research projects blossomed and yielded fruitful results. 
 Not only did Hoare Logic receive numerous copious attention during the first decade of its proposal~\cite{apt81}, it has become the basis for program verification now~\cite{gordon2010ForwardHoare}. 
@@ -58,7 +58,7 @@ Despite focusing on different transformers and relations, incorrectness logic gi
 This thesis yields results regarding in pre- and postcondition transformers and the implication $wlp.C.F\implies G$. 
 The results are listed below in chronological order: 
 \begin{enumerate}
-    \item We prove that the definition of the weakest precondition transformer of while-programs by Dijkstra~\cite{dijkstra75} and the one using the least fixed point coincide, and gave intuition to explain the necessity of using the least fixed point instead of using any other fixed point. 
+    \item We prove that the definition of the weakest precondition transformer of while-programs by Dijkstra~\cite{dijkstra75} and the one using the least fixed point coincide, and give intuition to explain the necessity of using the least fixed point instead of using any other fixed point. 
     \item Following the previous result, we deduce that the greatest fixed point is necessary to define the weakest liberal precondition. 
     \item We relate the pre- and postcondition transformers under angelic or demonic considerations over non-determinism using relations like termination, reachability, conjugation, implication, and equivalence. 
     We then present the results as a graph in \autoref{fig:wp-sp-relation}.
