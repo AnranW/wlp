@@ -1010,7 +1010,7 @@ This yields an alternative method to finding the necessary liberal precondition,
 \end{enumerate}
 
 One might wonder, what is the difference between this method and directly underapproximating wp$_a$, i.e. proving the validity of a Hoare triple? 
-The main difference is that we are not concerned with the postcondition anymore. 
+The main difference is that we separate the reasoning about termination and the reasoning about final states.%are not concerned with the postcondition anymore. 
 With this method, wp$_d^+$ is responsible for reasoning about the final states, and we are only concerned with termination proofs. 
 By proving that \imptt{all} executions terminate, we identify the green area in \autoref{fig:wpp-term}, which is strictly an underapproximation of wp$_a$, provided that the orange arrows in \autoref{fig:wpp-term} do exist, and that the negation of the green area is an overapproximation of wlp$_d$. 
 
